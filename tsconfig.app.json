@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist/app",
+    "lib": ["ES2022", "DOM"],
+    "strict": true,  // Enable strict mode for better type safety
+    "composite": true,  // Add this setting for project composition
+    "noEmit": false  // Ensure emit is not disabled
+  },
+  "include": ["src/app/**/*"]
+}
