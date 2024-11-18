@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
+    "composite": true,
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "Node",
     "strict": true,
     "skipLibCheck": true,
     "jsx": "react-jsx",
-    "noEmit": false,  // Set to false for emitting compiled files
+    "noEmit": false,
     "resolveJsonModule": true,
     "esModuleInterop": true
   },

@@ -1,7 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const EmployeeLandingPage = () => {
   const [activeTab, setActiveTab] = useState('Home'); // State for active tab
+  const [currentSlide, setCurrentSlide] = useState(0); // State for slideshow
+
+  const slides = ["/slide1.png", "/slide2.png", "/slide3.png"];
+  const slideInterval = 5000; // 5 seconds per slide
+
+  // Automated slideshow
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
+    }, slideInterval);
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, [slides.length]);
 
   // Function to render the content based on the active tab
   const renderContent = () => {
@@ -10,28 +23,27 @@ const EmployeeLandingPage = () => {
         return (
           <>
             {/* Slideshow Section */}
-            <div className="mt-40">
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                <img src="/slide1.png" alt="Slide 1" className="object-cover w-full rounded-lg shadow-md h-72" />
-                <img src="/slide2.png" alt="Slide 2" className="object-cover w-full rounded-lg shadow-md h-72" />
-                <img src="/slide3.png" alt="Slide 3" className="object-cover w-full rounded-lg shadow-md h-72" />
+<div className="relative mt-40 w-full h-[500px] flex justify-center items-center overflow-hidden">
+  <img
+    src={slides[currentSlide]}
+    alt={`Slide ${currentSlide + 1}`}
+    className="object-cover w-full h-full rounded-lg shadow-md"
+  />
+</div>
+            {/* Job Search Section */}
+            <div className="flex flex-col items-center justify-center p-4 mt-8 text-center bg-gray-100 md:p-8">
+              <h2 className="text-lg font-bold text-gray-600 md:text-2xl">Find Your Dream Job</h2>
+              <div className="flex items-center gap-2 mt-4">
+                <input
+                  type="text"
+                  placeholder="Search jobs..."
+                  className="w-full max-w-xs p-2 border border-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500"
+                />
+                <button className="p-2 bg-teal-500 rounded-full">
+                  <img src="/Microphone.png" alt="Mic" className="w-6 h-6" />
+                </button>
               </div>
             </div>
-
-           {/* Job Search Section */}
-<div className="flex flex-col items-center justify-center p-4 mt-8 text-center bg-gray-100 md:p-8">
-  <h2 className="text-lg font-bold text-gray-600 md:text-2xl">Find Your Dream Job</h2>
-  <div className="flex items-center gap-2 mt-4">
-    <input
-      type="text"
-      placeholder="Search jobs..."
-      className="w-full max-w-xs p-2 border border-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500"
-    />
-    <button className="p-2 bg-teal-500 rounded-full">
-      <img src="/Microphone.png" alt="Mic" className="w-6 h-6" />
-    </button>
-  </div>
-</div>
 
             {/* Job Cards Section */}
             <div className="flex flex-wrap justify-center gap-4 mt-8">
@@ -72,21 +84,20 @@ const EmployeeLandingPage = () => {
         {/* Logo */}
         <img src="/Logoo.png" alt="Logo" className="mb-12 h-14 sm:mb-4" />
 
-       {/* Tabs */}
-<div className="flex items-center justify-center gap-4">
-  {['Home', 'Tutorials', 'Contact'].map((tab) => (
-    <button
-      key={tab}
-      className={`text-sm font-medium sm:text-lg ${
-        activeTab === tab ? 'border-b-2 border-teal-500' : ''
-      }`}
-      onClick={() => setActiveTab(tab)}
-    >
-      {tab}
-    </button>
-  ))}
-</div>
-
+        {/* Tabs */}
+        <div className="flex items-center justify-center gap-4">
+          {['Home', 'Tutorials', 'Contact'].map((tab) => (
+            <button
+              key={tab}
+              className={`text-sm font-medium sm:text-lg ${
+                activeTab === tab ? 'border-b-2 border-teal-500' : ''
+              }`}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
 
         {/* Search Bar */}
         <div className="flex items-center gap-2 mt-4 sm:mt-0">
