@@ -24,47 +24,46 @@ const EmployeeLandingPage = () => {
           <>
             {/* Slideshow Section */}
             <div className="relative mt-40 w-full max-w-4xl mx-auto overflow-hidden">
-  {/* Background with gradient animation */}
-  <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600 animate-gradient-blur z-0" />
+              {/* Background with gradient animation */}
+              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600 animate-gradient-blur z-0" />
 
-  {/* Slides */}
-  <div
-    className="relative z-10 flex transition-transform duration-1000 ease-in-out"
-    style={{
-      transform: `translateX(-${currentSlide * 100}%)`, // Move slides horizontally
-    }}
-  >
-    {slides.map((slide, index) => (
-      <img
-        key={index}
-        src={slide}
-        alt={`Slide ${index + 1}`}
-        className="object-cover w-full h-auto rounded-lg shadow-md transform-gpu"
-        style={{
-          transform: `perspective(1000px) rotateY(${currentSlide === index ? 0 : 45}deg)`,
-          boxShadow: '0 4px 15px rgba(0, 255, 255, 0.7)', // Add neon glow
-        }}
-      />
-    ))}
-  </div>
+              {/* Slides */}
+              <div
+                className="relative z-10 flex transition-transform duration-1000 ease-in-out"
+                style={{
+                  transform: `translateX(-${currentSlide * 100}%)`, // Move slides horizontally
+                }}
+              >
+                {slides.map((slide, index) => (
+                  <img
+                    key={index}
+                    src={slide}
+                    alt={`Slide ${index + 1}`}
+                    className="object-cover w-full h-auto rounded-lg shadow-md transform-gpu"
+                    style={{
+                      transform: `perspective(1000px) rotateY(${currentSlide === index ? 0 : 45}deg)`,
+                      boxShadow: '0 4px 15px rgba(0, 255, 255, 0.7)', // Add neon glow
+                    }}
+                  />
+                ))}
+              </div>
 
-  {/* Slide indicators */}
-  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-    {slides.map((_, index) => (
-      <button
-        key={index}
-        onClick={() => setCurrentSlide(index)}
-        className={`w-3 h-3 rounded-full transition-all duration-300 ${
-          currentSlide === index ? 'bg-teal-400 shadow-neon' : 'bg-gray-400'
-        }`}
-        style={{
-          boxShadow: currentSlide === index ? '0 0 10px teal' : 'none',
-        }}
-      ></button>
-    ))}
-  </div>
-</div>
-
+              {/* Slide indicators */}
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+                {slides.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentSlide(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      currentSlide === index ? 'bg-teal-400 shadow-neon' : 'bg-gray-400'
+                    }`}
+                    style={{
+                      boxShadow: currentSlide === index ? '0 0 10px teal' : 'none',
+                    }}
+                  ></button>
+                ))}
+              </div>
+            </div>
 
             {/* Job Search Section */}
             <div className="flex flex-col items-center justify-center p-4 mt-8 text-center bg-gray-100 md:p-8">
@@ -105,7 +104,6 @@ const EmployeeLandingPage = () => {
           </>
         );
       case 'Tutorials':
-        // Same as before
         break;
       case 'Contact':
         return <div className="p-4 md:p-8">Get in touch with us via the Contact section.</div>;
@@ -116,46 +114,53 @@ const EmployeeLandingPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      {/* Header */}
-      <header className="fixed top-0 left-0 z-10 flex flex-col items-center justify-between w-full bg-white shadow-lg p-7 sm:flex-row sm:items-center sm:p-2">
-        {/* Logo */}
-        <img src="/Logoo.png" alt="Logo" className="mb-4 h-14 sm:mb-0" />
+   <header className="fixed top-0 left-0 z-10 flex flex-col items-center justify-between w-full bg-white shadow-lg p-7 sm:flex-row sm:items-center sm:p-2">
+  {/* Logo */}
+  <img src="/Logoo.png" alt="Logo" className="mb-4 h-14 sm:mb-0" />
 
-        {/* Tabs */}
-        <div className="flex items-center justify-center gap-4">
-          {['Home', 'Tutorials', 'Contact'].map((tab) => (
-            <button
-              key={tab}
-              className={`text-sm font-medium sm:text-lg ${
-                activeTab === tab ? 'border-b-2 border-teal-500' : ''
-              }`}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+  {/* Tabs */}
+  <div className="flex items-center justify-center gap-4">
+    {['Home', 'Tutorials', 'Contact'].map((tab) => (
+      <button
+        key={tab}
+        className={`text-sm font-medium sm:text-lg ${activeTab === tab ? 'border-b-2 border-teal-500' : ''}`}
+        onClick={() => setActiveTab(tab)}
+      >
+        {tab}
+      </button>
+    ))}
+  </div>
 
-        {/* Greeting and Search Bar */}
-        <div className="flex flex-col items-center gap-2 mt-4 sm:flex-row sm:mt-0">
-          {/* Greeting */}
-          <span className="text-sm font-medium text-gray-700 sm:text-lg">
-            Welcome, user@example.com
-          </span>
+  {/* Greeting, Search Bar, and Profile Image */}
+  <div className="flex items-center gap-4 mt-4 sm:flex-row sm:mt-0">
+    {/* Greeting */}
+    <span className="text-sm font-medium text-gray-700 sm:text-lg">
+      Welcome, user@example.com
+    </span>
 
-          {/* Search Bar */}
-          <div className="flex items-center gap-2">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full p-2 border border-gray-900 rounded-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-teal-400"
-            />
-            <button className="p-2 bg-teal-500 rounded-full">
-              <img src="/Microphone.png" alt="Mic" className="w-6 h-6" />
-            </button>
-          </div>
-        </div>
-      </header>
+    {/* Search Bar */}
+    <div className="flex items-center gap-2">
+      <input
+        type="text"
+        placeholder="Search..."
+        className="w-full p-2 border border-gray-900 rounded-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-teal-400"
+      />
+      <button className="p-2 bg-teal-500 rounded-full">
+        <img src="/Microphone.png" alt="Mic" className="w-6 h-6" />
+      </button>
+    </div>
+
+    {/* Profile Image */}
+    <div className="relative w-10 h-10">
+      <img
+        src="/profile.png"
+        alt="Profile"
+        className="object-cover w-full h-full rounded-full border-2 border-teal-500"
+      />
+    </div>
+  </div>
+</header>
+
 
       {/* Main Content */}
       <main className="flex-1 p-4 mt-20 md:p-8">{renderContent()}</main>
