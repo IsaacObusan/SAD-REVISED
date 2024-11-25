@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MainLandingPage from './components/MainLandingPage'; // Main Landing Page
 import Login from './components/Login';
 import EmployeeLandingPage from './components/EmployeeLandingPage'; // Employee landing page component
 import EmployerLandingPage from './components/EmployerLandingPage'; // Employer landing page component
@@ -9,7 +10,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} /> {/* Root path shows the Login page */}
+        <Route path="/" element={<MainLandingPage />} /> {/* Root path shows MainLandingPage */}
         <Route path="/login" element={<Login />} /> {/* Login page */}
         <Route path="/sign-up" element={<SignUp />} /> {/* Sign-Up page with tab container */}
         <Route path="/employee-landing" element={<EmployeeLandingPage />} /> {/* Employee landing page */}

@@ -48,7 +48,7 @@ const Login: React.FC = () => {
       <div className="p-8 bg-white rounded-lg shadow-lg w-[30rem]">
         {/* Logo */}
         <div className="flex justify-center mb-6">
-          <img src={Logo} alt="Logo" className="h-25" />
+          <img src={Logo} alt="Logo" className="h-20" />
         </div>
         <h2 className="mb-6 text-2xl font-semibold text-center">Login</h2>
 
