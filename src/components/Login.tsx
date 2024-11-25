@@ -1,37 +1,49 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from './Logoo.png'; // Import the logo
+import axios from 'axios';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(''); // State for handling error messages
   const navigate = useNavigate();
+  const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
 
   const validateEmail = (email: string) => {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async(e: React.FormEvent) => {
     e.preventDefault();
+    try{
+      if (!validateEmail(email)) {
+        setError('Please enter a valid email address');
+        return;
+      }
+  
+      if (password.length < 6) {
+        setError('Password must be at least 6 characters');
+        return;
+      }
 
-    if (!validateEmail(email)) {
-      setError('Please enter a valid email address');
-      return;
-    }
+      const response = await axios.post(
+         serverUrl + "login",
+        {email: email, password: password},
+      );
 
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters');
-      return;
-    }
+      if(response.data.role == "admin"){
 
-    if (email === 'employee@example.com' && password === 'employee123') {
-      navigate('/employee-landing');
-    } else if (email === 'employer@example.com' && password === 'employer123') {
-      navigate('/employer-landing');
-    } else {
-      setError('Invalid email or password');
+      }else if(response.data.role == "applicant"){
+        navigate('/employee-landing');
+      }else if(response.data.role == "employer"){
+        navigate('/employer-landing');
+      }else{
+        console.log("Account not Found");
+      }
+    }catch(e){
+      console.log(e);
     }
   };
 
