@@ -3,11 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Logo from './Logoo.png'; // Import the logo
 import axios from 'axios';
 
-// Define the response data interface
-interface LoginResponse {
-  role: 'admin' | 'applicant' | 'employer';
-}
-
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -37,33 +32,18 @@ const Login: React.FC = () => {
 
     try {
       // Send login request with typed response
-      const response = await axios.post<LoginResponse>(
-        `${serverUrl}login`,
-        { email, password }
-      );
+      const response = await axios.post(serverUrl + "login", {email: email, password: password});
 
-      // Handle role-based navigation
-      const { role } = response.data;
-
-<<<<<<< HEAD
-      }else if(response.data.role == "applicant"){
+      if (response.data.role === 'admin') {
+        navigate('/admin'); // Navigate to Admin page
+      } else if (response.data.role === 'applicant') {
         localStorage.setItem("id", response.data.id);
         localStorage.setItem("accountName", response.data.name);
-        navigate('/employee-landing');
-      }else if(response.data.role == "employer"){
-        navigate('/employer-landing');
-      }else{
-        console.log("Account not Found");
-=======
-      if (role === 'admin') {
-        navigate('/admin'); // Navigate to Admin page
-      } else if (role === 'applicant') {
         navigate('/employee-landing'); // Navigate to Employee Landing page
-      } else if (role === 'employer') {
+      } else if (response.data.role === 'employer') {
         navigate('/employer-landing'); // Navigate to Employer Lanpmnding page
       } else {
-        setError('Account not found or invalid role');
->>>>>>> 14e5e124da7f1a6ac65fd04fa29f64cf2e9276d1
+        setError('Invalid Credentials');
       }
     } catch (e: any) {
       // Handle Axios error
