@@ -127,7 +127,7 @@ def retrieveData():
 @app.route("/signup", methods=["POST"])
 def signup():
     try:
-        pass
+        return jsonify({"status": "approved"})
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
