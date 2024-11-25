@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from './Logoo.png'; // Import the logo
-import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import Font Awesome icons
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(''); // State for handling error messages
-  const [showPassword, setShowPassword] = useState(false); // State for showing/hiding password
   const navigate = useNavigate();
 
   const validateEmail = (email: string) => {
@@ -62,22 +60,16 @@ const Login: React.FC = () => {
             />
           </div>
 
-          <div className="relative">
+          <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
             <input
-              type={showPassword ? 'text' : 'password'}
+              type="password"
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <span
-              className="absolute top-9 right-4 text-gray-600 cursor-pointer hover:text-gray-800"
-              onClick={() => setShowPassword((prev) => !prev)}
-            >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
           </div>
 
           <button
