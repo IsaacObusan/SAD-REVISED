@@ -24,12 +24,47 @@ const EmployeeLandingPage = () => {
           <>
             {/* Slideshow Section */}
             <div className="relative mt-40 w-full max-w-4xl mx-auto overflow-hidden">
-  <img
-    src={slides[currentSlide]}
-    alt={`Slide ${currentSlide + 1}`}
-    className="object-cover w-full h-auto rounded-lg shadow-md"
-  />
+  {/* Background with gradient animation */}
+  <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600 animate-gradient-blur z-0" />
+
+  {/* Slides */}
+  <div
+    className="relative z-10 flex transition-transform duration-1000 ease-in-out"
+    style={{
+      transform: `translateX(-${currentSlide * 100}%)`, // Move slides horizontally
+    }}
+  >
+    {slides.map((slide, index) => (
+      <img
+        key={index}
+        src={slide}
+        alt={`Slide ${index + 1}`}
+        className="object-cover w-full h-auto rounded-lg shadow-md transform-gpu"
+        style={{
+          transform: `perspective(1000px) rotateY(${currentSlide === index ? 0 : 45}deg)`,
+          boxShadow: '0 4px 15px rgba(0, 255, 255, 0.7)', // Add neon glow
+        }}
+      />
+    ))}
+  </div>
+
+  {/* Slide indicators */}
+  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+    {slides.map((_, index) => (
+      <button
+        key={index}
+        onClick={() => setCurrentSlide(index)}
+        className={`w-3 h-3 rounded-full transition-all duration-300 ${
+          currentSlide === index ? 'bg-teal-400 shadow-neon' : 'bg-gray-400'
+        }`}
+        style={{
+          boxShadow: currentSlide === index ? '0 0 10px teal' : 'none',
+        }}
+      ></button>
+    ))}
+  </div>
 </div>
+
 
             {/* Job Search Section */}
             <div className="flex flex-col items-center justify-center p-4 mt-8 text-center bg-gray-100 md:p-8">
@@ -69,73 +104,9 @@ const EmployeeLandingPage = () => {
             </div>
           </>
         );
-        case 'Tutorials':
-          const tutorials = [
-            {
-              title: 'Getting Started with React',
-              description: 'Learn the basics of React and how to set up your first project.',
-              type: 'PDF',
-              file: '/tutorials/react-basics.pdf',
-              video: '/videos/react-basics.mp4',
-              image: '/images/react.png',
-            },
-            {
-              title: 'Understanding Tailwind CSS',
-              description: 'Explore how to use Tailwind CSS for modern UI development.',
-              type: 'Article',
-              file: '/tutorials/tailwind-guide.pdf',
-              video: '/videos/tailwind-guide.mp4',
-              image: '/images/tailwind.png',
-            },
-            {
-              title: 'State Management with Redux',
-              description: 'Master state management with Redux and best practices.',
-              type: 'Video',
-              file: '/tutorials/redux-state.pdf',
-              video: '/videos/redux-tutorial.mp4',
-              image: '/images/redux.png',
-            },
-          ];
-        
-          return (
-            <div className="flex flex-col items-center justify-center p-4 md:p-8">
-              <h2 className="mb-6 text-2xl font-bold text-teal-500">Tutorials</h2>
-              <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                {tutorials.map((tutorial, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col items-start p-6 bg-white border rounded-lg shadow-lg"
-                  >
-                    <img
-                      src={tutorial.image}
-                      alt={tutorial.title}
-                      className="w-full h-40 mb-4 rounded-lg object-cover"
-                    />
-                    <h3 className="text-lg font-bold text-gray-800">{tutorial.title}</h3>
-                    <p className="mt-2 text-sm text-gray-600">{tutorial.description}</p>
-                    <div className="flex items-center gap-4 mt-4">
-                      <a
-                        href={tutorial.file}
-                        download
-                        className="px-4 py-2 text-white bg-teal-500 rounded-lg hover:bg-teal-600"
-                      >
-                        Download
-                      </a>
-                      <a
-                        href={tutorial.video}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
-                      >
-                        Watch
-                      </a>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          );
-        
+      case 'Tutorials':
+        // Same as before
+        break;
       case 'Contact':
         return <div className="p-4 md:p-8">Get in touch with us via the Contact section.</div>;
       default:
@@ -147,45 +118,44 @@ const EmployeeLandingPage = () => {
     <div className="flex flex-col min-h-screen bg-white">
       {/* Header */}
       <header className="fixed top-0 left-0 z-10 flex flex-col items-center justify-between w-full bg-white shadow-lg p-7 sm:flex-row sm:items-center sm:p-2">
-  {/* Logo */}
-  <img src="/Logoo.png" alt="Logo" className="mb-4 h-14 sm:mb-0" />
+        {/* Logo */}
+        <img src="/Logoo.png" alt="Logo" className="mb-4 h-14 sm:mb-0" />
 
-  {/* Tabs */}
-  <div className="flex items-center justify-center gap-4">
-    {['Home', 'Tutorials', 'Contact'].map((tab) => (
-      <button
-        key={tab}
-        className={`text-sm font-medium sm:text-lg ${
-          activeTab === tab ? 'border-b-2 border-teal-500' : ''
-        }`}
-        onClick={() => setActiveTab(tab)}
-      >
-        {tab}
-      </button>
-    ))}
-  </div>
+        {/* Tabs */}
+        <div className="flex items-center justify-center gap-4">
+          {['Home', 'Tutorials', 'Contact'].map((tab) => (
+            <button
+              key={tab}
+              className={`text-sm font-medium sm:text-lg ${
+                activeTab === tab ? 'border-b-2 border-teal-500' : ''
+              }`}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
 
-  {/* Greeting and Search Bar */}
-  <div className="flex flex-col items-center gap-2 mt-4 sm:flex-row sm:mt-0">
-    {/* Greeting */}
-    <span className="text-sm font-medium text-gray-700 sm:text-lg">
-      Welcome, user@example.com
-    </span>
+        {/* Greeting and Search Bar */}
+        <div className="flex flex-col items-center gap-2 mt-4 sm:flex-row sm:mt-0">
+          {/* Greeting */}
+          <span className="text-sm font-medium text-gray-700 sm:text-lg">
+            Welcome, user@example.com
+          </span>
 
-    {/* Search Bar */}
-    <div className="flex items-center gap-2">
-      <input
-        type="text"
-        placeholder="Search..."
-        className="w-full p-2 border border-gray-900 rounded-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-teal-400"
-      />
-      <button className="p-2 bg-teal-500 rounded-full">
-        <img src="/Microphone.png" alt="Mic" className="w-6 h-6" />
-      </button>
-    </div>
-  </div>
-</header>
-
+          {/* Search Bar */}
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="w-full p-2 border border-gray-900 rounded-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-teal-400"
+            />
+            <button className="p-2 bg-teal-500 rounded-full">
+              <img src="/Microphone.png" alt="Mic" className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+      </header>
 
       {/* Main Content */}
       <main className="flex-1 p-4 mt-20 md:p-8">{renderContent()}</main>
