@@ -1,24 +1,36 @@
 import { useState } from 'react';
+import axios from 'axios';
+
+interface EmployeeSignUp{
+    fullname: string;
+    email: string;
+    age: string;
+    password: string;
+    cpassword: string;
+    file_loc: string;
+    link: string;
+    disabilities: string[];
+}
 
 const SignUp = () => {
   const [activeTab, setActiveTab] = useState<'employee' | 'employer'>('employee');
   const [resume, setResume] = useState<File | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [disabilities, setDisabilities] = useState<{
-    visual: boolean;
-    hearing: boolean;
-    mobility: boolean;
-    cognitive: boolean;
-    speech: boolean;
-    others: boolean;
-  }>({
-    visual: false,
-    hearing: false,
-    mobility: false,
-    cognitive: false,
-    speech: false,
-    others: false,
+  const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
+  const [signUpData, setSignUpData] = useState<EmployeeSignUp>({
+      fullname: "",
+      email: "",
+      age: "",
+      password: "",
+      cpassword: "",
+      file_loc: "",
+      link: "",
+      disabilities: []
   });
+
+  const handleSignUpChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSignUpData({ ...signUpData, [event.target.name]: event.target.value });
+  };
 
   const handleTabClick = (tab: 'employee' | 'employer') => {
     setActiveTab(tab);
@@ -33,14 +45,38 @@ const SignUp = () => {
     }
   };
 
-  const handleEmployeeSubmit = () => {
-    setIsModalOpen(true);
+  const handleEmployeeSubmit = async() => {
+    try {
+      const response = await axios.post(serverUrl + "signup", signUpData);
+      if(response.data.status){
+        setIsModalOpen(true);
+      }else{
+        console.log("Unable to sign up. Please try again.");
+      }
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const handleDisabilityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
-    setDisabilities((prev) => ({ ...prev, [name]: checked }));
+  
+    setSignUpData((prevSignUpData) => {
+      let updatedDisabilities = [...prevSignUpData.disabilities];
+  
+      if (checked) {
+        updatedDisabilities.push(name);
+      } else {
+        updatedDisabilities = updatedDisabilities.filter((disability) => disability !== name);
+      }
+  
+      return {
+        ...prevSignUpData,
+        disabilities: updatedDisabilities, // Update disabilities in the state
+      };
+    });
   };
+  
 
   const handleNext = () => {
     setIsModalOpen(false);
@@ -80,32 +116,47 @@ const SignUp = () => {
               <input
                 type="text"
                 placeholder="Full Name"
+                name="fullname"
+                value={signUpData.fullname}
+                onChange={handleSignUpChange}
                 className="w-full p-2 border border-gray-300 rounded"
+                required
               />
               <input
                 type="email"
                 placeholder="Email"
+                name="email"
+                value={signUpData.email}
+                onChange={handleSignUpChange}
                 className="w-full p-2 border border-gray-300 rounded"
+                required
               />
               <input
                 type="number"
                 placeholder="Age"
+                name="age"
+                value={signUpData.age}
+                onChange={handleSignUpChange}
                 className="w-full p-2 border border-gray-300 rounded"
+                required
               />
               <input
                 type="password"
                 placeholder="Password"
+                name="password"
+                value={signUpData.password}
+                onChange={handleSignUpChange}
                 className="w-full p-2 border border-gray-300 rounded"
+                required
               />
                <input
                 type="password"
                 placeholder="Confirm Password"
+                name="cpassword"
+                value={signUpData.cpassword}
+                onChange={handleSignUpChange}
                 className="w-full p-2 border border-gray-300 rounded"
-              />
-               <input
-                type="text"
-                placeholder="Disability"
-                className="w-full p-2 border border-gray-300 rounded"
+                required
               />
             
               <div className="flex flex-col items-center space-y-2">
@@ -195,7 +246,7 @@ const SignUp = () => {
                     type="checkbox"
                     id="visual"
                     name="visual"
-                    checked={disabilities.visual}
+                    checked={signUpData.disabilities.includes("Visual Impairment")}
                     onChange={handleDisabilityChange}
                     className="mr-2"
                   />
@@ -206,7 +257,7 @@ const SignUp = () => {
                     type="checkbox"
                     id="hearing"
                     name="hearing"
-                    checked={disabilities.hearing}
+                    checked={signUpData.disabilities.includes("Hearing Impairment")}
                     onChange={handleDisabilityChange}
                     className="mr-2"
                   />
@@ -217,7 +268,7 @@ const SignUp = () => {
                     type="checkbox"
                     id="mobility"
                     name="mobility"
-                    checked={disabilities.mobility}
+                    checked={signUpData.disabilities.includes("Mobility Impairment")}
                     onChange={handleDisabilityChange}
                     className="mr-2"
                   />
@@ -228,7 +279,7 @@ const SignUp = () => {
                     type="checkbox"
                     id="cognitive"
                     name="cognitive"
-                    checked={disabilities.cognitive}
+                    checked={signUpData.disabilities.includes("Cognitive Impairment")}
                     onChange={handleDisabilityChange}
                     className="mr-2"
                   />
@@ -239,7 +290,7 @@ const SignUp = () => {
                     type="checkbox"
                     id="speech"
                     name="speech"
-                    checked={disabilities.speech}
+                    checked={signUpData.disabilities.includes("Speech Impairment")}
                     onChange={handleDisabilityChange}
                     className="mr-2"
                   />
@@ -250,7 +301,7 @@ const SignUp = () => {
                     type="checkbox"
                     id="others"
                     name="others"
-                    checked={disabilities.others}
+                    checked={signUpData.disabilities.includes("Others")}
                     onChange={handleDisabilityChange}
                     className="mr-2"
                   />
