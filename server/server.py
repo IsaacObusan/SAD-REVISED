@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import pymysql, hashlib
 from flask_cors import CORS
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)  # This will enable CORS for all routes
@@ -12,6 +13,10 @@ mysql_config = {
     'password': '',
     'database': 'jc_db'
 }
+
+def get_current_date():
+    current_date = datetime.now().strftime('%Y-%m-%d')
+    return current_date
 
 def sha256(password):
     return hashlib.sha256(password.encode('utf-8')).hexdigest()
@@ -26,28 +31,28 @@ def get_db_connection():
     )
     return connection
 
-@app.route("/insert", methods=["POST"])
+@app.route("/apply", methods=["POST"])
 def insertData():
     try:
-        # Get data from the JSON request
         data = request.get_json()
-        name = data['name']
-        age = data['age']
+        _id = data['id']
+        title = data['title']
+        content = data['content']
 
         # Create a connection to the database
         connection = get_db_connection()
         cursor = connection.cursor()
 
         # Insert the data into MySQL
-        query = "INSERT INTO your_table_name (name, age) VALUES (%s, %s)"
-        cursor.execute(query, (name, age))
+        query = "INSERT INTO application (application_title, application_content, application_date, applicant) VALUES (%s, %s,%s,%s)"
+        cursor.execute(query, (title, content, get_current_date(), _id))
         connection.commit()
 
         # Close the connection
         cursor.close()
         connection.close()
 
-        return jsonify({"message": "Data inserted successfully"}), 201
+        return jsonify({"remarks": "success"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
@@ -101,7 +106,7 @@ def deleteData():
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
-@app.route("/retrieve", methods=["GET"])
+@app.route("/retrieve_job", methods=["GET"])
 def retrieveData():
     try:
         # Create a connection to the database
@@ -109,7 +114,7 @@ def retrieveData():
         cursor = connection.cursor()
 
         # Retrieve data from MySQL
-        query = "SELECT * FROM your_table_name"
+        query = "SELECT job_name, job_desc FROM job_hiring"
         cursor.execute(query)
         result = cursor.fetchall()
 
@@ -118,7 +123,7 @@ def retrieveData():
         connection.close()
 
         # Return the retrieved data as a JSON response
-        data = [{"id": row[0], "name": row[1], "age": row[2]} for row in result]
+        data = [{"jobName": row[0], "jobDesc": row[1]} for row in result]
         return jsonify(data), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
@@ -159,7 +164,7 @@ def login():
 
         #Get applicant account
         cursor2 = connection.cursor()
-        query2 = "SELECT * FROM applicant_account WHERE email = %s AND password = %s"
+        query2 = "SELECT * FROM applicant_account a JOIN applicant b ON a.applicant_acc_id = b.applicant_id WHERE a.email = %s AND a.password = %s"
         cursor2.execute(query2, (email, hashed_password))
 
         result = cursor.fetchone()
@@ -171,7 +176,7 @@ def login():
         elif result1:
             return jsonify({"role": "employer"})
         elif result2:
-            return jsonify({"role": "applicant"})
+            return jsonify({"role": "applicant", "id": result2[0],"name": result2[8]})
         else:
             return jsonify({"code": 401})
 

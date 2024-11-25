@@ -14,6 +14,7 @@ const Login: React.FC = () => {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
   };
+  
 
   const handleLogin = async(e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +37,8 @@ const Login: React.FC = () => {
       if(response.data.role == "admin"){
 
       }else if(response.data.role == "applicant"){
+        localStorage.setItem("id", response.data.id);
+        localStorage.setItem("accountName", response.data.name);
         navigate('/employee-landing');
       }else if(response.data.role == "employer"){
         navigate('/employer-landing');
