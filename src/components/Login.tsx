@@ -3,6 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import Logo from './Logoo.png'; // Import the logo
 import axios from 'axios';
 
+// Define the response data interface
+interface LoginResponse {
+  role: 'admin' | 'applicant' | 'employer';
+}
+
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,26 +21,31 @@ const Login: React.FC = () => {
   };
   
 
-  const handleLogin = async(e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    try{
-      if (!validateEmail(email)) {
-        setError('Please enter a valid email address');
-        return;
-      }
-  
-      if (password.length < 6) {
-        setError('Password must be at least 6 characters');
-        return;
-      }
 
-      const response = await axios.post(
-         serverUrl + "login",
-        {email: email, password: password},
+    // Validate email and password
+    if (!validateEmail(email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters');
+      return;
+    }
+
+    try {
+      // Send login request with typed response
+      const response = await axios.post<LoginResponse>(
+        `${serverUrl}login`,
+        { email, password }
       );
 
-      if(response.data.role == "admin"){
+      // Handle role-based navigation
+      const { role } = response.data;
 
+<<<<<<< HEAD
       }else if(response.data.role == "applicant"){
         localStorage.setItem("id", response.data.id);
         localStorage.setItem("accountName", response.data.name);
@@ -44,9 +54,21 @@ const Login: React.FC = () => {
         navigate('/employer-landing');
       }else{
         console.log("Account not Found");
+=======
+      if (role === 'admin') {
+        navigate('/admin'); // Navigate to Admin page
+      } else if (role === 'applicant') {
+        navigate('/employee-landing'); // Navigate to Employee Landing page
+      } else if (role === 'employer') {
+        navigate('/employer-landing'); // Navigate to Employer Lanpmnding page
+      } else {
+        setError('Account not found or invalid role');
+>>>>>>> 14e5e124da7f1a6ac65fd04fa29f64cf2e9276d1
       }
-    }catch(e){
-      console.log(e);
+    } catch (e: any) {
+      // Handle Axios error
+      console.error(e);
+      setError('An error occurred. Please try again.');
     }
   };
 
@@ -64,7 +86,9 @@ const Login: React.FC = () => {
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              Email
+            </label>
             <input
               type="email"
               id="email"
@@ -76,7 +100,9 @@ const Login: React.FC = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              Password
+            </label>
             <input
               type="password"
               id="password"
