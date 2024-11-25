@@ -26,7 +26,10 @@ const Login: React.FC = () => {
       return;
     }
 
-    if (email === 'employee@example.com' && password === 'employee123') {
+    // Add admin login check
+    if (email === 'admin@example.com' && password === 'admin123') {
+      navigate('/admin'); // Navigate to Admin page
+    } else if (email === 'employee@example.com' && password === 'employee123') {
       navigate('/employee-landing');
     } else if (email === 'employer@example.com' && password === 'employer123') {
       navigate('/employer-landing');
