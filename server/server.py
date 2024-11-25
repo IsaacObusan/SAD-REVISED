@@ -118,5 +118,14 @@ def retrieveData():
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
+
+@app.route("/signup", methods=["POST"])
+def signup():
+    pass
+
+@app.route("/login", methods=["POST"])
+def login():
+    pass
+
 if __name__ == "__main__":
     app.run(debug=True)
