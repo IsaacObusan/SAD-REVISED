@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Logo from './Logoo.png'; // Import the logo
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState(''); // Changed 'username' to 'email'
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('');
   const [error, setError] = useState(''); // State for handling error messages
   const navigate = useNavigate();
 
@@ -18,11 +17,6 @@ const Login: React.FC = () => {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!role) {
-      setError('Please select a role (Employee or Employer)');
-      return;
-    }
-
     if (!validateEmail(email)) {
       setError('Please enter a valid email address');
       return;
@@ -34,9 +28,9 @@ const Login: React.FC = () => {
     }
 
     // Simulate login verification
-    if (email === 'employee@example.com' && password === 'employee123' && role === 'employee') {
+    if (email === 'employee@example.com' && password === 'employee123') {
       navigate('/employee-landing');
-    } else if (email === 'employer@example.com' && password === 'employer123' && role === 'employer') {
+    } else if (email === 'employer@example.com' && password === 'employer123') {
       navigate('/employer-landing');
     } else {
       setError('Invalid email or password');
@@ -78,35 +72,6 @@ const Login: React.FC = () => {
               required
               className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-          </div>
-
-          {/* Role selection */}
-          <div className="mt-4">
-            <p className="mb-2 text-sm font-medium text-gray-700">Select your role:</p>
-            <div className="flex space-x-4">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="role"
-                  value="employee"
-                  checked={role === 'employee'}
-                  onChange={(e) => setRole(e.target.value)}
-                  className="mr-2"
-                />
-                Employee
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="role"
-                  value="employer"
-                  checked={role === 'employer'}
-                  onChange={(e) => setRole(e.target.value)}
-                  className="mr-2"
-                />
-                Employer
-              </label>
-            </div>
           </div>
 
           <button
