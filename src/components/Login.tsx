@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from './Logoo.png'; // Import the logo
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import Font Awesome icons
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(''); // State for handling error messages
+  const [showPassword, setShowPassword] = useState(false); // State for showing/hiding password
   const navigate = useNavigate();
 
   const validateEmail = (email: string) => {
-    // Simple email validation regex
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
   };
@@ -27,7 +28,6 @@ const Login: React.FC = () => {
       return;
     }
 
-    // Simulate login verification
     if (email === 'employee@example.com' && password === 'employee123') {
       navigate('/employee-landing');
     } else if (email === 'employer@example.com' && password === 'employer123') {
@@ -62,16 +62,22 @@ const Login: React.FC = () => {
             />
           </div>
 
-          <div>
+          <div className="relative">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               className="w-full px-4 py-2 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+            <span
+              className="absolute top-9 right-4 text-gray-600 cursor-pointer hover:text-gray-800"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
 
           <button
@@ -84,9 +90,9 @@ const Login: React.FC = () => {
 
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
-            Don't have an account? 
-            <span 
-              onClick={() => navigate('/sign-up')} 
+            Don't have an account?{' '}
+            <span
+              onClick={() => navigate('/sign-up')}
               className="text-teal-500 cursor-pointer hover:underline"
             >
               Sign up
