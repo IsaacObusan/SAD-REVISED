@@ -1,15 +1,20 @@
 from flask import Flask, request, jsonify
-import pymysql
+import pymysql, hashlib
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)  # This will enable CORS for all routes
 
 # MySQL connection details
 mysql_config = {
     'host': 'localhost',
-    'user': 'your_username',
-    'password': 'your_password',
-    'database': 'your_database'
+    'user': 'root',
+    'password': '',
+    'database': 'jc_db'
 }
+
+def sha256(password):
+    return hashlib.sha256(password.encode('utf-8')).hexdigest()
 
 # Function to create a MySQL connection
 def get_db_connection():
@@ -92,7 +97,7 @@ def deleteData():
         cursor.close()
         connection.close()
 
-        return jsonify({"message": "Data deleted successfully"}), 200
+        return jsonify({"message": "Data deleted successfully"})
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 
@@ -121,11 +126,57 @@ def retrieveData():
 
 @app.route("/signup", methods=["POST"])
 def signup():
-    pass
+    try:
+        pass
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 @app.route("/login", methods=["POST"])
 def login():
-    pass
+    try:
+        connection = get_db_connection()
+        data = request.get_json()
+        email = data["email"]
+        password = data["password"]
+
+        # Hash the input password
+        hashed_password = sha256(password)
+
+        #Get admin account
+        cursor = connection.cursor()
+        query = "SELECT * FROM admin_account WHERE admin_email = %s AND admin_password = %s"
+        cursor.execute(query, (email, hashed_password))
+
+        #Get employer account
+        cursor1 = connection.cursor()
+        query1 = "SELECT * FROM employer_account WHERE email = %s AND password = %s"
+        cursor1.execute(query1, (email, hashed_password))
+
+        #Get employer account
+        cursor1 = connection.cursor()
+        query1 = "SELECT * FROM employer_account WHERE email = %s AND password = %s"
+        cursor1.execute(query1, (email, hashed_password))
+
+        #Get applicant account
+        cursor2 = connection.cursor()
+        query2 = "SELECT * FROM applicant_account WHERE email = %s AND password = %s"
+        cursor2.execute(query2, (email, hashed_password))
+
+        result = cursor.fetchone()
+        result1 = cursor1.fetchone()
+        result2 = cursor2.fetchone()
+
+        if result:
+            return jsonify({"role": "admin"})
+        elif result1:
+            return jsonify({"role": "employer"})
+        elif result2:
+            return jsonify({"role": "applicant"})
+        else:
+            return jsonify({"code": 401})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 if __name__ == "__main__":
     app.run(debug=True)
