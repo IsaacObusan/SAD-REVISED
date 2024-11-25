@@ -49,7 +49,7 @@ const Login: React.FC = () => {
       } else if (role === 'applicant') {
         navigate('/employee-landing'); // Navigate to Employee Landing page
       } else if (role === 'employer') {
-        navigate('/employer-landing'); // Navigate to Employer Landing page
+        navigate('/employer-landing'); // Navigate to Employer Lanpmnding page
       } else {
         setError('Account not found or invalid role');
       }
