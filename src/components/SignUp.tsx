@@ -88,18 +88,26 @@ const SignUp = () => {
                 className="w-full p-2 border border-gray-300 rounded"
               />
               <input
+                type="number"
+                placeholder="Age"
+                className="w-full p-2 border border-gray-300 rounded"
+              />
+              <input
                 type="password"
                 placeholder="Password"
                 className="w-full p-2 border border-gray-300 rounded"
               />
-              <textarea
-                placeholder="Skills"
+               <input
+                type="password"
+                placeholder="Confirm Password"
                 className="w-full p-2 border border-gray-300 rounded"
               />
-              <textarea
-                placeholder="Experience"
+               <input
+                type="text"
+                placeholder="Disability"
                 className="w-full p-2 border border-gray-300 rounded"
               />
+            
               <div className="flex flex-col items-center space-y-2">
                 {/* File Input Trigger */}
                 <label
@@ -139,8 +147,18 @@ const SignUp = () => {
             <h2 className="text-xl font-bold text-center">Employer Sign-Up</h2>
             <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
               <input
+                type="text"
+                placeholder="Name"
+                className="w-full p-2 border border-gray-300 rounded"
+              />
+              <input
                 type="email"
                 placeholder="Email"
+                className="w-full p-2 border border-gray-300 rounded"
+              />
+              <input
+                type="number"
+                placeholder="Age"
                 className="w-full p-2 border border-gray-300 rounded"
               />
               <input
@@ -148,24 +166,14 @@ const SignUp = () => {
                 placeholder="Password"
                 className="w-full p-2 border border-gray-300 rounded"
               />
-              <input
-                type="text"
-                placeholder="Contact Person"
-                className="w-full p-2 border border-gray-300 rounded"
-              />
-              <input
-                type="tel"
-                placeholder="Phone Number"
-                className="w-full p-2 border border-gray-300 rounded"
-              />
-              <input
-                type="url"
-                placeholder="Company Website"
+               <input
+                type="password"
+                placeholder="Confirm Password"
                 className="w-full p-2 border border-gray-300 rounded"
               />
               <input
                 type="text"
-                placeholder="Industry"
+                placeholder="Company Name"
                 className="w-full p-2 border border-gray-300 rounded"
               />
               <button className="w-full py-2 text-white bg-teal-500 rounded hover:bg-green-600">Sign Up</button>
