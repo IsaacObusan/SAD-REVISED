@@ -1,9 +1,22 @@
-from flask import Flask, request, jsonify
-import pymysql, hashlib
+from flask import Flask, request, jsonify, session
+import pymysql, hashlib, redis, os
 from flask_cors import CORS
 from datetime import datetime
+from flask_session import Session
+
 
 app = Flask(__name__)
+
+app.secret_key = os.getenv('FLASK_SECRET_KEY', os.urandom(24))
+
+app.config['SESSION_TYPE'] = 'redis'
+app.config['SESSION_PERMANENT'] = False
+app.config['SESSION_USE_SIGNER'] = True
+app.config['SESSION_KEY_PREFIX'] = 'jobCompass_'
+app.config['SESSION_REDIS'] = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+# Initialize Session extension
+Session(app)
 CORS(app)  # This will enable CORS for all routes
 
 # MySQL connection details
@@ -13,6 +26,15 @@ mysql_config = {
     'password': '',
     'database': 'jc_db'
 }
+
+def set_session(email):
+    session['gmail'] = request.args.get('gmail', email)
+    return f'Session set for {session["email"]}'
+
+def get_session(email):
+    if email in session:
+        return f'Logged in as {session[email]}'
+    return 'You are not logged in'
 
 def get_current_date():
     current_date = datetime.now().strftime('%Y-%m-%d')
@@ -172,16 +194,24 @@ def login():
         result2 = cursor2.fetchone()
 
         if result:
+            set_session(email)
             return jsonify({"role": "admin"})
         elif result1:
+            set_session(email)
             return jsonify({"role": "employer"})
         elif result2:
+            set_session(email)
             return jsonify({"role": "applicant", "id": result2[0],"name": result2[8]})
         else:
             return jsonify({"code": 401})
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+
+@app.route('/logout')
+def logout():
+    session.pop('gmail', None)
+    return 'You have been logged out'
 
 if __name__ == "__main__":
     app.run(debug=True)
