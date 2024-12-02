@@ -1,10 +1,29 @@
-from flask import Flask, request, jsonify
-import pymysql, hashlib
+from flask import Flask, request, jsonify, session
+import pymysql, hashlib, os
 from flask_cors import CORS
 from datetime import datetime
+from flask_session import Session
+
 
 app = Flask(__name__)
-CORS(app)  # This will enable CORS for all routes
+
+from flask_session import Session
+from datetime import timedelta
+
+app.config['SESSION_PERMANENT'] = True
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=5)
+
+# The maximum number of items the session stores 
+# before it starts deleting some, default 500
+app.config['SESSION_FILE_THRESHOLD'] = 100  
+
+app.config['SECRET_KEY'] = os.urandom(24).hex()
+
+sess = Session()
+sess.init_app(app)
+
+CORS(app,  supports_credentials=True)  # This will enable CORS for all routes
 
 # MySQL connection details
 mysql_config = {
@@ -13,6 +32,9 @@ mysql_config = {
     'password': '',
     'database': 'jc_db'
 }
+
+def set_session(email):
+    session["email"] = email
 
 def get_current_date():
     current_date = datetime.now().strftime('%Y-%m-%d')
@@ -172,16 +194,25 @@ def login():
         result2 = cursor2.fetchone()
 
         if result:
+            set_session(email)
             return jsonify({"role": "admin"})
         elif result1:
+            set_session(email)
             return jsonify({"role": "employer"})
         elif result2:
+            set_session(email)
             return jsonify({"role": "applicant", "id": result2[0],"name": result2[8]})
         else:
             return jsonify({"code": 401})
 
     except Exception as e:
+        print(str(e))
         return jsonify({"error": str(e)}), 400
+
+@app.route('/logout')
+def logout():
+    session.pop('email', None)
+    return 'You have been logged out'
 
 if __name__ == "__main__":
     app.run(debug=True)
