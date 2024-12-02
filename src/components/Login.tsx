@@ -14,7 +14,6 @@ const Login: React.FC = () => {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
   };
-  
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,8 +30,8 @@ const Login: React.FC = () => {
     }
 
     try {
-      // Send login request with typed response
-      const response = await axios.post(serverUrl + "login", {email: email, password: password});
+      // Send login request
+      const response = await axios.post(serverUrl + "login", { email, password });
 
       if (response.data.role === 'admin') {
         navigate('/admin'); // Navigate to Admin page
@@ -41,7 +40,7 @@ const Login: React.FC = () => {
         localStorage.setItem("accountName", response.data.name);
         navigate('/employee-landing'); // Navigate to Employee Landing page
       } else if (response.data.role === 'employer') {
-        navigate('/employer-landing'); // Navigate to Employer Lanpmnding page
+        navigate('/employer-landing'); // Navigate to Employer Landing page
       } else {
         setError('Invalid Credentials');
       }
@@ -60,9 +59,6 @@ const Login: React.FC = () => {
           <img src={Logo} alt="Logo" className="h-20" />
         </div>
         <h2 className="mb-6 text-2xl font-semibold text-center">Login</h2>
-
-        {/* Error message */}
-        {error && <p className="mb-4 text-center text-red-500">{error}</p>}
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
@@ -99,6 +95,9 @@ const Login: React.FC = () => {
           >
             Login
           </button>
+
+          {/* Error message at the bottom */}
+          {error && <p className="mt-4 text-center text-red-500">{error}</p>}
         </form>
 
         <div className="mt-6 text-center">
