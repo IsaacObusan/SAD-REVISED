@@ -3,6 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import Logo from './Logoo.png'; // Import the logo
 import axios from 'axios';
 
+// Define the structure of the login response
+interface LoginResponse {
+  role: string;
+  id?: string; // Optional in case it's not returned for some roles
+  name?: string; // Optional for the same reason
+}
+
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,14 +37,14 @@ const Login: React.FC = () => {
     }
 
     try {
-      // Send login request
-      const response = await axios.post(serverUrl + "login", { email, password });
+      // Send login request with typed response
+      const response = await axios.post<LoginResponse>(`${serverUrl}login`, { email, password });
 
       if (response.data.role === 'admin') {
         navigate('/admin'); // Navigate to Admin page
       } else if (response.data.role === 'applicant') {
-        localStorage.setItem("id", response.data.id);
-        localStorage.setItem("accountName", response.data.name);
+        localStorage.setItem('id', response.data.id || '');
+        localStorage.setItem('accountName', response.data.name || '');
         navigate('/employee-landing'); // Navigate to Employee Landing page
       } else if (response.data.role === 'employer') {
         navigate('/employer-landing'); // Navigate to Employer Landing page

@@ -23,20 +23,25 @@ const EmployeeLandingPage = () => {
 
   const retrieveData = async () => {
     try {
-      const response = await axios.get(serverUrl + "retrieve_job");
-      setJobDetails(response.data);
+      // Explicitly typing the response to match the expected jobHiring array
+      const response = await axios.get<jobHiring[]>(serverUrl + "retrieve_job");
+      setJobDetails(response.data); // Now TypeScript knows the type of response.data
     } catch (e) {
       console.log(e);
     }
   };
+  
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedJobTitle, setSelectedJobTitle] = useState<string>(''); // Track the selected job title
 
   const apply = async () => {
-    // Access the current value when submitting
     try {
-      const response = await axios.post(serverUrl + "apply", { id: accountId, title: "Job Application for " + selectedJobTitle, content: letter });
+      const response = await axios.post<{ remarks: string }>(serverUrl + "apply", {
+        id: accountId,
+        title: "Job Application for " + selectedJobTitle,
+        content: letter,
+      });
       if (response.data.remarks === "success") {
         alert("Application has been submitted");
       } else {
@@ -48,7 +53,7 @@ const EmployeeLandingPage = () => {
       console.log(error);
     }
   };
-
+  
   const toggleModal = (jobTitle?: string) => {
     setSelectedJobTitle(jobTitle || ''); // Set the job title when the modal is opened
     setIsModalVisible(!isModalVisible);

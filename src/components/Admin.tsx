@@ -65,32 +65,158 @@ const Admin: React.FC = () => {
         </div>
       </header>
 
-      {/* Main Content */}
-      <div className="px-8 py-6">
+        {/* Main Content */}
+        <div className="px-8 py-6">
         <h2 className="text-2xl font-semibold">{activeTab.replace('-', ' ').toUpperCase()}</h2>
         {/* Content based on active tab */}
         {activeTab === 'job-offerings' && (
           <div>
             {/* Job Offerings Content */}
-            <p>This is the Job Offerings section</p>
+            <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+              <thead>
+                <tr className="text-left bg-gray-200">
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Job Title</th>
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Description</th>
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Location</th>
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Job Type</th>
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Posted Date</th>
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* Example Job Offerings Data */}
+                <tr className="border-b">
+                  <td className="py-4 px-6 text-sm text-gray-800">Software Engineer</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">Develop and maintain software applications.</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">Remote</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">Full-time</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">01 Dec 2024</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">
+                    <button className="bg-teal-500 text-white px-4 py-2 rounded-md">Edit</button>
+                    <button className="bg-red-500 text-white px-4 py-2 rounded-md ml-2">Delete</button>
+                  </td>
+                </tr>
+                <tr className="border-b">
+                  <td className="py-4 px-6 text-sm text-gray-800">Marketing Manager</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">Lead marketing campaigns and strategies.</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">Cebu City</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">Full-time</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">20 Nov 2024</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">
+                    <button className="bg-teal-500 text-white px-4 py-2 rounded-md">Edit</button>
+                    <button className="bg-red-500 text-white px-4 py-2 rounded-md ml-2">Delete</button>
+                  </td>
+                </tr>
+                {/* More rows can be added dynamically */}
+              </tbody>
+            </table>
           </div>
         )}
-        {activeTab === 'application' && (
+   {activeTab === 'application' && (
           <div>
             {/* Application Content */}
-            <p>This is the Application section</p>
+            <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+              <thead>
+                <tr className="text-left bg-gray-200">
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Applicant Name</th>
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Email</th>
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Job Title</th>
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Status</th>
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Applied Date</th>
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* Example Application Data */}
+                <tr className="border-b">
+                  <td className="py-4 px-6 text-sm text-gray-800">John Doe</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">john.doe@email.com</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">Software Engineer</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">Pending</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">02 Dec 2024</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded-md">View</button>
+                    <button className="bg-green-500 text-white px-4 py-2 rounded-md ml-2">Mark as Hired</button>
+                    <button className="bg-red-500 text-white px-4 py-2 rounded-md ml-2">Delete</button>
+                  </td>
+                </tr>
+                <tr className="border-b">
+                  <td className="py-4 px-6 text-sm text-gray-800">Jane Smith</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">jane.smith@email.com</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">Marketing Manager</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">Interviewed</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">25 Nov 2024</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded-md">View</button>
+                    <button className="bg-green-500 text-white px-4 py-2 rounded-md ml-2">Mark as Hired</button>
+                    <button className="bg-red-500 text-white px-4 py-2 rounded-md ml-2">Delete</button>
+                  </td>
+                </tr>
+                {/* More rows can be added dynamically */}
+              </tbody>
+            </table>
           </div>
         )}
-        {activeTab === 'hiring-notice' && (
+           {activeTab === 'hiring-notice' && (
           <div>
             {/* Hiring Notice Content */}
-            <p>This is the Hiring Notice section</p>
+            <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+              <thead>
+                <tr className="text-left bg-gray-200">
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Notice Title</th>
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Job Title</th>
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Description</th>
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Post Date</th>
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* Example Hiring Notice Data */}
+                <tr className="border-b">
+                  <td className="py-4 px-6 text-sm text-gray-800">Hiring for Software Engineers</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">Software Engineer</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">Looking for talented software engineers for a tech startup.</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">25 Nov 2024</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">
+                    <button className="bg-teal-500 text-white px-4 py-2 rounded-md">Edit</button>
+                    <button className="bg-red-500 text-white px-4 py-2 rounded-md ml-2">Delete</button>
+                  </td>
+                </tr>
+                {/* More rows can be added dynamically */}
+              </tbody>
+            </table>
           </div>
         )}
-        {activeTab === 'portfolio' && (
+   {activeTab === 'portfolio' && (
           <div>
             {/* Portfolio Content */}
-            <p>This is the Portfolio section</p>
+            <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+              <thead>
+                <tr className="text-left bg-gray-200">
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Image/Thumbnail</th>
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Portfolio Title</th>
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Description</th>
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Date Added</th>
+                  <th className="py-3 px-6 text-sm font-semibold text-gray-700">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* Example Portfolio Data */}
+                <tr className="border-b">
+                  <td className="py-4 px-6 text-sm text-gray-800">
+                    <img src="https://via.placeholder.com/150" alt="Portfolio Thumbnail" className="w-20 h-20 object-cover rounded-md" />
+                  </td>
+                  <td className="py-4 px-6 text-sm text-gray-800">Tech Startup Portfolio</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">Showcasing a collection of software engineering projects.</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">01 Dec 2024</td>
+                  <td className="py-4 px-6 text-sm text-gray-800">
+                    <button className="bg-teal-500 text-white px-4 py-2 rounded-md">Edit</button>
+                    <button className="bg-red-500 text-white px-4 py-2 rounded-md ml-2">Delete</button>
+                  </td>
+                </tr>
+                {/* More rows can be added dynamically */}
+              </tbody>
+            </table>
           </div>
         )}
       </div>
