@@ -6,8 +6,27 @@ interface jobHiring {
   jobDesc: string;
 }
 
+const tutorials = [
+  { 
+    title: "Tutorial 1", 
+    videoUrl: "/tutorial1.mp4", 
+    thumbnail: "/tutorial1-thumbnail.jpg" 
+  },
+  { 
+    title: "Tutorial 2", 
+    videoUrl: "/tutorial2.mp4", 
+    thumbnail: "/tutorial2-thumbnail.jpg" 
+  },
+  { 
+    title: "Tutorial 3", 
+    videoUrl: "/tutorial3.mp4", 
+    thumbnail: "/tutorial3-thumbnail.jpg" 
+  },
+];
+
 const EmployeeLandingPage = () => {
-  const [activeTab, setActiveTab] = useState('Home'); // State for active tab
+  const [activeTab, setActiveTab] = useState("Home");
+  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0); // State for slideshow
   const accountName = localStorage.getItem("accountName");
   const accountId = localStorage.getItem("id");
@@ -23,13 +42,23 @@ const EmployeeLandingPage = () => {
 
   const retrieveData = async () => {
     try {
-      // Explicitly typing the response to match the expected jobHiring array
-      const response = await axios.get<jobHiring[]>(serverUrl + "retrieve_job");
-      setJobDetails(response.data); // Now TypeScript knows the type of response.data
+      const response = await fetch(serverUrl + "retrieve_job");
+      const data = await response.json();  // Assuming the response is JSON
+      console.log("Data from fetch:", data);
+      if (Array.isArray(data)) {
+        setJobDetails(data);
+      } else {
+        console.error("Expected an array, but got:", data);
+      }
     } catch (e) {
       console.log(e);
     }
   };
+  
+  
+  
+  
+  
   
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -79,9 +108,9 @@ const EmployeeLandingPage = () => {
         return (
           <>
             {/* Slideshow Section */}
-            <div className="relative mt-40 w-full max-w-4xl mx-auto overflow-hidden">
+            <div className="relative w-full max-w-4xl mx-auto mt-40 overflow-hidden">
               {/* Background with gradient animation */}
-              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600 animate-gradient-blur z-0" />
+              <div className="absolute top-0 left-0 z-0 w-full h-full bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600 animate-gradient-blur" />
 
               {/* Slides */}
               <div
@@ -105,7 +134,7 @@ const EmployeeLandingPage = () => {
               </div>
 
               {/* Slide indicators */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+              <div className="absolute flex gap-2 transform -translate-x-1/2 bottom-4 left-1/2">
                 {slides.map((_, index) => (
                   <button
                     key={index}
@@ -134,8 +163,8 @@ const EmployeeLandingPage = () => {
               </div>
             </div>
 
-            {/* Job Cards Section */}
-            <div className="flex flex-wrap justify-center gap-4 mt-8">
+{/* Job Cards Section */}
+<div className="flex flex-wrap justify-center gap-4 mt-8">
               {jobDetails.map((job, index) => (
                 <div
                   key={index}
@@ -151,10 +180,59 @@ const EmployeeLandingPage = () => {
                 </div>
               ))}
             </div>
+
           </>
         );
-      case 'Tutorials':
-        break;
+        case "Tutorials":
+          return (
+            <div className="p-4">
+              <h2 className="text-lg font-bold text-gray-600 md:text-2xl">Tutorials</h2>
+              <div className="grid grid-cols-1 gap-6 mt-8 sm:grid-cols-2 md:grid-cols-3">
+                {tutorials.map((tutorial, index) => (
+                  <div key={index} className="overflow-hidden bg-white rounded-lg shadow-lg">
+                    <img
+                      src={tutorial.thumbnail}
+                      alt={tutorial.title}
+                      className="object-cover w-full h-48"
+                    />
+                    <div className="p-4">
+                      <h3 className="text-xl font-semibold text-teal-600">{tutorial.title}</h3>
+                      <div className="flex justify-between mt-4">
+                        <button
+                          className="w-full px-4 py-2 text-white bg-teal-500 rounded-lg hover:bg-teal-600"
+                          onClick={() => setSelectedVideo(tutorial.videoUrl)}
+                        >
+                          Watch
+                        </button>
+                      </div>
+                      <div className="mt-2">
+                        <button
+                          className="w-full px-4 py-2 text-white bg-teal-500 rounded-lg hover:bg-teal-600"
+                          onClick={() => {
+                            const a = document.createElement("a");
+                            a.href = tutorial.videoUrl;
+                            a.download = tutorial.videoUrl.split("/").pop() || "tutorial.mp4";
+                            a.click();
+                          }}
+                        >
+                          Download
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {selectedVideo && (
+                <div className="mt-8">
+                  <h3 className="text-lg font-bold text-gray-600 md:text-2xl">Now Playing:</h3>
+                  <video className="w-full mt-4 rounded-lg" controls>
+                    <source src={selectedVideo} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              )}
+            </div>
+          );
       case 'Contact':
         return <div className="p-4 md:p-8">Get in touch with us via the Contact section.</div>;
       default:
@@ -205,11 +283,14 @@ const EmployeeLandingPage = () => {
             <img
               src="/profile.png"
               alt="Profile"
-              className="object-cover w-full h-full rounded-full border-2 border-teal-500"
+              className="object-cover w-full h-full border-2 border-teal-500 rounded-full"
             />
           </div>
         </div>
       </header>
+
+       
+
 
       {/* Main Content */}
       <main className="flex-1 p-4 mt-20 md:p-8">{renderContent()}</main>
@@ -364,6 +445,7 @@ const Modal: React.FC<{
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onApply: () => void;
 }> = ({ isVisible, onClose, jobTitle, letter, onChange, onApply }) => {
+
   if (!isVisible) return null;
   
   return (
