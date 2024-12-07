@@ -10,6 +10,7 @@ const ErrorPage = React.lazy(() => import('./components/Error'));
 const SignUp = React.lazy(() => import('./components/SignUp')); // Sign-Up page
 const Admin = React.lazy(() => import('./components/Admin'));
 
+
 const LoadingSpinner = () => (
   <div className="flex items-center justify-center h-screen">
     <div className="w-16 h-16 border-4 border-t-4 border-teal-500 rounded-full animate-spin"></div>

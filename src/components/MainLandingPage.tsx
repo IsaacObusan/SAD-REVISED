@@ -160,13 +160,107 @@ const MainLandingPage = () => {
               </div>
             </div>
           );
-      case 'Explore Companies':
-        return <div className="p-4 md:p-8">Explore Companies Page Content</div>;
-      default:
-        return <div className="p-4 md:p-8">Welcome to the Landing Page!</div>;
-    }
-  };
-
+          case 'Explore Companies':
+            return (
+              <div className="flex flex-col items-center justify-center p-8 bg-gray-100">
+                {/* Explore Companies Frame */}
+                <div className="p-8 border-4 border-teal-500 rounded-lg bg-white w-full max-w-4xl">
+                  <h2 className="text-2xl font-bold text-gray-800 text-center">Search Companies</h2>
+                  <p className="mt-4 text-center text-gray-600">
+                    Search for companies that are inclusive and offer opportunities to the PWD community.
+                  </p>
+          
+                  {/* Search Box with Microphone Button on the Right */}
+                  <div className="flex items-center justify-center mt-8">
+                    <input
+                      type="text"
+                      placeholder="Search for companies..."
+                      className="w-full max-w-xs p-2 border border-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    />
+                    <button className="ml-2 p-2 bg-teal-500 rounded-full">
+                      <img src="/Microphone.png" alt="Mic" className="w-6 h-6" />
+                    </button>
+                  </div>
+                </div>
+          
+                {/* Find Employer Cards Section (Outside the Frame) */}
+                <section className="px-4 mt-12 sm:px-8 w-full">
+                  <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Explore Companies</h2>
+                  <div className="flex justify-center gap-4 overflow-x-scroll">
+                    {['Employer 1', 'Employer 2', 'Employer 3', 'Employer 4'].map((employer, index) => (
+                      <div
+                        key={index}
+                        className="flex-shrink-0 p-6 text-white transition-all duration-300 transform rounded-lg shadow-xl w-72 bg-gradient-to-r from-teal-500 to-teal-600 hover:scale-105"
+                      >
+                        {/* Employer Logo */}
+                        <div className="flex justify-center mb-4">
+                          <img
+                            src={`/${employer.toLowerCase().replace(' ', '-')}-logo.png`}
+                            alt={employer}
+                            className="w-16 h-16 rounded-full"
+                          />
+                        </div>
+          
+                        <h3 className="text-2xl font-bold">{employer}</h3>
+                        <p className="mt-2 text-sm">
+                          Discover great job opportunities with {employer}. Join their team and accelerate your career.
+                        </p>
+          
+                        {/* Rating */}
+                        <div className="flex items-center mt-4">
+                          {[1, 2, 3, 4, 5].map((star, idx) => (
+                            <svg
+                              key={idx}
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="currentColor"
+                              className={`w-5 h-5 ${star <= 4 ? 'text-yellow-400' : 'text-gray-300'}`}
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="M8 12.26l3.16 2.09-1.2-4.18L12.97 6h-4.03L7.04 10.17 5.84 14.34 8 12.26z" />
+                            </svg>
+                          ))}
+                        </div>
+          
+                        {/* Explore Button */}
+                        <button className="w-full px-4 py-2 mt-4 text-white border-2 border-white rounded-lg hover:bg-teal-500 hover:text-white">
+                          Explore
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+          
+                  {/* Pagination Section */}
+                  <div className="flex items-center justify-between mt-8">
+                    <button className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600">
+                      Previous
+                    </button>
+          
+                    {/* Page Number Box (Placeholder for number of cards) */}
+                    <div className="flex items-center gap-4">
+                      <span className="text-lg text-gray-600">Page</span>
+                      <input
+                        type="text"
+                        value="1" // Placeholder value, representing the current page or number of cards
+                        className="w-12 p-2 text-center border border-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        disabled
+                      />
+                      <span className="text-lg text-gray-600">of 1</span> {/* Placeholder for total pages */}
+                    </div>
+          
+                    <button className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600">
+                      Next
+                    </button>
+                  </div>
+                </section>
+              </div>
+            );
+          
+          
+          default:
+            return <div className="p-4 md:p-8">Welcome to the Landing Page!</div>;
+        }
+      };
+    
   return (
     <div className="flex flex-col min-h-screen bg-white">
       {/* Header */}
@@ -211,7 +305,7 @@ const MainLandingPage = () => {
   {/* Find Employer Cards Section */}
 {activeTab !== 'Profile' && activeTab !== 'Explore Companies' && (
   <section className="px-4 mt-12 sm:px-8">
-    <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Find Employer</h2>
+    <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Explore Companies</h2>
     <div className="flex justify-center gap-4 overflow-x-scroll">
       {['Employer 1', 'Employer 2', 'Employer 3', 'Employer 4'].map((employer, index) => (
         <div
