@@ -1,1 +1,1 @@
-/// <reference types="vite/client" />
+/// <reference types="http://127.0.0.1:8082" />

@@ -23,7 +23,7 @@ app.config['SECRET_KEY'] = os.urandom(24).hex()
 sess = Session()
 sess.init_app(app)
 
-CORS(app,  supports_credentials=True)  # This will enable CORS for all routes
+CORS(app, supports_credentials=True, origins=["*"]) # This will enable CORS for all routes
 
 # MySQL connection details
 mysql_config = {
@@ -215,4 +215,4 @@ def logout():
     return 'You have been logged out'
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0",port=8082)

@@ -15,7 +15,6 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(''); // State for handling error messages
   const navigate = useNavigate();
-  const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
 
   const validateEmail = (email: string) => {
     const re = /\S+@\S+\.\S+/;
@@ -38,7 +37,7 @@ const Login: React.FC = () => {
 
     try {
       // Send login request with typed response
-      const response = await axios.post<LoginResponse>(`${serverUrl}login`, { email, password });
+      const response = await axios.post<LoginResponse>('http://192.168.1.5:8082/login', { email, password });
 
       if (response.data.role === 'admin') {
         navigate('/admin'); // Navigate to Admin page
@@ -59,12 +58,11 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="p-8 bg-white rounded-lg shadow-lg w-[30rem]">
-        {/* Logo */}
-        <div className="flex justify-center mb-6">
-          <img src={Logo} alt="Logo" className="h-20" />
-        </div>
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+      {/* Logo and Login Card */}
+      <div className="p-8 bg-white rounded-lg shadow-lg w-[30rem] mt-8">
+        <img src={Logo} alt="Logo" className="h-20 mx-auto mb-6" />
+
         <h2 className="mb-6 text-2xl font-semibold text-center">Login</h2>
 
         <form onSubmit={handleLogin} className="space-y-4">
