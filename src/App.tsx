@@ -7,7 +7,7 @@ const Login = React.lazy(() => import('./components/Login'));
 const EmployeeLandingPage = React.lazy(() => import('./components/EmployeeLandingPage'));
 const EmployerLandingPage = React.lazy(() => import('./components/EmployerLandingPage'));
 const ErrorPage = React.lazy(() => import('./components/Error'));
-const SignUp = React.lazy(() => import('./components/SignUp'));
+const SignUp = React.lazy(() => import('./components/SignUp')); // Sign-Up page
 const Admin = React.lazy(() => import('./components/Admin'));
 
 const LoadingSpinner = () => (
@@ -23,7 +23,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<MainLandingPage />} /> {/* Root path shows MainLandingPage */}
           <Route path="/login" element={<Login />} /> {/* Login page */}
-          <Route path="/sign-up" element={<SignUp />} /> {/* Sign-Up page with tab container */}
+          <Route path="/sign-up" element={<SignUp />} /> {/* Sign-Up page */}
           <Route path="/employee-landing" element={<EmployeeLandingPage />} /> {/* Employee landing page */}
           <Route path="/employer-landing" element={<EmployerLandingPage />} /> {/* Employer landing page */}
           <Route path="/admin" element={<Admin />} /> {/* Admin page */}
