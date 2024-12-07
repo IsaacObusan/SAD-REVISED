@@ -12,7 +12,7 @@ const MainLandingPage = () => {
       case 'Job Search':
         return (
           <>
-          {/* Video Section with SignUp Button */}
+ {/* Video Section with SignUp Button */}
 <div className="relative mt-12 w-full h-[500px] flex justify-center items-center overflow-hidden">
   <video
     src="/jobcom.mp4"
@@ -21,14 +21,31 @@ const MainLandingPage = () => {
     muted
     className="object-cover w-full h-full rounded-lg shadow-md"
   ></video>
+
+  {/* Caption on the Left Side and Bigger Font */}
+  <div className="absolute top-9 right-10 text-right text-black bg-opacity-75 py-6 px-12 rounded-lg">
+    <p className="text-3xl font-bold">Find Inclusive Job Opportunities for PWDs</p>
+  </div>
+
   {/* Button to navigate to SignUp */}
   <button
-    onClick={() => navigate('/sign-up')}
-    className="absolute w-1/5 px-4 py-3 text-xl text-black transition-all duration-300 bg-transparent border-2 border-teal-500 rounded-lg right-12 bottom-20 hover:bg-teal-500 hover:text-white hover:border-teal-600"
-  >
-    Sign Up
-  </button>
+  onClick={() => navigate('/sign-up')}
+  className="absolute w-1/5 px-4 py-3 text-xl text-black transition-all duration-300 bg-transparent border-2 border-teal-500 rounded-lg right-12 bottom-32 hover:bg-teal-500 hover:text-white hover:border-teal-600"
+>
+  Sign Up
+</button>
+
+
+  {/* Learn More Button beside Sign Up Button */}
+  <button
+  onClick={() => navigate('/more-info')}
+  className="absolute w-1/5 px-4 py-3 text-xl text-black transition-all duration-300 bg-transparent border-2 border-teal-500 rounded-lg right-12 bottom-10 hover:bg-teal-500 hover:text-white"
+>
+  Learn More
+</button>
+
 </div>
+
 
 
 
