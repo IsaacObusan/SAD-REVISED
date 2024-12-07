@@ -78,8 +78,27 @@ const MainLandingPage = () => {
             </div>
           </>
         );
-      case 'Profile':
-        return <div className="p-4 md:p-8">Your Profile Page Content</div>;
+        case 'Profile':
+          return (
+            <div className="flex items-center justify-center p-8 bg-gray-100">
+              <div className="p-8 border-4 border-teal-500 rounded-lg">
+                <h2 className="text-2xl font-bold text-gray-800 text-center">Your Profile</h2>
+                <p className="mt-4 text-center text-gray-600">
+                  You haven't created your profile yet. Let employers know more about you!
+                </p>
+    
+                {/* Create Profile Button */}
+                <div className="flex justify-center mt-6">
+                  <button
+                    onClick={() => navigate('/create-profile')}
+                    className="px-6 py-2 text-teal-500 border-2 border-teal-500 bg-transparent rounded-lg hover:bg-teal-500 hover:text-white"
+                  >
+                    Create Profile
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
       case 'Explore Companies':
         return <div className="p-4 md:p-8">Explore Companies Page Content</div>;
       default:
