@@ -131,7 +131,7 @@ const MainLandingPage = () => {
   {/* Find Employer Cards Section */}
   {activeTab !== 'Profile' && (
         <section className="px-4 mt-12 sm:px-8">
-          <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Find Employers</h2>
+          <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Explore companies</h2>
           <div className="flex justify-center gap-4 overflow-x-scroll">
             {['Employer 1', 'Employer 2', 'Employer 3', 'Employer 4'].map((employer, index) => (
               <div
