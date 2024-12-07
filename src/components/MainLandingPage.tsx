@@ -129,54 +129,63 @@ const MainLandingPage = () => {
       <main className="flex-1 p-4 mt-28 md:p-8">{renderContent()}</main>
 
   {/* Find Employer Cards Section */}
-  {activeTab !== 'Profile' && (
-        <section className="px-4 mt-12 sm:px-8">
-          <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Explore companies</h2>
-          <div className="flex justify-center gap-4 overflow-x-scroll">
-            {['Employer 1', 'Employer 2', 'Employer 3', 'Employer 4'].map((employer, index) => (
-              <div
-                key={index}
-                className="flex-shrink-0 p-6 text-white transition-all duration-300 transform rounded-lg shadow-xl w-72 bg-gradient-to-r from-teal-500 to-teal-600 hover:scale-105"
+{activeTab !== 'Profile' && activeTab !== 'Explore Companies' && (
+  <section className="px-4 mt-12 sm:px-8">
+    <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Find Employer</h2>
+    <div className="flex justify-center gap-4 overflow-x-scroll">
+      {['Employer 1', 'Employer 2', 'Employer 3', 'Employer 4'].map((employer, index) => (
+        <div
+          key={index}
+          className="flex-shrink-0 p-6 text-white transition-all duration-300 transform rounded-lg shadow-xl w-72 bg-gradient-to-r from-teal-500 to-teal-600 hover:scale-105"
+        >
+          {/* Employer Logo */}
+          <div className="flex justify-center mb-4">
+            <img
+              src={`/${employer.toLowerCase().replace(' ', '-')}-logo.png`}
+              alt={employer}
+              className="w-16 h-16 rounded-full"
+            />
+          </div>
+
+          <h3 className="text-2xl font-bold">{employer}</h3>
+          <p className="mt-2 text-sm">
+            Discover great job opportunities with {employer}. Join their team and accelerate your career.
+          </p>
+
+          {/* Rating */}
+          <div className="flex items-center mt-4">
+            {[1, 2, 3, 4, 5].map((star, idx) => (
+              <svg
+                key={idx}
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                className={`w-5 h-5 ${star <= 4 ? 'text-yellow-400' : 'text-gray-300'}`}
+                viewBox="0 0 16 16"
               >
-                {/* Employer Logo */}
-                <div className="flex justify-center mb-4">
-                  <img
-                    src={`/${employer.toLowerCase().replace(' ', '-')}-logo.png`}
-                    alt={employer}
-                    className="w-16 h-16 rounded-full"
-                  />
-                </div>
-
-                <h3 className="text-2xl font-bold">{employer}</h3>
-                <p className="mt-2 text-sm">
-                  Discover great job opportunities with {employer}. Join their team and accelerate your career.
-                </p>
-
-                {/* Rating */}
-                <div className="flex items-center mt-4">
-                  {[1, 2, 3, 4, 5].map((star, idx) => (
-                    <svg
-                      key={idx}
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      className={`w-5 h-5 ${star <= 4 ? 'text-yellow-400' : 'text-gray-300'}`}
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M8 12.26l3.16 2.09-1.2-4.18L12.97 6h-4.03L7.04 10.17 5.84 14.34 8 12.26z" />
-                    </svg>
-                  ))}
-                </div>
-
-                {/* Explore Button */}
-                <button className="w-full px-4 py-2 mt-4 text-white border-2 border-white rounded-lg hover:bg-teal-500 hover:text-white">
-                  Explore
-                </button>
-              </div>
+                <path d="M8 12.26l3.16 2.09-1.2-4.18L12.97 6h-4.03L7.04 10.17 5.84 14.34 8 12.26z" />
+              </svg>
             ))}
           </div>
-        </section>
-      )}
 
+          {/* Explore Button */}
+          <button className="w-full px-4 py-2 mt-4 text-white border-2 border-white rounded-lg hover:bg-teal-500 hover:text-white">
+            Explore
+          </button>
+        </div>
+      ))}
+    </div>
+
+    {/* See More Button */}
+    <div className="flex justify-center mt-6">
+      <button
+        onClick={() => setActiveTab('Explore Companies')}
+        className="px-6 py-2 text-white bg-teal-600 rounded-lg hover:bg-teal-500"
+      >
+        See More
+      </button>
+    </div>
+  </section>
+)}
   
 
       {/* Footer */}

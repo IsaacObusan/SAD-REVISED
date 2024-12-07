@@ -16,7 +16,7 @@ const LandingPageEmployer = () => {
             <p className="mt-4">Here are your latest stats:</p>
 
             {/* Chart Section */}
-            <div className="grid grid-cols-1 gap-6 mt-6 md:grid-cols-2">
+            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
               <div className="p-4 bg-gray-100 rounded shadow">
                 <h3 className="text-lg font-medium">Job Posting Insights</h3>
                 <Bar
@@ -71,20 +71,20 @@ const LandingPageEmployer = () => {
               <p className="mt-4">Here you can view and manage all your job postings:</p>
   
               {/* Modern Job Postings Table */}
-              <div className="mt-6 overflow-x-auto">
-                <table className="min-w-full bg-white rounded-md shadow-md">
-                  <thead className="text-white bg-teal-500">
+              <div className="overflow-x-auto mt-6">
+                <table className="min-w-full bg-white shadow-md rounded-md">
+                  <thead className="bg-teal-500 text-white">
                     <tr>
-                      <th className="px-6 py-3 text-left">Job Title</th>
-                      <th className="px-6 py-3 text-left">Company</th>
-                      <th className="px-6 py-3 text-left">Status</th>
-                      <th className="px-6 py-3 text-center">Action</th>
+                      <th className="py-3 px-6 text-left">Job Title</th>
+                      <th className="py-3 px-6 text-left">Company</th>
+                      <th className="py-3 px-6 text-left">Status</th>
+                      <th className="py-3 px-6 text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     {/* Active Job Post */}
                     <tr className="border-b hover:bg-teal-50">
-                      <td className="flex items-center px-6 py-3 space-x-2">
+                      <td className="py-3 px-6 flex items-center space-x-2">
                         <img 
                           src="https://via.placeholder.com/30" 
                           alt="Company Logo" 
@@ -92,9 +92,9 @@ const LandingPageEmployer = () => {
                         />
                         <span>Software Engineer</span>
                       </td>
-                      <td className="px-6 py-3">Tech Corp</td>
-                      <td className="px-6 py-3 text-teal-500">Active</td>
-                      <td className="px-6 py-3 text-center">
+                      <td className="py-3 px-6">Tech Corp</td>
+                      <td className="py-3 px-6 text-teal-500">Active</td>
+                      <td className="py-3 px-6 text-center">
                         <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
                           Manage
                         </button>
@@ -103,7 +103,7 @@ const LandingPageEmployer = () => {
   
                     {/* Closed Job Post */}
                     <tr className="border-b hover:bg-teal-50">
-                      <td className="flex items-center px-6 py-3 space-x-2">
+                      <td className="py-3 px-6 flex items-center space-x-2">
                         <img 
                           src="https://via.placeholder.com/30" 
                           alt="Company Logo" 
@@ -111,9 +111,9 @@ const LandingPageEmployer = () => {
                         />
                         <span>Data Analyst</span>
                       </td>
-                      <td className="px-6 py-3">Data Solutions</td>
-                      <td className="px-6 py-3 text-gray-500">Closed</td>
-                      <td className="px-6 py-3 text-center">
+                      <td className="py-3 px-6">Data Solutions</td>
+                      <td className="py-3 px-6 text-gray-500">Closed</td>
+                      <td className="py-3 px-6 text-center">
                         <button className="px-4 py-2 text-sm text-white bg-gray-500 rounded cursor-not-allowed" disabled>
                           Closed
                         </button>
@@ -122,7 +122,7 @@ const LandingPageEmployer = () => {
   
                     {/* Draft Job Post */}
                     <tr className="border-b hover:bg-teal-50">
-                      <td className="flex items-center px-6 py-3 space-x-2">
+                      <td className="py-3 px-6 flex items-center space-x-2">
                         <img 
                           src="https://via.placeholder.com/30" 
                           alt="Company Logo" 
@@ -130,9 +130,9 @@ const LandingPageEmployer = () => {
                         />
                         <span>UX Designer</span>
                       </td>
-                      <td className="px-6 py-3">Creative Minds</td>
-                      <td className="px-6 py-3 text-yellow-500">Draft</td>
-                      <td className="px-6 py-3 text-center">
+                      <td className="py-3 px-6">Creative Minds</td>
+                      <td className="py-3 px-6 text-yellow-500">Draft</td>
+                      <td className="py-3 px-6 text-center">
                         <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
                           Edit
                         </button>
@@ -159,42 +159,42 @@ const LandingPageEmployer = () => {
               <p className="mt-4">Manage and review your job applicants:</p>
   
               {/* Modern Candidate Table */}
-              <div className="mt-6 overflow-x-auto">
-                <table className="min-w-full bg-white rounded-md shadow-md">
-                  <thead className="text-white bg-teal-500">
+              <div className="overflow-x-auto mt-6">
+                <table className="min-w-full bg-white shadow-md rounded-md">
+                  <thead className="bg-teal-500 text-white">
                     <tr>
-                      <th className="px-6 py-3 text-left">Candidate</th>
-                      <th className="px-6 py-3 text-left">Position</th>
-                      <th className="px-6 py-3 text-left">Status</th>
-                      <th className="px-6 py-3 text-center">Action</th>
+                      <th className="py-3 px-6 text-left">Candidate</th>
+                      <th className="py-3 px-6 text-left">Position</th>
+                      <th className="py-3 px-6 text-left">Status</th>
+                      <th className="py-3 px-6 text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr className="border-b">
-                      <td className="px-6 py-3">John Doe</td>
-                      <td className="px-6 py-3">Software Engineer</td>
-                      <td className="px-6 py-3 text-teal-500">Pending</td>
-                      <td className="px-6 py-3 text-center">
+                      <td className="py-3 px-6">John Doe</td>
+                      <td className="py-3 px-6">Software Engineer</td>
+                      <td className="py-3 px-6 text-teal-500">Pending</td>
+                      <td className="py-3 px-6 text-center">
                         <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
                           View Profile
                         </button>
                       </td>
                     </tr>
                     <tr className="border-b">
-                      <td className="px-6 py-3">Jane Smith</td>
-                      <td className="px-6 py-3">Data Analyst</td>
-                      <td className="px-6 py-3 text-teal-500">Reviewed</td>
-                      <td className="px-6 py-3 text-center">
+                      <td className="py-3 px-6">Jane Smith</td>
+                      <td className="py-3 px-6">Data Analyst</td>
+                      <td className="py-3 px-6 text-teal-500">Reviewed</td>
+                      <td className="py-3 px-6 text-center">
                         <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
                           View Profile
                         </button>
                       </td>
                     </tr>
                     <tr>
-                      <td className="px-6 py-3">Michael Brown</td>
-                      <td className="px-6 py-3">UX Designer</td>
-                      <td className="px-6 py-3 text-teal-500">Interviewed</td>
-                      <td className="px-6 py-3 text-center">
+                      <td className="py-3 px-6">Michael Brown</td>
+                      <td className="py-3 px-6">UX Designer</td>
+                      <td className="py-3 px-6 text-teal-500">Interviewed</td>
+                      <td className="py-3 px-6 text-center">
                         <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
                           View Profile
                         </button>
