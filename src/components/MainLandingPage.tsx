@@ -230,7 +230,8 @@ const MainLandingPage = () => {
                   </div>
           
                   {/* Pagination Section */}
-                  <div className="flex items-center justify-between mt-8">
+                  <div className="flex items-center justify-center gap-4 mt-8">
+                    {/* Previous Button */}
                     <button className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600">
                       Previous
                     </button>
@@ -247,6 +248,7 @@ const MainLandingPage = () => {
                       <span className="text-lg text-gray-600">of 1</span> {/* Placeholder for total pages */}
                     </div>
           
+                    {/* Next Button */}
                     <button className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600">
                       Next
                     </button>
