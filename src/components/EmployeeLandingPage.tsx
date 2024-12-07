@@ -286,8 +286,20 @@ const EmployeeLandingPage = () => {
               className="object-cover w-full h-full border-2 border-teal-500 rounded-full"
             />
           </div>
-        </div>
-      </header>
+
+{/* Logout Button */}
+ {/* Logout Button */}
+ <button
+      onClick={() => {
+        localStorage.clear(); // Clear local storage
+        window.location.href = "/login"; // Redirect to login page
+      }}
+      className="text-sm font-medium text-gray-700 hover:text-teal-500 sm:text-lg"
+    >
+      Logout
+    </button>
+  </div>
+</header>
 
        
 
