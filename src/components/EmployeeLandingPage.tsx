@@ -37,6 +37,17 @@ const EmployeeLandingPage = () => {
   const [jobDetails, setJobDetails] = useState<jobHiring[]>([]);
   const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
   const [letter, setLetter] = useState<string>('');
+  const [isOpen, setIsOpen] = useState(false);
+  const handleLogout = () => {
+    // Add your logout logic here, such as clearing the session or redirecting the user.
+    console.log('Logging out...');
+  };
+  
+
+const toggleDropdown = () => {
+  setIsOpen((prev) => !prev);
+};
+
   
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setLetter(event.target.value);  // Update parent state with the letter content
@@ -84,6 +95,8 @@ const EmployeeLandingPage = () => {
       console.log(error);
     }
   };
+
+  
   
   const toggleModal = (jobTitle?: string) => {
     setSelectedJobTitle(jobTitle || ''); // Set the job title when the modal is opened
@@ -109,6 +122,7 @@ const EmployeeLandingPage = () => {
       case 'Home':
         return (
           <>
+
 
 
            {/* Simplified Slideshow Section */}
@@ -308,19 +322,62 @@ const EmployeeLandingPage = () => {
             </button>
           </div>
 
- 
+{/* Profile Button */}
+<div className="relative">
+        <button
+          className="w-10 h-10 focus:outline-none"
+          onClick={toggleDropdown}
+        >
+          <img
+            src="/profile.png"
+            alt="Profile"
+            className="object-cover w-full h-full border-2 border-teal-500 rounded-full"
+          />
+        </button>
 
-          {/* Profile Image */}
-          <div className="relative w-10 h-10">
-            <img
-              src="/profile.png"
-              alt="Profile"
-              className="object-cover w-full h-full border-2 border-teal-500 rounded-full"
-            />
+        {/* Dropdown Menu */}
+        {isOpen && (
+          <div className="absolute right-0 z-10 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg w-44">
+            <ul className="text-gray-700">
+              <li>
+                <a
+                  href="/profile"
+                  className="block px-4 py-2 hover:bg-gray-100"
+                >
+                  Your Profile
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/stats"
+                  className="block px-4 py-2 hover:bg-gray-100"
+                >
+                  My Stats
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/settings"
+                  className="block px-4 py-2 hover:bg-gray-100"
+                >
+                  Settings
+                </a>
+              </li>
+              <li>
+                <button
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </li>
+            </ul>
           </div>
+        )}
+      </div>
+    </div>
+  </header>
 
-  </div>
-</header>
 
        
 
