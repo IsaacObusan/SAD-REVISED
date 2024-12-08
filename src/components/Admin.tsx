@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from './Logoo.png'; // Import the logo
+import Footer from './Footer';
+
 
 const Admin: React.FC = () => {
   const [activeTab, setActiveTab] = useState('job-offerings'); // State for active tab

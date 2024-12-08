@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Bar, Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
+import Footer from './Footer';
+
 
 
 const LandingPageEmployer = () => {

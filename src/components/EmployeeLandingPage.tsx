@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import Footer from './Footer';
+
 
 interface jobHiring {
   jobName: string;
@@ -307,14 +309,7 @@ const EmployeeLandingPage = () => {
       {/* Main Content */}
       <main className="flex-1 p-4 mt-20 md:p-8">{renderContent()}</main>
 
-      {/* Footer */}
-      <footer className="flex flex-col items-center p-4 mt-auto text-gray-900 bg-white sm:p-8">
-        <p className="mb-4 text-sm sm:text-base">In partnership with:</p>
-        <div className="flex gap-4">
-          <img src="/Pwd.png" alt="PWD" className="h-10 sm:h-12" />
-          <img src="/Labor.png" alt="Labor" className="h-10 sm:h-12" />
-        </div>
-      </footer>
+   
 
       {/* Modal */}
       <Modal
