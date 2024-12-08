@@ -109,6 +109,8 @@ const EmployeeLandingPage = () => {
       case 'Home':
         return (
           <>
+
+
             {/* Slideshow Section */}
             <div className="relative w-full max-w-4xl mx-auto mt-40 overflow-hidden">
               {/* Background with gradient animation */}
@@ -250,16 +252,54 @@ const EmployeeLandingPage = () => {
 
         {/* Tabs */}
         <div className="flex items-center justify-center gap-4">
-          {['Home', 'Tutorials', 'Contact'].map((tab) => (
-            <button
-              key={tab}
-              className={`text-sm font-medium sm:text-lg ${activeTab === tab ? 'border-b-2 border-teal-500' : ''}`}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
+  {['Home', 'Tutorials', 'Contact'].map((tab) => (
+    <button
+      key={tab}
+      className={`text-sm font-medium sm:text-lg ${activeTab === tab ? 'border-b-2 border-teal-500' : ''}`}
+      onClick={() => setActiveTab(tab)}
+    >
+      {tab}
+    </button>
+  ))}
+
+  {/* Dropdowns aligned closer to the tabs */}
+  <div className="flex items-center gap-2 ml-4">
+    {/* First Dropdown */}
+    <div className="relative">
+      <select
+        className="p-2 bg-white "
+        defaultValue=""
+      >
+        <option value="" disabled>
+          Find Work
+        </option>
+        <option value="Option1">Option 1</option>
+        <option value="Option2">Option 2</option>
+        <option value="Option3">Option 3</option>
+      </select>
+    </div>
+
+    {/* Second Dropdown */}
+    <div className="relative">
+      <select
+        className="p-2 bg-white "
+        defaultValue=""
+      >
+        <option value="" disabled>
+          Deliver Work
+        </option>
+        <option value="Option1">Option 1</option>
+        <option value="Option2">Option 2</option>
+        <option value="Option3">Option 3</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+       
+
+    
+
 
         {/* Greeting, Search Bar, and Profile Image */}
         <div className="flex items-center gap-4 mt-4 sm:flex-row sm:mt-0">
@@ -280,6 +320,8 @@ const EmployeeLandingPage = () => {
             </button>
           </div>
 
+ 
+
           {/* Profile Image */}
           <div className="relative w-10 h-10">
             <img
@@ -289,17 +331,6 @@ const EmployeeLandingPage = () => {
             />
           </div>
 
-{/* Logout Button */}
- {/* Logout Button */}
- <button
-      onClick={() => {
-        localStorage.clear(); // Clear local storage
-        window.location.href = "/login"; // Redirect to login page
-      }}
-      className="text-sm font-medium text-gray-700 hover:text-teal-500 sm:text-lg"
-    >
-      Logout
-    </button>
   </div>
 </header>
 
@@ -323,6 +354,9 @@ const EmployeeLandingPage = () => {
     </div>
   );
 };
+
+
+
 
 const styles = {
   container: {
