@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Footer from './components/Footer'; // Import the Footer component
 
 // Lazy-loaded components for optimization
 const MainLandingPage = React.lazy(() => import('./components/MainLandingPage'));
@@ -7,9 +8,8 @@ const Login = React.lazy(() => import('./components/Login'));
 const EmployeeLandingPage = React.lazy(() => import('./components/EmployeeLandingPage'));
 const EmployerLandingPage = React.lazy(() => import('./components/EmployerLandingPage'));
 const ErrorPage = React.lazy(() => import('./components/Error'));
-const SignUp = React.lazy(() => import('./components/SignUp')); // Sign-Up page
+const SignUp = React.lazy(() => import('./components/SignUp'));
 const Admin = React.lazy(() => import('./components/Admin'));
-
 
 const LoadingSpinner = () => (
   <div className="flex items-center justify-center h-screen">
@@ -22,14 +22,15 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>
-          <Route path="/" element={<MainLandingPage />} /> {/* Root path shows MainLandingPage */}
-          <Route path="/login" element={<Login />} /> {/* Login page */}
-          <Route path="/sign-up" element={<SignUp />} /> {/* Sign-Up page */}
-          <Route path="/employee-landing" element={<EmployeeLandingPage />} /> {/* Employee landing page */}
-          <Route path="/employer-landing" element={<EmployerLandingPage />} /> {/* Employer landing page */}
-          <Route path="/admin" element={<Admin />} /> {/* Admin page */}
-          <Route path="/*" element={<ErrorPage />} /> {/* Handle invalid routes */}
+          <Route path="/" element={<MainLandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/employee-landing" element={<EmployeeLandingPage />} />
+          <Route path="/employer-landing" element={<EmployerLandingPage />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/*" element={<ErrorPage />} />
         </Routes>
+        <Footer /> {/* Insert Footer component */}
       </Suspense>
     </BrowserRouter>
   );
