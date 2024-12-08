@@ -23,7 +23,7 @@ const MainLandingPage = () => {
   ></video>
 
   {/* Caption on the Left Side and Bigger Font */}
-  <div className="absolute top-9 right-10 text-right text-black bg-opacity-75 py-6 px-12 rounded-lg">
+  <div className="absolute top-9 right-10 text-right text-white bg-opacity-75 py-6 px-12 rounded-lg">
     <p className="text-3xl font-bold">Find Inclusive Job Opportunities for PWDs</p>
   </div>
 
@@ -92,9 +92,33 @@ const MainLandingPage = () => {
                   </div>
                 )
               )}
-            </div>
-          </>
-        );
+           </div>
+
+{/* Small Frame with Get Tips Button */}
+<div className="flex justify-center mt-12">
+  <div className="w-full max-w-2xl p-6 text-center bg-gray-100 border-2 border-gray-300 rounded-lg shadow-md">
+    {/* Icon */}
+    <div className="flex justify-center mb-4">
+      <img
+        src="/tips-icon.png"
+        alt="Tips Icon"
+        className="w-12 h-12"
+      />
+    </div>
+    <h3 className="text-xl font-bold text-gray-800">Career Tips</h3>
+    <p className="mt-2 text-sm text-gray-600">
+      Discover expert advice and insights to advance your career and make an impact.
+    </p>
+    <button
+      onClick={() => setActiveTab('Career Advice')}
+      className="px-4 py-2 mt-4 text-white bg-teal-500 border-white-400 rounded-lg hover:bg-gray-300"
+    >
+      Get Tips
+    </button>
+  </div>
+</div>
+</>
+);
         case 'Profile':
           return (
             <div className="flex flex-col items-center justify-center p-8 bg-gray-100">
@@ -274,6 +298,154 @@ const MainLandingPage = () => {
               </div>
             );
           
+         
+          
+
+case 'Career Advice':
+  return (
+    <div className="flex flex-col items-center p-8">
+      {/* Autoplay Video Slider with Caption Inside */}
+      <div className="relative w-full mb-20">
+        <div className="w-full h-96 overflow-hidden"> {/* Adjusted height to h-96 */}
+          <video autoPlay loop muted className="w-full h-full object-cover">
+            <source src="/path/to/your/video.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-30">
+          <h2 className="text-3xl text-white font-bold text-center">
+            Let Job Compass empower your career journey by guiding you .
+          </h2>
+        </div>
+        <button className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white bg-transparent border-2 border-white px-6 py-3 rounded-full opacity-80 hover:bg-white hover:text-black">
+          Watch Now
+
+                    </button>
+              
+                  </div>
+            
+                  {/* Career Advice Content */}
+                  <h2 className="text-2xl font-bold text-gray-800 text-center">
+                    Career Advice for PWDs
+                  </h2>
+                  <p className="mt-4 text-center text-gray-600">
+                    Discover tips and guidance to navigate your career journey.
+                  </p>
+      
+                  {/* Advice Cards */}
+                  <div className="flex flex-wrap justify-center gap-6 mt-8">
+                    {[
+                      {
+                        title: 'Resume Tips',
+                        description:
+                          'Learn how to highlight your unique skills and experiences effectively.',
+                        icon: '/icon_resume.png',
+                      },
+                      {
+                        title: 'Interview Prep',
+                        description:
+                          'Ace your interviews with these practical tips and strategies.',
+                        icon: '/icon_interview.png',
+                      },
+                      {
+                        title: 'Networking',
+                        description:
+                          'Build meaningful connections to enhance your career opportunities.',
+                        icon: '/icon_networking.png',
+                      },
+                      {
+                        title: 'Skill Development',
+                        description:
+                          'Explore training programs and resources to upskill and grow.',
+                        icon: '/icon_skills.png',
+                      },
+                    ].map((advice, index) => (
+                      <div
+                        key={index}
+                        className="w-full p-6 text-center bg-white rounded-lg shadow-lg sm:w-64"
+                      >
+                        <img
+                          src={advice.icon}
+                          alt={advice.title}
+                          className="w-16 h-16 mx-auto mb-4"
+                        />
+                        <h3 className="text-lg font-bold text-gray-800">
+                          {advice.title}
+                        </h3>
+                        <p className="mt-2 text-sm text-gray-600">
+                          {advice.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Bottom Frames with Buttons */}
+      <div className="mt-12 w-full max-w-screen-md space-y-6">
+        <div className="flex flex-col items-center justify-between p-6 bg-white rounded-lg shadow-lg sm:flex-row">
+          <div>
+            <h3 className="text-lg font-bold text-gray-800">Find Job Opportunities</h3>
+            <p className="mt-2 text-sm text-gray-600">
+              Browse jobs tailored for persons with disabilities and take the first step in your career.
+            </p>
+          </div>
+          <button className="mt-4 sm:mt-0 px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+            Explore Jobs
+          </button>
+        </div>
+        <div className="flex flex-col items-center justify-between p-6 bg-white rounded-lg shadow-lg sm:flex-row">
+          <div>
+            <h3 className="text-lg font-bold text-gray-800">Access Training Programs</h3>
+            <p className="mt-2 text-sm text-gray-600">
+              Enroll in training courses designed to empower and enhance your skills.
+            </p>
+          </div>
+          <button className="mt-4 sm:mt-0 px-6 py-3 text-white bg-green-600 rounded-lg hover:bg-green-700">
+            Start Learning
+          </button>
+        </div>
+      </div>
+{/* Subscribe Frame with Icon at the Top of Caption */}
+<div className="mt-12 flex flex-col items-center justify-between p-6 bg-white rounded-lg shadow-lg sm:flex-row">
+  <div className="w-full sm:w-80 space-y-4 mt-6 sm:mt-0">
+    {/* Icon Above the Caption */}
+    <div className="flex justify-center mb-4">
+      <img src="/path/to/your/icon.png" alt="Career Advice Icon" className="w-8 h-8" />
+    </div>
+    <h3 className="text-lg font-bold text-gray-800 text-center">Subscribe to Career Advice</h3>
+    <p className="mt-2 text-sm text-gray-600 text-center">
+      Get expert career advice delivered to your inbox.
+    </p>
+    {/* Form and Button */}
+    <input
+      type="text"
+      placeholder="First name"
+      className="w-full p-3 border rounded-lg"
+    />
+    <input
+      type="text"
+      placeholder="Last name"
+      className="w-full p-3 border rounded-lg"
+    />
+    <input
+      type="email"
+      placeholder="Email"
+      className="w-full p-3 border rounded-lg"
+    />
+    <button className="w-full py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+      Subscribe
+    </button>
+    <p className="mt-2 text-sm text-gray-600 text-center">
+      You can cancel emails at any time. By clicking ‘subscribe’ you agree to Jobstreet’s Privacy Statement.
+    </p>
+  </div>
+</div>
+
+
+
+
+
+</div>
+
+  );
           
           default:
             return <div className="p-4 md:p-8">Welcome to the Landing Page!</div>;
@@ -282,47 +454,61 @@ const MainLandingPage = () => {
     
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      {/* Header */}
-      <header className="fixed top-0 left-0 z-10 flex items-center justify-between w-full p-4 bg-white shadow-lg sm:p-8">
-        {/* Logo */}
-        <img src="/Logoo.png" alt="Logo" className="h-14" />
+     {/* Header */}
+<header className="fixed top-0 left-0 z-10 flex items-center justify-between w-full p-4 bg-white shadow-lg sm:p-8">
+  {/* Logo */}
+  <img src="/Logoo.png" alt="Logo" className="h-14" />
 
-        {/* Tabs */}
-        <div className="flex gap-4">
-          <button
-            className={`px-4 py-2 text-lg font-medium ${activeTab === 'Job Search' ? 'text-teal-500' : 'text-gray-600'}`}
-            onClick={() => setActiveTab('Job Search')}
-          >
-            Job Search
-          </button>
-          <button
-            className={`px-4 py-2 text-lg font-medium ${activeTab === 'Profile' ? 'text-teal-500' : 'text-gray-600'}`}
-            onClick={() => setActiveTab('Profile')}
-          >
-            Profile
-          </button>
-          <button
-            className={`px-4 py-2 text-lg font-medium ${activeTab === 'Explore Companies' ? 'text-teal-500' : 'text-gray-600'}`}
-            onClick={() => setActiveTab('Explore Companies')}
-          >
-            Explore Companies
-          </button>
-        </div>
+  {/* Tabs */}
+  <div className="flex gap-4">
+    <button
+      className={`px-4 py-2 text-lg font-medium ${
+        activeTab === 'Job Search' ? 'text-teal-500' : 'text-gray-600'
+      }`}
+      onClick={() => setActiveTab('Job Search')}
+    >
+      Job Search
+    </button>
+    <button
+      className={`px-4 py-2 text-lg font-medium ${
+        activeTab === 'Profile' ? 'text-teal-500' : 'text-gray-600'
+      }`}
+      onClick={() => setActiveTab('Profile')}
+    >
+      Profile
+    </button>
+    <button
+      className={`px-4 py-2 text-lg font-medium ${
+        activeTab === 'Explore Companies' ? 'text-teal-500' : 'text-gray-600'
+      }`}
+      onClick={() => setActiveTab('Explore Companies')}
+    >
+      Explore Companies
+    </button>
+    <button
+      className={`px-4 py-2 text-lg font-medium ${
+        activeTab === 'Career Advice' ? 'text-teal-500' : 'text-gray-600'
+      }`}
+      onClick={() => setActiveTab('Career Advice')}
+    >
+      Career Advice
+    </button>
+  </div>
 
-        {/* Button */}
-        <button
-          className="px-4 py-2 text-white bg-teal-500 rounded-lg hover:bg-teal-600"
-          onClick={() => navigate('/login')}
-        >
-          Login
-        </button>
-      </header>
+  {/* Button */}
+  <button
+    className="px-4 py-2 text-white bg-teal-500 rounded-lg hover:bg-teal-600"
+    onClick={() => navigate('/login')}
+  >
+    Login
+  </button>
+</header>
 
       {/* Main Content */}
       <main className="flex-1 p-4 mt-28 md:p-8">{renderContent()}</main>
 
   {/* Find Employer Cards Section */}
-{activeTab !== 'Profile' && activeTab !== 'Explore Companies' && (
+{activeTab !== 'Profile' && activeTab !== 'Explore Companies'  && activeTab !== 'Career Advice' && (
   <section className="px-4 mt-12 sm:px-8">
     <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Explore Companies</h2>
     <div className="flex justify-center gap-4 overflow-x-scroll">
@@ -381,14 +567,66 @@ const MainLandingPage = () => {
 )}
   
 
-      {/* Footer */}
-      <footer className="flex flex-col items-center p-4 mt-auto text-gray-900 bg-white sm:p-8">
-        <p className="mb-4 text-sm sm:text-base">In partnership with:</p>
-        <div className="flex gap-4">
-          <img src="/Pwd.png" alt="PWD" className="h-10 sm:h-12" />
-          <img src="/Labor.png" alt="Labor" className="h-10 sm:h-12" />
-        </div>
-      </footer>
+   {/* Footer */}
+<footer className="bg-white border-t-2 border-gray-200">
+  <div className="max-w-screen-xl mx-auto px-6 py-8">
+    {/* Top Section: Partnership */}
+    <div className="text-center mb-8">
+      <p className="text-sm text-gray-700">In partnership with:</p>
+      <div className="flex justify-center items-center gap-7 mt-2">
+        <img src="/Pwd.png" alt="PWD" className="h-10 sm:h-12" />
+        <img src="/Labor.png" alt="Labor" className="h-10 sm:h-12" />
+      </div>
+    </div>
+    {/* Footer Links */}
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-sm text-gray-600">
+      <div>
+        <h3 className="font-bold text-gray-800 mb-2">Job Seekers</h3>
+        <ul className="space-y-1">
+          <li><a href="#" className="hover:underline">Job Search</a></li>
+          <li><a href="#" className="hover:underline">Profile</a></li>
+          <li><a href="#" className="hover:underline">Recommended Jobs</a></li>
+          <li><a href="#" className="hover:underline">Career Advice</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 className="font-bold text-gray-800 mb-2">Employers</h3>
+        <ul className="space-y-1">
+          <li><a href="#" className="hover:underline">Post a Job</a></li>
+          <li><a href="#" className="hover:underline">Products & Prices</a></li>
+          <li><a href="#" className="hover:underline">Market Insights</a></li>
+          <li><a href="#" className="hover:underline">Hiring Advice</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 className="font-bold text-gray-800 mb-2">About Us</h3>
+        <ul className="space-y-1">
+          <li><a href="#" className="hover:underline">About Us</a></li>
+          <li><a href="#" className="hover:underline">Newsroom</a></li>
+          <li><a href="#" className="hover:underline">Careers</a></li>
+          <li><a href="#" className="hover:underline">Partner Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 className="font-bold text-gray-800 mb-2">Contact</h3>
+        <ul className="space-y-1">
+          <li><a href="#" className="hover:underline">Help Center</a></li>
+          <li><a href="#" className="hover:underline">Contact Us</a></li>
+          <li><a href="#" className="hover:underline">Social</a></li>
+        </ul>
+      </div>
+    </div>
+    {/* Bottom Section */}
+    <div className="text-center mt-6 text-xs text-gray-500">
+      <p>© 2024 Your Website. All Rights Reserved.</p>
+      <div className="flex justify-center items-center gap-4 mt-2">
+        <a href="#" className="hover:underline">Terms & Conditions</a>
+        <a href="#" className="hover:underline">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
     </div>
   );
 };
