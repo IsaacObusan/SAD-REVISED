@@ -618,7 +618,7 @@ case 'Career Advice':
     </div>
     {/* Bottom Section */}
     <div className="text-center mt-6 text-xs text-gray-500">
-      <p>© 2024 Your Website. All Rights Reserved.</p>
+      <p>© 2024 Job Compass. All Rights Reserved.</p>
       <div className="flex justify-center items-center gap-4 mt-2">
         <a href="#" className="hover:underline">Terms & Conditions</a>
         <a href="#" className="hover:underline">Privacy Policy</a>
