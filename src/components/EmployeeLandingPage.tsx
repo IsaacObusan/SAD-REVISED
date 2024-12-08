@@ -111,14 +111,10 @@ const EmployeeLandingPage = () => {
           <>
 
 
-            {/* Slideshow Section */}
-            <div className="relative w-full max-w-4xl mx-auto mt-40 overflow-hidden">
-              {/* Background with gradient animation */}
-              <div className="absolute top-0 left-0 z-0 w-full h-full bg-gradient-to-r from-teal-400 via-blue-500 to-purple-600 animate-gradient-blur" />
-
-              {/* Slides */}
+           {/* Simplified Slideshow Section */}
+           <div className="relative w-full max-w-4xl mx-auto mt-40 overflow-hidden">
               <div
-                className="relative z-10 flex transition-transform duration-1000 ease-in-out"
+                className="flex transition-transform duration-500 ease-in-out"
                 style={{
                   transform: `translateX(-${currentSlide * 100}%)`, // Move slides horizontally
                 }}
@@ -128,25 +124,17 @@ const EmployeeLandingPage = () => {
                     key={index}
                     src={slide}
                     alt={`Slide ${index + 1}`}
-                    className="object-cover w-full h-auto rounded-lg shadow-md transform-gpu"
-                    style={{
-                      transform: `perspective(1000px) rotateY(${currentSlide === index ? 0 : 45}deg)`,
-                      boxShadow: '0 4px 15px rgba(0, 255, 255, 0.7)', // Add neon glow
-                    }}
+                    className="w-full h-auto rounded-lg"
                   />
                 ))}
               </div>
-
               {/* Slide indicators */}
               <div className="absolute flex gap-2 transform -translate-x-1/2 bottom-4 left-1/2">
                 {slides.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentSlide(index)}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${currentSlide === index ? 'bg-teal-400 shadow-neon' : 'bg-gray-400'}`}
-                    style={{
-                      boxShadow: currentSlide === index ? '0 0 10px teal' : 'none',
-                    }}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${currentSlide === index ? 'bg-teal-400' : 'bg-gray-400'}`}
                   ></button>
                 ))}
               </div>
