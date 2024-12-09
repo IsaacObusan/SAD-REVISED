@@ -53,7 +53,7 @@ const YourProfile: React.FC = () => {
     <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
       {/* Profile Section */}
       <div className="w-full max-w-3xl bg-white p-6 shadow rounded-lg">
-        {/* Profile Image */}
+        {/* Profile Image Section */}
         <div className="flex items-center gap-4">
           <div className="relative">
             <img

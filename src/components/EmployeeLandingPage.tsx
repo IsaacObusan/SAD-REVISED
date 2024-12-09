@@ -9,6 +9,9 @@ interface jobHiring {
   jobDesc: string;
 }
 
+
+
+
 const tutorials = [
   { 
     title: "Tutorial 1", 
@@ -43,6 +46,9 @@ const EmployeeLandingPage = () => {
     // Add your logout logic here, such as clearing the session or redirecting the user.
     console.log('Logging out...');
   };
+  
+
+
   
 
 const toggleDropdown = () => {
@@ -365,12 +371,12 @@ const toggleDropdown = () => {
                 </a>
               </li>
               <li>
-                <button
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
+              <button
+      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+      onClick={handleLogout}
+    >
+      Logout
+    </button>
               </li>
             </ul>
           </div>

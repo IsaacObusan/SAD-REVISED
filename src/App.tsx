@@ -11,6 +11,12 @@ const ErrorPage = React.lazy(() => import('./components/Error'));
 const SignUp = React.lazy(() => import('./components/SignUp'));
 const Admin = React.lazy(() => import('./components/Admin'));
 const YourProfile = React.lazy(() => import('./components/YourProfile')); // Lazy load YourProfile component
+const MyStats = React.lazy(() => import('./components/MyStats'));
+const Settings = React.lazy(() => import('./components/Settings')); // Lazy load Settings component
+
+
+
+
 
 const LoadingSpinner = () => (
   <div className="flex items-center justify-center h-screen">
@@ -30,6 +36,8 @@ const App: React.FC = () => {
           <Route path="/employer-landing" element={<EmployerLandingPage />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/profile" element={<YourProfile />} /> {/* Add route for YourProfile */}
+          <Route path="/stats" element={<MyStats />} /> {/* Add route for MyStats */}
+          <Route path="/settings" element={<Settings />} /> {/* Add route for Settings */}
           <Route path="/*" element={<ErrorPage />} />
         </Routes>
         <Footer /> {/* Insert Footer component */}
