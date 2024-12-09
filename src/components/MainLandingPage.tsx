@@ -69,29 +69,94 @@ const MainLandingPage = () => {
                 </button>
               </div>
             </div>
+{/* Job Cards Section */}
+<div className="flex flex-wrap justify-center gap-4 mt-8">
+  {[
+    {
+      title: 'Software Engineer',
+      description: 'Develop and maintain web applications.',
+      budget: '$100/month',
+      rating: 5,
+      company: 'Tech Innovations',
+      logo: 'https://via.placeholder.com/50', // Placeholder logo URL
+    },
+    {
+      title: 'Data Analyst',
+      description: 'Analyze data to help companies make decisions.',
+      budget: '$120/month',
+      rating: 4.5,
+      company: 'DataCorp',
+      logo: 'https://via.placeholder.com/50', // Placeholder logo URL
+    },
+    {
+      title: 'UX/UI Designer',
+      description: 'Design user-friendly interfaces for apps and websites.',
+      budget: '$150/month',
+      rating: 4.8,
+      company: 'Creative Studios',
+      logo: 'https://via.placeholder.com/50', // Placeholder logo URL
+    },
+  ].map((job, index) => (
+    <div
+      key={index}
+      className="w-full p-6 text-left bg-white rounded-lg shadow-md sm:w-80"
+    >
+      <div className="flex items-center mb-4">
+        <img
+          src={job.logo}
+          alt={`${job.company} logo`}
+          className="w-12 h-12 rounded-full mr-4"
+        />
+        <h3 className="text-lg font-bold text-green-700">{job.title}</h3>
+      </div>
+      <p className="mt-2 text-sm text-gray-700">{job.description}</p>
+      <div className="mt-4 text-xs text-gray-500">
+        <span>Estimated Budget: </span>
+        <span className="font-bold text-gray-800">{job.budget}</span>
+      </div>
+      {/* Rating Section */}
+      <div className="flex items-center mt-2 space-x-1">
+        <span className="text-yellow-500">
+          {Array.from({ length: Math.floor(job.rating) }, (_, i) => (
+            <svg
+              key={i}
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966h4.175c.969 0 1.371 1.24.588 1.81l-3.405 2.481 1.286 3.966c.3.921-.755 1.688-1.54 1.118L10 13.011l-3.405 2.481c-.785.57-1.84-.197-1.54-1.118l1.286-3.966-3.405-2.481c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.966z" />
+            </svg>
+          ))}
+          {job.rating % 1 !== 0 && (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966h4.175c.969 0 1.371 1.24.588 1.81l-3.405 2.481 1.286 3.966c.3.921-.755 1.688-1.54 1.118L10 13.011l-3.405 2.481c-.785.57-1.84-.197-1.54-1.118l1.286-3.966-3.405-2.481c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.966z" />
+            </svg>
+          )}
+        </span>
+        <span className="ml-2 text-sm text-gray-600">{job.rating} stars</span>
+      </div>
+      <div className="mt-4 text-sm font-medium text-green-600">{job.company}</div>
+      <div className="flex justify-between mt-6">
+  {/* Apply Now Button */}
+  <button className="px-5 py-3 text-sm font-medium text-white bg-teal-500 rounded-md hover:bg-teal-600">
+    Apply Now
+  </button>
 
-            {/* Job Cards Section */}
-            <div className="flex flex-wrap justify-center gap-4 mt-8">
-              {['Software Engineer', 'Data Analyst', 'UX/UI Designer'].map(
-                (title, index) => (
-                  <div
-                    key={index}
-                    className="w-full p-6 text-center bg-white rounded-lg shadow-lg sm:w-64"
-                  >
-                    <h3 className="text-lg font-bold text-gray-800">
-                      {title}
-                    </h3>
-                    <p className="mt-2 text-sm text-gray-600">
-                      {title === 'Software Engineer'
-                        ? 'Develop and maintain web applications.'
-                        : title === 'Data Analyst'
-                        ? 'Analyze data to help companies make decisions.'
-                        : 'Design user-friendly interfaces for apps and websites.'}
-                    </p>
-                    <button className="px-4 py-2 mt-4 text-white bg-teal-500 rounded-lg hover:bg-teal-600">
-                      Apply
-                    </button>
-                  </div>
+  {/* Save Job Button */}
+  <button className="px-5 py-3 text-sm font-medium text-white bg-teal-500 rounded-md hover:bg-teal-600">
+    Save Job
+  </button>
+</div>
+
+
+
+    </div>
                 )
               )}
            </div>
