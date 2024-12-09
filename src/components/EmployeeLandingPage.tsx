@@ -9,7 +9,12 @@ interface jobHiring {
   jobDesc: string;
 }
 
-
+declare global {
+  interface Window {
+    SpeechRecognition: any;
+    webkitSpeechRecognition: any;
+  }
+}
 
 
 const tutorials = [
@@ -43,10 +48,25 @@ const EmployeeLandingPage = () => {
   const [letter, setLetter] = useState<string>('');
   const [isOpen, setIsOpen] = useState(false);
   const handleLogout = () => {
-    // Add your logout logic here, such as clearing the session or redirecting the user.
+    // Clear session-related data
+    localStorage.removeItem('accountName'); // Remove specific items, if needed
+    localStorage.removeItem('id'); // Remove the user ID from localStorage
+  
+    // Optional: Clear other session-related data if stored
+    // localStorage.clear(); // If you want to clear all localStorage items
+  
+    // Redirect the user to the login page
+    navigate('/login');
+    
+    // Log out message for debugging purposes
     console.log('Logging out...');
   };
+
+
   
+  
+  
+
 
 
   
@@ -104,6 +124,8 @@ const toggleDropdown = () => {
   };
 
   
+
+  
   
   const toggleModal = (jobTitle?: string) => {
     setSelectedJobTitle(jobTitle || ''); // Set the job title when the modal is opened
@@ -123,12 +145,43 @@ const toggleDropdown = () => {
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, [slides.length]);
 
+
+  // Speech-to-text search bar functionality
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const SpeechRecognition =
+    window.SpeechRecognition || (window as any).webkitSpeechRecognition;
+  const recognition = SpeechRecognition ? new SpeechRecognition() : null;
+
+  const handleMicClick = () => {
+    if (recognition) {
+      recognition.start();
+
+      recognition.onresult = (event: any) => {
+        const transcript = event.results[0][0].transcript;
+        setSearchQuery(transcript);
+      };
+
+      recognition.onerror = (event: any) => {
+        console.error('Speech recognition error', event.error);
+      };
+    } else {
+      alert('Speech Recognition not supported in this browser.');
+    }
+  };
+
+  
+
   // Function to render the content based on the active tab
   const renderContent = () => {
     switch (activeTab) {
       case 'Home':
         return (
           <>
+
+
+
+
 
 
 
@@ -317,17 +370,20 @@ const toggleDropdown = () => {
             Welcome, {accountName}
           </span>
 
-          {/* Search Bar */}
-          <div className="flex items-center gap-2">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="w-full p-2 border border-gray-900 rounded-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-teal-400"
-            />
-            <button className="p-2 bg-teal-500 rounded-full">
-              <img src="/Microphone.png" alt="Mic" className="w-6 h-6" />
-            </button>
-          </div>
+      {/* Search Bar */}
+<div className="flex items-center gap-2">
+  <input
+    type="text"
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state as user types
+    placeholder="Search..."
+    className="w-full p-2 border border-gray-900 rounded-full sm:w-48 focus:outline-none focus:ring-2 focus:ring-teal-400"
+  />
+  <button className="p-2 bg-teal-500 rounded-full" onClick={handleMicClick}>
+    <img src="/Microphone.png" alt="Mic" className="w-6 h-6" />
+  </button>
+</div>
+
 
 {/* Profile Button */}
 <div className="relative">
