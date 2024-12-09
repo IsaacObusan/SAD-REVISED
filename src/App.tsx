@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Footer from './components/Footer'; // Import the Footer component
 
@@ -10,6 +10,7 @@ const EmployerLandingPage = React.lazy(() => import('./components/EmployerLandin
 const ErrorPage = React.lazy(() => import('./components/Error'));
 const SignUp = React.lazy(() => import('./components/SignUp'));
 const Admin = React.lazy(() => import('./components/Admin'));
+const YourProfile = React.lazy(() => import('./components/YourProfile')); // Lazy load YourProfile component
 
 const LoadingSpinner = () => (
   <div className="flex items-center justify-center h-screen">
@@ -28,6 +29,7 @@ const App: React.FC = () => {
           <Route path="/employee-landing" element={<EmployeeLandingPage />} />
           <Route path="/employer-landing" element={<EmployerLandingPage />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/profile" element={<YourProfile />} /> {/* Add route for YourProfile */}
           <Route path="/*" element={<ErrorPage />} />
         </Routes>
         <Footer /> {/* Insert Footer component */}

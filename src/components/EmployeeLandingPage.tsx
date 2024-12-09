@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Footer from './Footer';
+import { useNavigate } from 'react-router-dom';
 
 
 interface jobHiring {
@@ -275,9 +276,9 @@ const toggleDropdown = () => {
         <option value="" disabled>
           Find Work
         </option>
-        <option value="Option1">Option 1</option>
-        <option value="Option2">Option 2</option>
-        <option value="Option3">Option 3</option>
+        <option value="Option1">Work</option>
+        <option value="Option2">Saved Jobs</option>
+        <option value="Option3">Proposals</option>
       </select>
     </div>
 
@@ -290,9 +291,9 @@ const toggleDropdown = () => {
         <option value="" disabled>
           Deliver Work
         </option>
-        <option value="Option1">Option 1</option>
-        <option value="Option2">Option 2</option>
-        <option value="Option3">Option 3</option>
+        <option value="Option1">Active</option>
+        <option value="Option2">History</option>
+        <option value="Option3">Hourly</option>
       </select>
     </div>
   </div>
