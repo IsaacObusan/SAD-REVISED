@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 
 
+
 const MainLandingPage = () => {
   const [activeTab, setActiveTab] = useState('Job Search');
   const navigate = useNavigate();

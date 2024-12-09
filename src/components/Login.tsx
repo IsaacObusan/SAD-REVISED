@@ -105,6 +105,19 @@ const Login: React.FC = () => {
           {error && <p className="mt-4 text-center text-red-500">{error}</p>}
         </form>
 
+
+        <div className="mt-4 text-center">
+      <p className="text-sm text-gray-600">
+        <span
+          onClick={() => navigate('/forgot')}
+          className="text-teal-500 cursor-pointer hover:underline"
+        >
+          Forgot Password?
+        </span>
+          </p>
+        </div>
+
+
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
             Don't have an account?{' '}
@@ -112,10 +125,12 @@ const Login: React.FC = () => {
               onClick={() => navigate('/sign-up')}
               className="text-teal-500 cursor-pointer hover:underline"
             >
-              Sign up
+          Sign up
             </span>
           </p>
         </div>
+
+      
       </div>
     </div>
   );
