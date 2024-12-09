@@ -150,25 +150,29 @@ const toggleDropdown = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const SpeechRecognition =
-    window.SpeechRecognition || (window as any).webkitSpeechRecognition;
-  const recognition = SpeechRecognition ? new SpeechRecognition() : null;
+  window.SpeechRecognition || (window as any).webkitSpeechRecognition;
+const recognition = SpeechRecognition ? new SpeechRecognition() : null;
 
-  const handleMicClick = () => {
-    if (recognition) {
-      recognition.start();
+const handleMicClick = () => {
+  if (recognition) {
+    recognition.start();
 
-      recognition.onresult = (event: any) => {
-        const transcript = event.results[0][0].transcript;
-        setSearchQuery(transcript);
-      };
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      setSearchQuery(transcript);  // Update searchQuery with the recognized speech
+    };
 
-      recognition.onerror = (event: any) => {
-        console.error('Speech recognition error', event.error);
-      };
-    } else {
-      alert('Speech Recognition not supported in this browser.');
-    }
-  };
+    recognition.onerror = (event: any) => {
+      console.error('Speech recognition error', event.error);
+    };
+
+    recognition.onend = () => {
+      console.log('Speech recognition service has stopped');
+    };
+  } else {
+    alert('Speech Recognition not supported in this browser.');
+  }
+};
 
   
 
@@ -372,7 +376,7 @@ const toggleDropdown = () => {
 
       {/* Search Bar */}
 <div className="flex items-center gap-2">
-  <input
+<input
     type="text"
     value={searchQuery}
     onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state as user types
