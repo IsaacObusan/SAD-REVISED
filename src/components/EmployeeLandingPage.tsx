@@ -330,6 +330,9 @@ const handleMicClick = () => {
                       </button>
                     </div>
                   </div>
+
+
+                  
         
                   {/* Find Employer Cards Section (Outside the Frame) */}
                   <section className="px-4 mt-12 sm:px-8 w-full">

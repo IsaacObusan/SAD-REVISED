@@ -13,20 +13,16 @@ const YourProfile: React.FC = () => {
     'Experienced developer specializing in web and mobile app development.'
   );
   const [rate, setRate] = useState('$50/hr');
-  const [publishedPortfolios, setPublishedPortfolios] = useState([
-    'Portfolio 1',
-    'Portfolio 2',
-  ]);
-  const [draftPortfolios, setDraftPortfolios] = useState([
-    'Draft Portfolio 1',
-    'Draft Portfolio 2',
-  ]);
+  const [publishedPortfolios, setPublishedPortfolios] = useState([ 'Portfolio 1', 'Portfolio 2' ]);
+  const [draftPortfolios, setDraftPortfolios] = useState([ 'Draft Portfolio 1', 'Draft Portfolio 2' ]);
   const [languagesUsed, setLanguagesUsed] = useState(['English', 'Spanish', 'French']);
 
   // Modal states
   const [isLanguageModalOpen, setIsLanguageModalOpen] = useState(false);
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>(languagesUsed);
+  const [profileImage, setProfileImage] = useState('https://via.placeholder.com/150');
 
+  // Handle input changes for various profile fields
   const handleEdit = (field: string) => {
     alert(`Edit ${field}`);
   };
@@ -49,6 +45,17 @@ const YourProfile: React.FC = () => {
     setIsLanguageModalOpen(false);
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setProfileImage(reader.result as string); // Update the profile image with the selected file
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
       {/* Profile Section */}
@@ -57,16 +64,23 @@ const YourProfile: React.FC = () => {
         <div className="flex items-center gap-4">
           <div className="relative">
             <img
-              src="https://via.placeholder.com/150"
+              src={profileImage}
               alt="Profile"
               className="w-24 h-24 rounded-full border border-gray-300 object-cover"
             />
-            <button
-              className="absolute bottom-0 right-0 bg-teal-500 text-white p-1 rounded-full"
-              onClick={() => handleEdit('Profile Image')}
+            <label
+              htmlFor="file-input"
+              className="absolute bottom-0 right-0 bg-teal-500 text-white p-1 rounded-full cursor-pointer"
             >
               Edit
-            </button>
+            </label>
+            <input
+              id="file-input"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageChange}
+            />
           </div>
           <div className="flex-1">
             <div className="flex items-center justify-between">
