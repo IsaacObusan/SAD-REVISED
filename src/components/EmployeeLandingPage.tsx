@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Footer from './Footer';
 import { useNavigate } from 'react-router-dom';
+import ExplorePage from './Explore';
 
 
 interface jobHiring {
@@ -36,6 +37,7 @@ const tutorials = [
 ];
 
 const EmployeeLandingPage = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("Home");
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0); // State for slideshow
@@ -368,8 +370,11 @@ const handleMicClick = () => {
                           </div>
         
                           {/* Explore Button */}
-                          <button className="w-full px-4 py-2 mt-4 text-white border-2 border-white rounded-lg hover:bg-teal-500 hover:text-white">
-                            Explore
+                          <button
+            className="w-full px-4 py-2 mt-4 text-white border-2 border-white rounded-lg hover:bg-teal-500 hover:text-white"
+            onClick={() => navigate('/explore')}
+        >
+            Explore
                           </button>
                         </div>
                       ))}
@@ -594,10 +599,15 @@ const handleMicClick = () => {
             ))}
           </div>
 
-          {/* Explore Button */}
-          <button className="w-full px-4 py-2 mt-4 text-white border-2 border-white rounded-lg hover:bg-teal-500 hover:text-white">
+   {/* Explore Button */}
+   <button
+            className="w-full px-4 py-2 mt-4 text-white border-2 border-white rounded-lg hover:bg-teal-500 hover:text-white"
+            onClick={() => navigate('/explore')}
+        >
             Explore
-          </button>
+</button>
+
+
         </div>
       ))}
     </div>
