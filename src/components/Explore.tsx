@@ -110,17 +110,20 @@ const ExplorePage: React.FC = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="w-full max-w-md p-6 bg-white rounded-lg">
             <h2 className="text-lg font-bold">Write a Review</h2>
-            <div className="flex mt-4">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <button
-                  key={star}
-                  onClick={() => setRating(star)}
-                  className={`w-8 h-8 ${star <= rating ? 'text-yellow-500' : 'text-gray-400'}`}
-                >
-                  ★
-                </button>
-              ))}
-            </div>
+            <div className="flex mt-4 space-x-2">
+  {[1, 2, 3, 4, 5].map((star) => (
+    <button
+      key={star}
+      onClick={() => setRating(star)}
+      className={`text-4xl transition-transform transform hover:scale-125 active:scale-150 ${
+        star <= rating ? 'text-yellow-500' : 'text-gray-400'
+      }`}
+    >
+      ★
+    </button>
+  ))}
+</div>
+
             <textarea
               className="w-full p-2 mt-4 border rounded"
               rows={4}
