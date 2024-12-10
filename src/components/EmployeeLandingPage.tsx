@@ -3,7 +3,7 @@ import axios from 'axios';
 import Footer from './Footer';
 import { useNavigate } from 'react-router-dom';
 import ExplorePage from './Explore';
-
+import AccessibilityTool from './AccessibilityTool';
 
 interface jobHiring {
   jobName: string;

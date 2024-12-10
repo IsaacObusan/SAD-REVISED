@@ -8,31 +8,13 @@ const AccessibilityToolbar: React.FC = () => {
   const handleTextSizeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newSize = parseInt(e.target.value, 10);
     setTextSize(newSize);
-    document.documentElement.style.setProperty("--base-font-size", `${newSize}px`);
-    
-    // Apply the new font size globally
     document.body.style.fontSize = `${newSize}px`;
-
-    // Apply the font size to all text-containing elements (including cards, etc.)
-    const allTextElements = document.querySelectorAll("p, span, h1, h2, h3, h4, h5, h6, li, .card p, .tab-content p, .read-the-docs");
-    allTextElements.forEach((element) => {
-      const textElement = element as HTMLElement;  // Cast to HTMLElement
-      textElement.style.fontSize = `${newSize}px`;
-    });
   };
 
   const handleLineSpacingChange = () => {
     const newSpacing = lineSpacing === 1.5 ? 2 : 1.5;
     setLineSpacing(newSpacing);
-    document.documentElement.style.setProperty("--line-height", `${newSpacing}`);
-    document.body.style.lineHeight = `${newSpacing}`; // Apply line height to body
-
-    // Apply line-height globally to all text-containing elements
-    const allTextElements = document.querySelectorAll("p, span, h1, h2, h3, h4, h5, h6, li, .card p, .tab-content p, .read-the-docs");
-    allTextElements.forEach((element) => {
-      const textElement = element as HTMLElement;
-      textElement.style.lineHeight = `${newSpacing}`;
-    });
+    document.body.style.lineHeight = `${newSpacing}`;
   };
 
   const toggleContrastMode = () => {
@@ -44,21 +26,9 @@ const AccessibilityToolbar: React.FC = () => {
     setTextSize(16);
     setLineSpacing(1.5);
     setIsHighContrast(false);
-    document.documentElement.style.setProperty("--base-font-size", "16px");
-    document.documentElement.style.setProperty("--line-height", "1.5");
-    document.body.classList.remove("high-contrast");
-
-    // Reset global styles for font size and line height
     document.body.style.fontSize = "16px";
     document.body.style.lineHeight = "1.5";
-
-    // Reset text size and line height in cards and other sections
-    const allTextElements = document.querySelectorAll("p, span, h1, h2, h3, h4, h5, h6, li, .card p, .tab-content p, .read-the-docs");
-    allTextElements.forEach((element) => {
-      const textElement = element as HTMLElement;
-      textElement.style.fontSize = "16px";
-      textElement.style.lineHeight = "1.5";
-    });
+    document.body.classList.remove("high-contrast");
   };
 
   return (

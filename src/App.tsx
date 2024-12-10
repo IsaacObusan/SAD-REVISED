@@ -1,9 +1,7 @@
 import React, { Suspense, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Footer from './components/Footer'; // Import the Footer component
-
-
-
+import AccessibilityTool from './components/AccessibilityTool'; // Import the AccessibilityToolbar component
 
 // Lazy-loaded components for optimization
 const MainLandingPage = React.lazy(() => import('./components/MainLandingPage'));
@@ -18,7 +16,6 @@ const MyStats = React.lazy(() => import('./components/MyStats'));
 const Settings = React.lazy(() => import('./components/Settings')); // Lazy load Settings component
 const Forgot = React.lazy(() => import('./components/Forgot')); // Lazy load Forgot component
 const Explore = React.lazy(() => import('./components/Explore')); 
-
 
 const LoadingSpinner = () => (
   <div className="flex items-center justify-center h-screen">
@@ -46,7 +43,7 @@ const App: React.FC = () => {
           <Route path="/*" element={<ErrorPage />} />
         </Routes>
         <Footer /> {/* Insert Footer component */}
-   
+        <AccessibilityTool /> {/* Insert AccessibilityToolbar component */}
       </Suspense>
     </BrowserRouter>
   );

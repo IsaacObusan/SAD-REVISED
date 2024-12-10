@@ -1,3 +1,4 @@
+/* Root and Basic Styles */
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -5,19 +6,68 @@
   text-align: center;
 }
 
+:root {
+  --base-font-size: 16px;
+  --line-height: 1.5;
+}
+
+body {
+  font-size: var(--base-font-size);
+  line-height: var(--line-height);
+  background-color: #fff; /* Light background for default mode */
+  color: #333; /* Dark text for default mode */
+}
+
+/* High Contrast Mode Styles */
+body.high-contrast {
+  background-color: #000; /* Black background */
+  color: #fff; /* White text */
+}
+
+body.high-contrast a {
+  color: #0ff; /* Cyan links for high contrast */
+  text-decoration: underline; /* Underline links for visibility */
+}
+
+body.high-contrast button {
+  background-color: #ff0; /* Yellow buttons */
+  color: #000; /* Black text on buttons */
+  border: 2px solid #fff; /* White border on buttons */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.high-contrast button:hover {
+  background-color: #ff4500; /* Red hover effect */
+  color: #fff; /* White text on hover */
+}
+
+body.high-contrast .card {
+  background-color: #222; /* Darker card background */
+  color: #fff; /* White text on card */
+  border: 1px solid #fff; /* White border for cards */
+}
+
+body.high-contrast .read-the-docs {
+  color: #f0f0f0; /* Light gray for doc links */
+}
+
+/* Logo Styles */
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+/* Animation for Logo */
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -33,10 +83,55 @@
   }
 }
 
+/* Card Styles */
 .card {
   padding: 2em;
+  transition: background-color 300ms, color 300ms;
 }
 
+/* Read the Docs Text */
 .read-the-docs {
   color: #888;
+  transition: color 300ms;
+}
+
+/* High Contrast Mode for Form Elements */
+body.high-contrast input,
+body.high-contrast textarea,
+body.high-contrast select {
+  background-color: #333; /* Dark background for form inputs */
+  color: #fff; /* White text */
+  border: 2px solid #fff; /* White borders */
+}
+
+body.high-contrast input:focus,
+body.high-contrast textarea:focus,
+body.high-contrast select:focus {
+  outline: none; /* Remove default focus outline */
+  border-color: #ff0; /* Yellow border on focus */
+}
+
+/* High Contrast Mode for Navigation */
+body.high-contrast nav {
+  background-color: #111; /* Dark background for nav */
+  color: #fff; /* White text for nav */
+}
+
+body.high-contrast nav a {
+  color: #ff0; /* Yellow text for links in navigation */
+}
+
+body.high-contrast nav a:hover {
+  color: #0ff; /* Cyan text on hover */
+}
+
+/* High Contrast Mode for Tables */
+body.high-contrast table {
+  background-color: #222; /* Dark background for tables */
+  color: #fff; /* White text in tables */
+}
+
+body.high-contrast table th,
+body.high-contrast table td {
+  border: 1px solid #fff; /* White borders for table cells */
 }
