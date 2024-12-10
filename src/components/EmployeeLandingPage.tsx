@@ -357,21 +357,7 @@ const handleMicClick = () => {
                             Discover great job opportunities with {employer}. Join their team and accelerate your career.
                           </p>
         
-                          {/* Rating */}
-                          <div className="flex items-center mt-4">
-                            {[1, 2, 3, 4, 5].map((star, idx) => (
-                              <svg
-                                key={idx}
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor"
-                                className={`w-5 h-5 ${star <= 4 ? 'text-yellow-400' : 'text-gray-300'}`}
-                                viewBox="0 0 16 16"
-                              >
-                                <path d="M8 12.26l3.16 2.09-1.2-4.18L12.97 6h-4.03L7.04 10.17 5.84 14.34 8 12.26z" />
-                              </svg>
-                            ))}
-                          </div>
-        
+                         
                           {/* Explore Button */}
                           <button
             className="w-full px-4 py-2 mt-4 text-white border-2 border-white rounded-lg hover:bg-teal-500 hover:text-white"
@@ -587,20 +573,7 @@ const handleMicClick = () => {
             Discover great job opportunities with {employer}. Join their team and accelerate your career.
           </p>
 
-          {/* Rating */}
-          <div className="flex items-center mt-4">
-            {[1, 2, 3, 4, 5].map((star, idx) => (
-              <svg
-                key={idx}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                className={`w-5 h-5 ${star <= 4 ? 'text-yellow-400' : 'text-gray-300'}`}
-                viewBox="0 0 16 16"
-              >
-                <path d="M8 12.26l3.16 2.09-1.2-4.18L12.97 6h-4.03L7.04 10.17 5.84 14.34 8 12.26z" />
-              </svg>
-            ))}
-          </div>
+       
 
    {/* Explore Button */}
    <button

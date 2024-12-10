@@ -117,21 +117,7 @@ const MainLandingPage = () => {
         <span>Estimated Budget: </span>
         <span className="font-bold text-gray-800">{job.budget}</span>
       </div>
-      {/* Rating Section */}
-      <div className="flex items-center mt-2 space-x-1">
-        {Array.from({ length: 5 }, (_, i) => (
-          <svg
-            key={i}
-            xmlns="http://www.w3.org/2000/svg"
-            className={`w-5 h-5 ${i < job.rating ? 'text-yellow-500' : 'text-gray-300'}`}
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966h4.175c.969 0 1.371 1.24.588 1.81l-3.405 2.481 1.286 3.966c.3.921-.755 1.688-1.54 1.118L10 13.011l-3.405 2.481c-.785.57-1.84-.197-1.54-1.118l1.286-3.966-3.405-2.481c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.966z" />
-          </svg>
-        ))}
-        <span className="ml-2 text-sm text-gray-600">{job.rating} stars</span>
-      </div>
+     
       <div className="mt-4 text-sm font-medium text-green-600">{job.company}</div>
       {/* Job Location */}
       <div className="mt-2 text-sm text-gray-600">{job.location}</div>
@@ -307,21 +293,7 @@ const MainLandingPage = () => {
                           Discover great job opportunities with {employer}. Join their team and accelerate your career.
                         </p>
           
-                        {/* Rating */}
-                        <div className="flex items-center mt-4">
-                          {[1, 2, 3, 4, 5].map((star, idx) => (
-                            <svg
-                              key={idx}
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="currentColor"
-                              className={`w-5 h-5 ${star <= 4 ? 'text-yellow-400' : 'text-gray-300'}`}
-                              viewBox="0 0 16 16"
-                            >
-                              <path d="M8 12.26l3.16 2.09-1.2-4.18L12.97 6h-4.03L7.04 10.17 5.84 14.34 8 12.26z" />
-                            </svg>
-                          ))}
-                        </div>
-          
+                        
                         {/* Explore Button */}
                         <button className="w-full px-4 py-2 mt-4 text-white border-2 border-white rounded-lg hover:bg-teal-500 hover:text-white">
                           Explore
@@ -591,21 +563,7 @@ case 'Career Advice':
             Discover great job opportunities with {employer}. Join their team and accelerate your career.
           </p>
 
-          {/* Rating */}
-          <div className="flex items-center mt-4">
-            {[1, 2, 3, 4, 5].map((star, idx) => (
-              <svg
-                key={idx}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                className={`w-5 h-5 ${star <= 4 ? 'text-yellow-400' : 'text-gray-300'}`}
-                viewBox="0 0 16 16"
-              >
-                <path d="M8 12.26l3.16 2.09-1.2-4.18L12.97 6h-4.03L7.04 10.17 5.84 14.34 8 12.26z" />
-              </svg>
-            ))}
-          </div>
-
+         
           {/* Explore Button */}
           <button className="w-full px-4 py-2 mt-4 text-white border-2 border-white rounded-lg hover:bg-teal-500 hover:text-white">
             Explore
