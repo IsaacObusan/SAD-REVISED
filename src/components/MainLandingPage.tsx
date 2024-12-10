@@ -78,6 +78,7 @@ const MainLandingPage = () => {
       budget: '$100/month',
       rating: 5,
       company: 'Tech Innovations',
+      location: 'New York, NY', // Job location
       logo: 'https://via.placeholder.com/50', // Placeholder logo URL
     },
     {
@@ -86,6 +87,7 @@ const MainLandingPage = () => {
       budget: '$120/month',
       rating: 4.5,
       company: 'DataCorp',
+      location: 'San Francisco, CA', // Job location
       logo: 'https://via.placeholder.com/50', // Placeholder logo URL
     },
     {
@@ -94,6 +96,7 @@ const MainLandingPage = () => {
       budget: '$150/month',
       rating: 4.8,
       company: 'Creative Studios',
+      location: 'Austin, TX', // Job location
       logo: 'https://via.placeholder.com/50', // Placeholder logo URL
     },
   ].map((job, index) => (
@@ -116,42 +119,32 @@ const MainLandingPage = () => {
       </div>
       {/* Rating Section */}
       <div className="flex items-center mt-2 space-x-1">
-        <span className="text-yellow-500">
-          {Array.from({ length: Math.floor(job.rating) }, (_, i) => (
-            <svg
-              key={i}
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966h4.175c.969 0 1.371 1.24.588 1.81l-3.405 2.481 1.286 3.966c.3.921-.755 1.688-1.54 1.118L10 13.011l-3.405 2.481c-.785.57-1.84-.197-1.54-1.118l1.286-3.966-3.405-2.481c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.966z" />
-            </svg>
-          ))}
-          {job.rating % 1 !== 0 && (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966h4.175c.969 0 1.371 1.24.588 1.81l-3.405 2.481 1.286 3.966c.3.921-.755 1.688-1.54 1.118L10 13.011l-3.405 2.481c-.785.57-1.84-.197-1.54-1.118l1.286-3.966-3.405-2.481c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.966z" />
-            </svg>
-          )}
-        </span>
+        {Array.from({ length: 5 }, (_, i) => (
+          <svg
+            key={i}
+            xmlns="http://www.w3.org/2000/svg"
+            className={`w-5 h-5 ${i < job.rating ? 'text-yellow-500' : 'text-gray-300'}`}
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966h4.175c.969 0 1.371 1.24.588 1.81l-3.405 2.481 1.286 3.966c.3.921-.755 1.688-1.54 1.118L10 13.011l-3.405 2.481c-.785.57-1.84-.197-1.54-1.118l1.286-3.966-3.405-2.481c-.783-.57-.38-1.81.588-1.81h4.175l1.286-3.966z" />
+          </svg>
+        ))}
         <span className="ml-2 text-sm text-gray-600">{job.rating} stars</span>
       </div>
       <div className="mt-4 text-sm font-medium text-green-600">{job.company}</div>
+      {/* Job Location */}
+      <div className="mt-2 text-sm text-gray-600">{job.location}</div>
       <div className="flex justify-between mt-6">
-  {/* Apply Now Button */}
-  <button className="px-5 py-3 text-sm font-medium text-white bg-teal-500 rounded-md hover:bg-teal-600">
-    Apply Now
-  </button>
+        {/* Apply Now Button */}
+        <button className="px-5 py-3 text-sm font-medium text-white bg-teal-500 rounded-md hover:bg-teal-600">
+          Apply Now
+        </button>
 
-  {/* Save Job Button */}
-  <button className="px-5 py-3 text-sm font-medium text-white bg-teal-500 rounded-md hover:bg-teal-600">
-    Save Job
-  </button>
+        {/* Save Job Button */}
+        <button className="px-5 py-3 text-sm font-medium text-white bg-teal-500 rounded-md hover:bg-teal-600">
+          Save Job
+        </button>
 </div>
 
 
