@@ -8,7 +8,7 @@ import {
   FaUndo,
   FaSearchPlus,
 } from "react-icons/fa";
-import VoiceCommand from "./VoiceCommand"; // Import the VoiceCommand component
+// Import the VoiceCommand component
 
 const AccessibilityToolbar: React.FC = () => {
   const [textSize, setTextSize] = useState(16);
@@ -209,7 +209,7 @@ const AccessibilityToolbar: React.FC = () => {
             </div>
 
             {/* Voice Command Button */}
-            <VoiceCommand />
+           
           </div>
         </div>
       )}

@@ -149,6 +149,28 @@ def retrieveData():
         return jsonify(data), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+    
+@app.route("/retrieve_employer", methods=["GET"])
+def retrieveEmployer():
+    try:
+        # Create a connection to the database
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        # Retrieve data from MySQL
+        query = "SELECT * FROM employer"
+        cursor.execute(query)
+        result = cursor.fetchall()
+
+        # Close the connection
+        cursor.close()
+        connection.close()
+
+        # Return the retrieved data as a JSON response
+        data = [{"empName": row[1], "empAge": row[2],"empCom": row[4], "comDesc": row[5], "comImage": row[6]} for row in result]
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
 
 
 @app.route("/signup", methods=["POST"])

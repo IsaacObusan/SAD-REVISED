@@ -15,6 +15,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(''); // State for handling error messages
   const navigate = useNavigate();
+  const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
 
   const validateEmail = (email: string) => {
     const re = /\S+@\S+\.\S+/;
@@ -37,7 +38,7 @@ const Login: React.FC = () => {
 
     try {
       // Send login request with typed response
-      const response = await axios.post<LoginResponse>('http://192.168.1.5:8082/login', { email, password });
+      const response = await axios.post<LoginResponse>(serverUrl+'login', { email, password });
 
       if (response.data.role === 'admin') {
         navigate('/admin'); // Navigate to Admin page

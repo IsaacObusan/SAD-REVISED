@@ -17,6 +17,14 @@ declare global {
   }
 }
 
+interface employerDetails{
+  empName: string;
+  empAge: string;
+  empCom: string;
+  comDesc: string;
+  comImage: string;
+}
+
 
 const tutorials = [
   { 
@@ -49,6 +57,7 @@ const EmployeeLandingPage = () => {
   const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
   const [letter, setLetter] = useState<string>('');
   const [isOpen, setIsOpen] = useState(false);
+  const [companyDetails, setCompanyDetails] = useState<employerDetails[]>([]);
   const handleLogout = () => {
     // Clear session-related data
     localStorage.removeItem('accountName'); // Remove specific items, if needed
@@ -64,14 +73,20 @@ const EmployeeLandingPage = () => {
     console.log('Logging out...');
   };
 
-
-  
-  
-  
-
-
-
-  
+  const retrieveEmployer = async () => {
+    try {
+      const response = await fetch(serverUrl + "retrieve_employer");
+      const data = await response.json();  // Assuming the response is JSON
+      console.log(data);
+      if (Array.isArray(data)) {
+        setCompanyDetails(data);
+      } else {
+        console.error("Expected an array, but got:", data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
 const toggleDropdown = () => {
   setIsOpen((prev) => !prev);
@@ -138,6 +153,7 @@ const toggleDropdown = () => {
 
   useEffect(() => {
     retrieveData();
+    retrieveEmployer();
   }, []);
 
   // Automated slideshow
@@ -492,23 +508,23 @@ const handleMicClick = () => {
                   <section className="px-4 mt-12 sm:px-8 w-full">
                     <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Explore Companies</h2>
                     <div className="flex justify-center gap-4 overflow-x-scroll">
-                      {['Employer 1', 'Employer 2', 'Employer 3', 'Employer 4'].map((employer, index) => (
+                      {companyDetails.map((dets, index) => (
                         <div
                           key={index}
                           className="flex-shrink-0 p-6 text-white transition-all duration-300 transform rounded-lg shadow-xl w-72 bg-gradient-to-r from-teal-500 to-teal-600 hover:scale-105"
                         >
                           {/* Employer Logo */}
                           <div className="flex justify-center mb-4">
-                            <img
+                            {/*<img
                               src={`/${employer.toLowerCase().replace(' ', '-')}-logo.png`}
                               alt={employer}
                               className="w-16 h-16 rounded-full"
-                            />
+                            />*/}
                           </div>
         
-                          <h3 className="text-2xl font-bold">{employer}</h3>
+                          <h3 className="text-2xl font-bold">{dets.empCom}</h3>
                           <p className="mt-2 text-sm">
-                            Discover great job opportunities with {employer}. Join their team and accelerate your career.
+                            Discover great job opportunities with {dets.empCom}. Join their team and accelerate your career.
                           </p>
         
                          
@@ -708,23 +724,23 @@ const handleMicClick = () => {
   <section className="px-4 mt-12 sm:px-8">
     <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Explore Companies</h2>
     <div className="flex justify-center gap-4 overflow-x-scroll">
-      {['Employer 1', 'Employer 2', 'Employer 3', 'Employer 4'].map((employer, index) => (
+      {companyDetails.slice(0,3).map((dets, index) => (
         <div
           key={index}
           className="flex-shrink-0 p-6 text-white transition-all duration-300 transform rounded-lg shadow-xl w-72 bg-gradient-to-r from-teal-500 to-teal-600 hover:scale-105"
         >
           {/* Employer Logo */}
           <div className="flex justify-center mb-4">
-            <img
+            {/*<img
               src={`/${employer.toLowerCase().replace(' ', '-')}-logo.png`}
               alt={employer}
               className="w-16 h-16 rounded-full"
-            />
+            />*/}
           </div>
 
-          <h3 className="text-2xl font-bold">{employer}</h3>
+          <h3 className="text-2xl font-bold">{dets.empCom}</h3>
           <p className="mt-2 text-sm">
-            Discover great job opportunities with {employer}. Join their team and accelerate your career.
+            Discover great job opportunities with {dets.empCom}. Join their team and accelerate your career.
           </p>
 
        
