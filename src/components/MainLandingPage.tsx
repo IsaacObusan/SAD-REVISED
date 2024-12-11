@@ -1,14 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import AccessibilityTool from './AccessibilityTool';
+import axios from 'axios';
 
+interface jobHiring {
+  jobName: string;
+  jobDesc: string;
+  jobRate: string;
+  jobMuni: string;
+  jobProvince: string;
+  jobCompany: string;
+  jobLogo: string;
+}
 
-
+interface employerDetails{
+  empName: string;
+  empAge: string;
+  empCom: string;
+  comImage: string;
+}
 
 const MainLandingPage = () => {
   const [activeTab, setActiveTab] = useState('Job Search');
   const navigate = useNavigate();
+  const [jobDetails, setJobDetails] = useState<jobHiring[]>([]);
+  const [companyDetails, setCompanyDetails] = useState<employerDetails[]>([]);
+  const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
+
+  const retrieveData = async () => {
+    try {
+      const response = await fetch(serverUrl + "retrieve_job");
+      const data = await response.json();  // Assuming the response is JSON
+      console.log("Data from fetch:", data);
+      if (Array.isArray(data)) {
+        setJobDetails(data);
+      } else {
+        console.error("Expected an array, but got:", data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const retrieveEmployer = async () => {
+    try {
+      const response = await fetch(serverUrl + "retrieve_employer");
+      const data = await response.json();  // Assuming the response is JSON
+      console.log(data);
+      if (Array.isArray(data)) {
+        setCompanyDetails(data);
+      } else {
+        console.error("Expected an array, but got:", data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    retrieveData();
+    retrieveEmployer();
+  }, []);
 
   // Function to render the content based on the active tab
   const renderContent = () => {
@@ -73,56 +126,28 @@ const MainLandingPage = () => {
             </div>
 {/* Job Cards Section */}
 <div className="flex flex-wrap justify-center gap-4 mt-8">
-  {[
-    {
-      title: 'Software Engineer',
-      description: 'Develop and maintain web applications.',
-      budget: '$100/month',
-      rating: 5,
-      company: 'Tech Innovations',
-      location: 'New York, NY', // Job location
-      logo: 'https://via.placeholder.com/50', // Placeholder logo URL
-    },
-    {
-      title: 'Data Analyst',
-      description: 'Analyze data to help companies make decisions.',
-      budget: '$120/month',
-      rating: 4.5,
-      company: 'DataCorp',
-      location: 'San Francisco, CA', // Job location
-      logo: 'https://via.placeholder.com/50', // Placeholder logo URL
-    },
-    {
-      title: 'UX/UI Designer',
-      description: 'Design user-friendly interfaces for apps and websites.',
-      budget: '$150/month',
-      rating: 4.8,
-      company: 'Creative Studios',
-      location: 'Austin, TX', // Job location
-      logo: 'https://via.placeholder.com/50', // Placeholder logo URL
-    },
-  ].map((job, index) => (
+  {jobDetails.slice(0,3).map((job, index) => (
     <div
       key={index}
       className="w-full p-6 text-left bg-white rounded-lg shadow-md sm:w-80"
     >
       <div className="flex items-center mb-4">
         <img
-          src={job.logo}
-          alt={`${job.company} logo`}
+          src={job.jobLogo}
+          alt={`${job.jobCompany} logo`}
           className="w-12 h-12 rounded-full mr-4"
         />
-        <h3 className="text-lg font-bold text-green-700">{job.title}</h3>
+        <h3 className="text-lg font-bold text-green-700">{job.jobName}</h3>
       </div>
-      <p className="mt-2 text-sm text-gray-700">{job.description}</p>
+      <p className="mt-2 text-sm text-gray-700">{job.jobDesc}</p>
       <div className="mt-4 text-xs text-gray-500">
         <span>Estimated Budget: </span>
-        <span className="font-bold text-gray-800">{job.budget}</span>
+        <span className="font-bold text-gray-800">{job.jobRate}</span>
       </div>
      
-      <div className="mt-4 text-sm font-medium text-green-600">{job.company}</div>
+      <div className="mt-4 text-sm font-medium text-green-600">{job.jobCompany}</div>
       {/* Job Location */}
-      <div className="mt-2 text-sm text-gray-600">{job.location}</div>
+      <div className="mt-2 text-sm text-gray-600">{job.jobProvince}, {job.jobMuni}</div>
       <div className="flex justify-between mt-6">
         {/* Apply Now Button */}
         <button className="px-5 py-3 text-sm font-medium text-white bg-teal-500 rounded-md hover:bg-teal-600">
@@ -276,7 +301,7 @@ const MainLandingPage = () => {
                 <section className="px-4 mt-12 sm:px-8 w-full">
                   <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Explore Companies</h2>
                   <div className="flex justify-center gap-4 overflow-x-scroll">
-                    {['Employer 1', 'Employer 2', 'Employer 3', 'Employer 4'].map((employer, index) => (
+                    {companyDetails.map((dets, index) => (
                       <div
                         key={index}
                         className="flex-shrink-0 p-6 text-white transition-all duration-300 transform rounded-lg shadow-xl w-72 bg-gradient-to-r from-teal-500 to-teal-600 hover:scale-105"
@@ -284,15 +309,15 @@ const MainLandingPage = () => {
                         {/* Employer Logo */}
                         <div className="flex justify-center mb-4">
                           <img
-                            src={`/${employer.toLowerCase().replace(' ', '-')}-logo.png`}
-                            alt={employer}
+                            src={dets.comImage}
+                            alt={"Logo of " + dets.empCom}
                             className="w-16 h-16 rounded-full"
                           />
                         </div>
           
-                        <h3 className="text-2xl font-bold">{employer}</h3>
+                        <h3 className="text-2xl font-bold">{dets.empCom}</h3>
                         <p className="mt-2 text-sm">
-                          Discover great job opportunities with {employer}. Join their team and accelerate your career.
+                          Discover great job opportunities with {dets.empCom}. Join their team and accelerate your career.
                         </p>
           
                         
@@ -558,7 +583,7 @@ case 'Career Advice':
   <section className="px-4 mt-12 sm:px-8">
     <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Explore Companies</h2>
     <div className="flex justify-center gap-4 overflow-x-scroll">
-      {['Employer 1', 'Employer 2', 'Employer 3', 'Employer 4'].map((employer, index) => (
+      {companyDetails.slice(0,3).map((dets, index) => (
         <div
           key={index}
           className="flex-shrink-0 p-6 text-white transition-all duration-300 transform rounded-lg shadow-xl w-72 bg-gradient-to-r from-teal-500 to-teal-600 hover:scale-105"
@@ -566,15 +591,15 @@ case 'Career Advice':
           {/* Employer Logo */}
           <div className="flex justify-center mb-4">
             <img
-              src={`/${employer.toLowerCase().replace(' ', '-')}-logo.png`}
-              alt={employer}
+              src={dets.comImage}
+              alt={"Logo for " + dets.empCom}
               className="w-16 h-16 rounded-full"
             />
           </div>
 
-          <h3 className="text-2xl font-bold">{employer}</h3>
+          <h3 className="text-2xl font-bold">{dets.empCom}</h3>
           <p className="mt-2 text-sm">
-            Discover great job opportunities with {employer}. Join their team and accelerate your career.
+            Discover great job opportunities with {dets.empCom}. Join their team and accelerate your career.
           </p>
 
          

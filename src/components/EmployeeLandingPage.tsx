@@ -72,6 +72,9 @@ const EmployeeLandingPage = () => {
     // Log out message for debugging purposes
     console.log('Logging out...');
   };
+  const [maxCount, setMaxCount] = useState(0);
+  const startingPoint = 0;
+  const endPoint = startingPoint + 5;
 
   const retrieveEmployer = async () => {
     try {
@@ -80,6 +83,7 @@ const EmployeeLandingPage = () => {
       console.log(data);
       if (Array.isArray(data)) {
         setCompanyDetails(data);
+        setMaxCount(companyDetails.length);
       } else {
         console.error("Expected an array, but got:", data);
       }
@@ -508,7 +512,7 @@ const handleMicClick = () => {
                   <section className="px-4 mt-12 sm:px-8 w-full">
                     <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Explore Companies</h2>
                     <div className="flex justify-center gap-4 overflow-x-scroll">
-                      {companyDetails.map((dets, index) => (
+                      {companyDetails.slice(startingPoint, endPoint).map((dets, index) => (
                         <div
                           key={index}
                           className="flex-shrink-0 p-6 text-white transition-all duration-300 transform rounded-lg shadow-xl w-72 bg-gradient-to-r from-teal-500 to-teal-600 hover:scale-105"

@@ -136,7 +136,7 @@ def retrieveData():
         cursor = connection.cursor()
 
         # Retrieve data from MySQL
-        query = "SELECT job_name, job_desc FROM job_hiring"
+        query = "SELECT job_name, job_desc, job_rate, b.employer_company, b.company_image, c.* FROM job_hiring a JOIN employer b ON a.job_employer = b.employer_id JOIN address c ON b.employer_address_id = c.address_id;"
         cursor.execute(query)
         result = cursor.fetchall()
 
@@ -145,7 +145,7 @@ def retrieveData():
         connection.close()
 
         # Return the retrieved data as a JSON response
-        data = [{"jobName": row[0], "jobDesc": row[1]} for row in result]
+        data = [{"jobName": row[0], "jobDesc": row[1], "jobRate": row[2],"jobCompany": row[3], "jobLogo": row[4],"jobMuni": row[9], "jobProvince": row[10]} for row in result]
         return jsonify(data), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
@@ -167,7 +167,7 @@ def retrieveEmployer():
         connection.close()
 
         # Return the retrieved data as a JSON response
-        data = [{"empName": row[1], "empAge": row[2],"empCom": row[4], "comDesc": row[5], "comImage": row[6]} for row in result]
+        data = [{"empName": row[1], "empAge": row[2],"empCom": row[4], "comImage": row[5]} for row in result]
         return jsonify(data), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
