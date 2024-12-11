@@ -33,7 +33,7 @@ const MainLandingPage = () => {
   {/* Button to navigate to SignUp */}
   <button
   onClick={() => navigate('/sign-up')}
-  className="absolute w-1/5 px-4 py-3 text-xl text-black transition-all duration-300 bg-transparent border-2 border-teal-500 rounded-lg right-12 bottom-32 hover:bg-teal-500 hover:text-white hover:border-teal-600"
+  className="absolute w-1/5 px-4 py-3 text-xl text-white transition-all duration-300 bg-transparent border-2 border-teal-500 rounded-lg right-12 bottom-32 hover:bg-teal-500 hover:text-white hover:border-teal-600"
 >
   Sign Up
 </button>
@@ -42,7 +42,7 @@ const MainLandingPage = () => {
   {/* Learn More Button beside Sign Up Button */}
   <button
   onClick={() => navigate('/more-info')}
-  className="absolute w-1/5 px-4 py-3 text-xl text-black transition-all duration-300 bg-transparent border-2 border-teal-500 rounded-lg right-12 bottom-10 hover:bg-teal-500 hover:text-white"
+  className="absolute w-1/5 px-4 py-3 text-xl text-white transition-all duration-300 bg-transparent border-2 border-teal-500 rounded-lg right-12 bottom-10 hover:bg-teal-500 hover:text-white"
 >
   Learn More
 </button>

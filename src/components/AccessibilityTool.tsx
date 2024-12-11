@@ -33,11 +33,13 @@ const AccessibilityToolbar: React.FC = () => {
 
   return (
     <div
-      className="fixed bottom-0 left-0 w-full bg-gray-900 text-gray-100 p-4 flex items-center justify-between z-50 border-t-2 border-gray-600"
-      style={{
-        boxShadow: "0 -2px 5px rgba(0,0,0,0.2)",
-      }}
-    >
+    className="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-gray-50 text-gray-800 p-4 flex items-center justify-between z-50 border-2 border-gray-600 rounded-lg w-4/5 sm:w-4/5"
+    style={{
+      boxShadow: "0 -2px 5px rgba(0,0,0,0.2)",
+    }}
+  >
+  
+  
       <button
         onClick={toggleContrastMode}
         className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold py-2 px-4 rounded"
@@ -77,5 +79,7 @@ const AccessibilityToolbar: React.FC = () => {
     </div>
   );
 };
+
+
 
 export default AccessibilityToolbar;
