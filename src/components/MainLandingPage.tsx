@@ -411,29 +411,41 @@ case 'Career Advice':
                       </div>
                     ))}
                   </div>
-                  {/* Bottom Frames with Buttons */}
-      <div className="mt-12 w-full max-w-screen-md space-y-6">
-        <div className="flex flex-col items-center justify-between p-6 bg-white rounded-lg shadow-lg sm:flex-row">
-          <div>
-            <h3 className="text-lg font-bold text-gray-800">Find Job Opportunities</h3>
-            <p className="mt-2 text-sm text-gray-600">
-              Browse jobs tailored for persons with disabilities and take the first step in your career.
-            </p>
-          </div>
-          <button className="mt-4 sm:mt-0 px-6 py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
-            Explore Jobs
-          </button>
-        </div>
-        <div className="flex flex-col items-center justify-between p-6 bg-white rounded-lg shadow-lg sm:flex-row">
-          <div>
-            <h3 className="text-lg font-bold text-gray-800">Access Training Programs</h3>
-            <p className="mt-2 text-sm text-gray-600">
-              Enroll in training courses designed to empower and enhance your skills.
-            </p>
-          </div>
-          <button className="mt-4 sm:mt-0 px-6 py-3 text-white bg-green-600 rounded-lg hover:bg-green-700">
-            Start Learning
-          </button>
+     {/* Bottom Frames with Buttons */}
+<div className="mt-12 w-full max-w-screen-md space-y-6">
+  <div className="flex flex-col items-center justify-between p-6 bg-white rounded-lg shadow-lg sm:flex-row">
+    <div>
+      <h3 className="text-lg font-bold text-gray-800">Find Job Opportunities</h3>
+      <p className="mt-2 text-sm text-gray-600">
+        Browse jobs tailored for persons with disabilities and take the first step in your career.
+      </p>
+    </div>
+    <button className="mt-4 sm:mt-0 px-6 py-3 text-white bg-teal-500 rounded-lg hover:bg-blue-700">
+      Explore Jobs
+    </button>
+  </div>
+  <div className="flex flex-col items-center justify-between p-6 bg-white rounded-lg shadow-lg sm:flex-row">
+    <div>
+      <h3 className="text-lg font-bold text-gray-800">Access Training Programs</h3>
+      <p className="mt-2 text-sm text-gray-600">
+        Enroll in training courses designed to empower and enhance your skills.
+      </p>
+    </div>
+    <button className="mt-4 sm:mt-0 px-6 py-3 text-white bg-teal-500 rounded-lg hover:bg-green-700">
+      Start Learning
+    </button>
+  </div>
+  {/* New Frame for PWD Career Guide Materials */}
+  <div className="flex flex-col items-center justify-between p-6 bg-white rounded-lg shadow-lg sm:flex-row">
+    <div>
+      <h3 className="text-lg font-bold text-gray-800">PWD Career Guide Materials</h3>
+      <p className="mt-2 text-sm text-gray-600">
+        Access career resources and guides designed specifically for persons with disabilities.
+      </p>
+    </div>
+    <button className="mt-4 sm:mt-0 px-6 py-3 text-white bg-teal-500 rounded-lg hover:bg-purple-700">
+      View Materials
+    </button>
         </div>
       </div>
 {/* Subscribe Frame with Icon at the Top of Caption */}
@@ -467,7 +479,7 @@ case 'Career Advice':
       Subscribe
     </button>
     <p className="mt-2 text-sm text-gray-600 text-center">
-      You can cancel emails at any time. By clicking ‘subscribe’ you agree to Jobstreet’s Privacy Statement.
+      You can cancel emails at any time. By clicking ‘subscribe’ you agree to JobCompass’s Privacy Statement.
     </p>
   </div>
 </div>

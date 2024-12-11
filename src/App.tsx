@@ -16,6 +16,7 @@ const MyStats = React.lazy(() => import('./components/MyStats'));
 const Settings = React.lazy(() => import('./components/Settings')); // Lazy load Settings component
 const Forgot = React.lazy(() => import('./components/Forgot')); // Lazy load Forgot component
 const Explore = React.lazy(() => import('./components/Explore')); 
+const Materials = React.lazy(() => import('./components/Materials'));
 
 const LoadingSpinner = () => (
   <div className="flex items-center justify-center h-screen">
@@ -39,6 +40,7 @@ const App: React.FC = () => {
           <Route path="/settings" element={<Settings />} /> {/* Add route for Settings */}
           <Route path="/forgot" element={<Forgot />} /> {/* Add route for Forgot Password */}
           <Route path="/explore" element={<Explore />} />
+          <Route path="/materials" element={<Materials/>} />
 
           <Route path="/*" element={<ErrorPage />} />
         </Routes>
