@@ -1,14 +1,23 @@
-import React, { useState, useRef } from "react";
-import { FaArrowDown, FaArrowUp, FaAdjust, FaFont, FaArrowsAltV, FaUndo } from "react-icons/fa";
+import React, { useState, useRef, useEffect } from "react";
+import {
+  FaArrowDown,
+  FaArrowUp,
+  FaAdjust,
+  FaFont,
+  FaArrowsAltV,
+  FaUndo,
+  FaSearchPlus,
+} from "react-icons/fa";
+import VoiceCommand from "./VoiceCommand"; // Import the VoiceCommand component
 
 const AccessibilityToolbar: React.FC = () => {
   const [textSize, setTextSize] = useState(16);
   const [lineSpacing, setLineSpacing] = useState(1.5);
   const [isHighContrast, setIsHighContrast] = useState(false);
   const [isToolbarVisible, setIsToolbarVisible] = useState(true);
-
-  // Button state to track which button is clicked
+  const [isMagnifierActive, setIsMagnifierActive] = useState(false);
   const [activeButton, setActiveButton] = useState<string | null>(null);
+  const [magnifierPosition, setMagnifierPosition] = useState({ x: 0, y: 0 });
 
   const toolbarRef = useRef<HTMLDivElement | null>(null);
   const [dragging, setDragging] = useState(false);
@@ -38,13 +47,37 @@ const AccessibilityToolbar: React.FC = () => {
     document.body.style.fontSize = "16px";
     document.body.style.lineHeight = "1.5";
     document.body.classList.remove("high-contrast");
+    setIsMagnifierActive(false);
   };
 
   const toggleToolbarVisibility = () => {
     setIsToolbarVisible(!isToolbarVisible);
   };
 
-  // Handling drag events
+  const toggleMagnifier = () => {
+    setIsMagnifierActive(!isMagnifierActive);
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (isMagnifierActive) {
+        setMagnifierPosition({ x: e.clientX, y: e.clientY });
+      }
+    };
+
+    if (isMagnifierActive) {
+      document.body.style.cursor = "zoom-in";
+      document.addEventListener("mousemove", handleMouseMove);
+    } else {
+      document.body.style.cursor = "default";
+      document.removeEventListener("mousemove", handleMouseMove);
+    }
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [isMagnifierActive]);
+
   const handleMouseDown = (e: React.MouseEvent) => {
     if (toolbarRef.current) {
       setDragging(true);
@@ -68,18 +101,16 @@ const AccessibilityToolbar: React.FC = () => {
     setDragging(false);
   };
 
-  // Toggle active state for each button
+
+  
+
   const handleButtonClick = (buttonName: string) => {
-    if (activeButton === buttonName) {
-      setActiveButton(null); // Deactivate if clicked again
-    } else {
-      setActiveButton(buttonName); // Activate the clicked button
-    }
+    setActiveButton(activeButton === buttonName ? null : buttonName);
   };
 
   return (
     <div>
-      {/* Toggle button */}
+      {/* Toggle Button */}
       <button
         onClick={toggleToolbarVisibility}
         className="fixed bottom-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-teal-500 to-teal-500 text-white p-4 rounded-full z-50 border-4 border-indigo-700 shadow-xl transition duration-300 ease-in-out hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-600 hover:scale-105"
@@ -91,7 +122,7 @@ const AccessibilityToolbar: React.FC = () => {
       {isToolbarVisible && (
         <div
           ref={toolbarRef}
-          className="fixed bottom-16 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-gray-700 to-gray-900 text-white p-3 md:p-4 flex flex-col items-center space-y-4 justify-center z-50 border-2 border-gray-600 rounded-xl w-2/3 sm:w-1/2 md:w-1/3 shadow-2xl"
+          className="fixed bottom-16 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-gray-700 to-gray-900 text-white p-3 md:p-4 flex flex-col items-center space-y-4 justify-center z-50 border-2 border-gray-600 rounded-xl w-3/4 sm:w-2/3 md:w-1/2 shadow-2xl"
           style={{
             boxShadow: "0 4px 10px rgba(0,0,0,0.4)",
             transition: "transform 0.2s ease",
@@ -164,9 +195,40 @@ const AccessibilityToolbar: React.FC = () => {
               </button>
               <span className="text-xs mt-1">Reset</span>
             </div>
+
+            {/* Magnifier Button */}
+            <div className="flex flex-col items-center">
+              <button
+                onClick={toggleMagnifier}
+                className={`bg-purple-500 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 transform ${isMagnifierActive ? "scale-110 shadow-lg" : "hover:scale-110 hover:shadow-lg"}`}
+                aria-label="Toggle Magnifier"
+              >
+                <FaSearchPlus size={20} />
+              </button>
+              <span className="text-xs mt-1">Magnifier</span>
+            </div>
+
+            {/* Voice Command Button */}
+            <VoiceCommand />
           </div>
         </div>
       )}
+
+<div
+          className="fixed pointer-events-none rounded-full border-2 border-gray-300 shadow-lg"
+          style={{
+            width: "150px",
+            height: "150px",
+            backgroundColor: "transparent",
+            backdropFilter: "blur(0px)",
+            position: "absolute",
+            transform: `translate(-50%, -50%)`,
+            left: `${magnifierPosition.x}px`,
+            top: `${magnifierPosition.y}px`,
+            zIndex: 1000,
+          }}
+        ></div>
+      )
     </div>
   );
 };

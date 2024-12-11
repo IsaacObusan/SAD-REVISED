@@ -5,6 +5,7 @@ import AccessibilityTool from './AccessibilityTool';
 
 
 
+
 const MainLandingPage = () => {
   const [activeTab, setActiveTab] = useState('Job Search');
   const navigate = useNavigate();

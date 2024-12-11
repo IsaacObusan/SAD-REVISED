@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Footer from './components/Footer'; // Import the Footer component
 import AccessibilityTool from './components/AccessibilityTool'; // Import the AccessibilityToolbar component
 
+
 // Lazy-loaded components for optimization
 const MainLandingPage = React.lazy(() => import('./components/MainLandingPage'));
 const Login = React.lazy(() => import('./components/Login'));
@@ -17,6 +18,7 @@ const Settings = React.lazy(() => import('./components/Settings')); // Lazy load
 const Forgot = React.lazy(() => import('./components/Forgot')); // Lazy load Forgot component
 const Explore = React.lazy(() => import('./components/Explore')); 
 const Materials = React.lazy(() => import('./components/Materials'));
+const VoiceCommand = React.lazy(() => import('./components/VoiceCommand'));
 
 const LoadingSpinner = () => (
   <div className="flex items-center justify-center h-screen">
@@ -41,6 +43,7 @@ const App: React.FC = () => {
           <Route path="/forgot" element={<Forgot />} /> {/* Add route for Forgot Password */}
           <Route path="/explore" element={<Explore />} />
           <Route path="/materials" element={<Materials/>} />
+          <Route path="voice-command" element={<VoiceCommand/>} />
 
           <Route path="/*" element={<ErrorPage />} />
         </Routes>
