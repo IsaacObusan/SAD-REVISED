@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
+
+
 import {
   FaArrowDown,
   FaArrowUp,
@@ -8,7 +10,6 @@ import {
   FaUndo,
   FaSearchPlus,
 } from "react-icons/fa";
-// Import the VoiceCommand component
 
 const AccessibilityToolbar: React.FC = () => {
   const [textSize, setTextSize] = useState(16);
@@ -55,7 +56,11 @@ const AccessibilityToolbar: React.FC = () => {
   };
 
   const toggleMagnifier = () => {
-    setIsMagnifierActive(!isMagnifierActive);
+    setIsMagnifierActive((prevState) => {
+      const newState = !prevState;
+      document.body.style.cursor = newState ? "zoom-in" : "default";
+      return newState;
+    });
   };
 
   useEffect(() => {
@@ -66,10 +71,8 @@ const AccessibilityToolbar: React.FC = () => {
     };
 
     if (isMagnifierActive) {
-      document.body.style.cursor = "zoom-in";
       document.addEventListener("mousemove", handleMouseMove);
     } else {
-      document.body.style.cursor = "default";
       document.removeEventListener("mousemove", handleMouseMove);
     }
 
@@ -92,17 +95,20 @@ const AccessibilityToolbar: React.FC = () => {
     if (dragging && toolbarRef.current) {
       const newX = e.clientX - offset.x;
       const newY = e.clientY - offset.y;
-      toolbarRef.current.style.left = `${Math.max(0, Math.min(window.innerWidth - toolbarRef.current.offsetWidth, newX))}px`;
-      toolbarRef.current.style.top = `${Math.max(0, Math.min(window.innerHeight - toolbarRef.current.offsetHeight, newY))}px`;
+      toolbarRef.current.style.left = `${Math.max(
+        0,
+        Math.min(window.innerWidth - toolbarRef.current.offsetWidth, newX)
+      )}px`;
+      toolbarRef.current.style.top = `${Math.max(
+        0,
+        Math.min(window.innerHeight - toolbarRef.current.offsetHeight, newY)
+      )}px`;
     }
   };
 
   const handleMouseUp = () => {
     setDragging(false);
   };
-
-
-  
 
   const handleButtonClick = (buttonName: string) => {
     setActiveButton(activeButton === buttonName ? null : buttonName);
@@ -113,7 +119,7 @@ const AccessibilityToolbar: React.FC = () => {
       {/* Toggle Button */}
       <button
         onClick={toggleToolbarVisibility}
-        className="fixed bottom-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-teal-500 to-teal-500 text-white p-4 rounded-full z-50 border-4 border-indigo-700 shadow-xl transition duration-300 ease-in-out hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-600 hover:scale-105"
+        className="fixed z-50 p-4 text-white transition duration-300 ease-in-out transform -translate-x-1/2 border-4 border-indigo-700 rounded-full shadow-xl bottom-3 left-1/2 bg-gradient-to-r from-teal-500 to-teal-500 hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-600 hover:scale-105"
       >
         {isToolbarVisible ? <FaArrowDown size={20} /> : <FaArrowUp size={20} />}
       </button>
@@ -122,7 +128,11 @@ const AccessibilityToolbar: React.FC = () => {
       {isToolbarVisible && (
         <div
           ref={toolbarRef}
-          className="fixed bottom-16 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-gray-700 to-gray-900 text-white p-3 md:p-4 flex flex-col items-center space-y-4 justify-center z-50 border-2 border-gray-600 rounded-xl w-3/4 sm:w-2/3 md:w-1/2 shadow-2xl"
+          
+          className="fixed z-50 flex flex-col items-center w-1/2 p-2 text-white -translate-x-1/2 bg-gray-800 border border-gray-600 rounded-lg shadow-xl bottom-16 left-1/2 sm:w-2/3 md:w-1/3"
+
+
+
           style={{
             boxShadow: "0 4px 10px rgba(0,0,0,0.4)",
             transition: "transform 0.2s ease",
@@ -140,12 +150,14 @@ const AccessibilityToolbar: React.FC = () => {
                   toggleContrastMode();
                   handleButtonClick("contrast");
                 }}
-                className={`bg-yellow-500 text-gray-900 font-semibold py-2 px-4 rounded-full transition-all duration-300 transform ${activeButton === "contrast" ? "scale-110 shadow-lg" : "hover:scale-110 hover:shadow-lg"}`}
+                className={`bg-yellow-500 text-gray-900 font-semibold py-2 px-4 rounded-full transition-all duration-300 transform ${
+                  activeButton === "contrast" ? "scale-110 shadow-lg" : "hover:scale-110 hover:shadow-lg"
+                }`}
                 aria-label="Toggle Contrast"
               >
                 <FaAdjust size={20} />
               </button>
-              <span className="text-xs mt-1">Contrast</span>
+              <span className="mt-1 text-xs">Contrast</span>
             </div>
 
             {/* Text Size Button */}
@@ -163,7 +175,7 @@ const AccessibilityToolbar: React.FC = () => {
                 className="w-32 bg-gray-600 rounded-lg"
               />
               <span className="font-medium">{textSize}px</span>
-              <span className="text-xs mt-1">Text Size</span>
+              <span className="mt-1 text-xs">Text Size</span>
             </div>
 
             {/* Line Spacing Button */}
@@ -173,12 +185,14 @@ const AccessibilityToolbar: React.FC = () => {
                   handleLineSpacingChange();
                   handleButtonClick("spacing");
                 }}
-                className={`bg-teal-500 text-gray-900 font-semibold py-2 px-4 rounded-full transition-all duration-300 transform ${activeButton === "spacing" ? "scale-110 shadow-lg" : "hover:scale-110 hover:shadow-lg"}`}
+                className={`bg-teal-500 text-gray-900 font-semibold py-2 px-4 rounded-full transition-all duration-300 transform ${
+                  activeButton === "spacing" ? "scale-110 shadow-lg" : "hover:scale-110 hover:shadow-lg"
+                }`}
                 aria-label="Adjust Line Spacing"
               >
                 <FaArrowsAltV size={20} />
               </button>
-              <span className="text-xs mt-1">Spacing</span>
+              <span className="mt-1 text-xs">Spacing</span>
             </div>
 
             {/* Reset Button */}
@@ -188,47 +202,49 @@ const AccessibilityToolbar: React.FC = () => {
                   resetAccessibility();
                   handleButtonClick("reset");
                 }}
-                className={`bg-red-500 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 transform ${activeButton === "reset" ? "scale-110 shadow-lg" : "hover:scale-110 hover:shadow-lg"}`}
+                className={`bg-red-500 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 transform ${
+                  activeButton === "reset" ? "scale-110 shadow-lg" : "hover:scale-110 hover:shadow-lg"
+                }`}
                 aria-label="Reset Accessibility"
               >
                 <FaUndo size={20} />
               </button>
-              <span className="text-xs mt-1">Reset</span>
+              <span className="mt-1 text-xs">Reset</span>
             </div>
 
             {/* Magnifier Button */}
             <div className="flex flex-col items-center">
               <button
                 onClick={toggleMagnifier}
-                className={`bg-purple-500 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 transform ${isMagnifierActive ? "scale-110 shadow-lg" : "hover:scale-110 hover:shadow-lg"}`}
+                className={`bg-teal-500 text-white font-semibold py-2 px-4 rounded-full transition-all duration-300 transform ${
+                  isMagnifierActive ? "scale-110 shadow-lg" : "hover:scale-110 hover:shadow-lg"
+                }`}
                 aria-label="Toggle Magnifier"
               >
                 <FaSearchPlus size={20} />
               </button>
-              <span className="text-xs mt-1">Magnifier</span>
+              <span className="mt-1 text-xs">Magnifier</span>
             </div>
-
-            {/* Voice Command Button */}
-           
           </div>
         </div>
       )}
 
-<div
-          className="fixed pointer-events-none rounded-full border-2 border-gray-300 shadow-lg"
+      {/* Magnifier Lens */}
+      {isMagnifierActive && (
+        <div
+          className="fixed border-2 border-gray-300 rounded-full shadow-lg pointer-events-none"
           style={{
             width: "150px",
             height: "150px",
             backgroundColor: "transparent",
             backdropFilter: "blur(0px)",
-            position: "absolute",
             transform: `translate(-50%, -50%)`,
             left: `${magnifierPosition.x}px`,
             top: `${magnifierPosition.y}px`,
             zIndex: 1000,
           }}
         ></div>
-      )
+      )}
     </div>
   );
 };

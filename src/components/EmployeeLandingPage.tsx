@@ -332,24 +332,24 @@ const handleMicClick = () => {
               <div className="flex flex-col items-center p-8">
                 {/* Autoplay Video Slider with Caption Inside */}
                 <div className="relative w-full mb-20">
-                  <div className="w-full h-96 overflow-hidden"> {/* Adjusted height to h-96 */}
-                    <video autoPlay loop muted className="w-full h-full object-cover">
+                  <div className="w-full overflow-hidden h-96"> {/* Adjusted height to h-96 */}
+                    <video autoPlay loop muted className="object-cover w-full h-full">
                       <source src="/path/to/your/video.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                   </div>
-                  <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-30">
-                    <h2 className="text-3xl text-white font-bold text-center">
+                  <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-30">
+                    <h2 className="text-3xl font-bold text-center text-white">
                       Let Job Compass empower your career journey by guiding you.
                     </h2>
                   </div>
-                  <button className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white bg-transparent border-2 border-white px-6 py-3 rounded-full opacity-80 hover:bg-white hover:text-black">
+                  <button className="absolute px-6 py-3 text-white transform -translate-x-1/2 bg-transparent border-2 border-white rounded-full bottom-4 left-1/2 opacity-80 hover:bg-white hover:text-black">
                     Watch Now
                   </button>
                 </div>
           
                 {/* Career Advice Content */}
-                <h2 className="text-2xl font-bold text-gray-800 text-center">
+                <h2 className="text-2xl font-bold text-center text-gray-800">
                   Career Advice for PWDs
                 </h2>
                 <p className="mt-4 text-center text-gray-600">
@@ -404,7 +404,7 @@ const handleMicClick = () => {
                 </div>
           
           {/* Bottom Frames with Buttons */}
-<div className="mt-12 w-full max-w-screen-md space-y-6">
+<div className="w-full max-w-screen-md mt-12 space-y-6">
   <div className="flex flex-col items-center justify-between p-6 bg-white rounded-lg shadow-lg sm:flex-row">
     <div>
       <h3 className="text-lg font-bold text-gray-800">Find Job Opportunities</h3>
@@ -412,7 +412,7 @@ const handleMicClick = () => {
         Browse jobs tailored for persons with disabilities and take the first step in your career.
       </p>
     </div>
-    <button className="mt-4 sm:mt-0 px-6 py-3 text-white bg-teal-500 rounded-lg hover:bg-blue-700">
+    <button className="px-6 py-3 mt-4 text-white bg-teal-500 rounded-lg sm:mt-0 hover:bg-blue-700">
       Explore Jobs
     </button>
   </div>
@@ -423,7 +423,7 @@ const handleMicClick = () => {
         Enroll in training courses designed to empower and enhance your skills.
       </p>
     </div>
-    <button className="mt-4 sm:mt-0 px-6 py-3 text-white bg-teal-500 rounded-lg hover:bg-green-700">
+    <button className="px-6 py-3 mt-4 text-white bg-teal-500 rounded-lg sm:mt-0 hover:bg-green-700">
       Start Learning
     </button>
   </div>
@@ -436,7 +436,7 @@ const handleMicClick = () => {
       </p>
     </div>
     <button 
-      className="mt-4 sm:mt-0 px-6 py-3 text-white bg-teal-500 rounded-lg hover:bg-gray-300"
+      className="px-6 py-3 mt-4 text-white bg-teal-500 rounded-lg sm:mt-0 hover:bg-gray-300"
       onClick={handleClick}
     >
       View Materials
@@ -445,14 +445,14 @@ const handleMicClick = () => {
 </div>
           
                 {/* Subscribe Frame with Icon at the Top of Caption */}
-                <div className="mt-12 flex flex-col items-center justify-between p-6 bg-white rounded-lg shadow-lg sm:flex-row">
-                  <div className="w-full sm:w-80 space-y-4 mt-6 sm:mt-0">
+                <div className="flex flex-col items-center justify-between p-6 mt-12 bg-white rounded-lg shadow-lg sm:flex-row">
+                  <div className="w-full mt-6 space-y-4 sm:w-80 sm:mt-0">
                     {/* Icon Above the Caption */}
                     <div className="flex justify-center mb-4">
                       <img src="/path/to/your/icon.png" alt="Career Advice Icon" className="w-8 h-8" />
                     </div>
-                    <h3 className="text-lg font-bold text-gray-800 text-center">Subscribe to Career Advice</h3>
-                    <p className="mt-2 text-sm text-gray-600 text-center">
+                    <h3 className="text-lg font-bold text-center text-gray-800">Subscribe to Career Advice</h3>
+                    <p className="mt-2 text-sm text-center text-gray-600">
                       Get expert career advice delivered to your inbox.
                     </p>
                     {/* Form and Button */}
@@ -474,7 +474,7 @@ const handleMicClick = () => {
                     <button className="w-full py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
                       Subscribe
                     </button>
-                    <p className="mt-2 text-sm text-gray-600 text-center">
+                    <p className="mt-2 text-sm text-center text-gray-600">
                       You can cancel emails at any time. By clicking ‘subscribe’ you agree to JobCompass’s Privacy Statement.
                     </p>
                   </div>
@@ -486,8 +486,8 @@ const handleMicClick = () => {
               return (
                 <div className="flex flex-col items-center justify-center p-8 bg-gray-100">
                   {/* Explore Companies Frame */}
-                  <div className="p-8 border-4 border-teal-500 rounded-lg bg-white w-full max-w-4xl">
-                    <h2 className="text-2xl font-bold text-gray-800 text-center">Search Companies</h2>
+                  <div className="w-full max-w-4xl p-8 bg-white border-4 border-teal-500 rounded-lg">
+                    <h2 className="text-2xl font-bold text-center text-gray-800">Search Companies</h2>
                     <p className="mt-4 text-center text-gray-600">
                       Search for companies that are inclusive and offer opportunities to the PWD community.
                     </p>
@@ -499,7 +499,7 @@ const handleMicClick = () => {
                         placeholder="Search for companies..."
                         className="w-full max-w-xs p-2 border border-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500"
                       />
-                      <button className="ml-2 p-2 bg-teal-500 rounded-full">
+                      <button className="p-2 ml-2 bg-teal-500 rounded-full">
                         <img src="/Microphone.png" alt="Mic" className="w-6 h-6" />
                       </button>
                     </div>
@@ -509,7 +509,7 @@ const handleMicClick = () => {
                   
         
                   {/* Find Employer Cards Section (Outside the Frame) */}
-                  <section className="px-4 mt-12 sm:px-8 w-full">
+                  <section className="w-full px-4 mt-12 sm:px-8">
                     <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Explore Companies</h2>
                     <div className="flex justify-center gap-4 overflow-x-scroll">
                       {companyDetails.slice(startingPoint, endPoint).map((dets, index) => (
@@ -546,7 +546,7 @@ const handleMicClick = () => {
                     {/* Pagination Section */}
                     <div className="flex items-center justify-center gap-4 mt-8">
                       {/* Previous Button */}
-                      <button className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600">
+                      <button className="px-4 py-2 text-white bg-teal-500 rounded-lg hover:bg-teal-600">
                         Previous
                       </button>
         
@@ -563,7 +563,7 @@ const handleMicClick = () => {
                       </div>
         
                       {/* Next Button */}
-                      <button className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600">
+                      <button className="px-4 py-2 text-white bg-teal-500 rounded-lg hover:bg-teal-600">
                         Next
                       </button>
                     </div>
@@ -702,7 +702,7 @@ const handleMicClick = () => {
               </li>
               <li>
               <button
-      className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+      className="block w-full px-4 py-2 text-left hover:bg-gray-100"
       onClick={handleLogout}
     >
       Logout
