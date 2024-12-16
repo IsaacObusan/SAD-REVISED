@@ -4,12 +4,14 @@ import 'chart.js/auto';
 import Footer from './Footer';
 import { useNavigate } from 'react-router-dom';
 import axios  from 'axios';
+import PostModal from './PostModal';  // Import the modal component
 
 const LandingPageEmployer = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
   const [jobs, setJobs] = useState<string[]>([]);
   const [application, setApplication] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
   const accountName = localStorage.getItem("accountName");
   const accountId = localStorage.getItem("id");
   const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
@@ -18,6 +20,15 @@ const LandingPageEmployer = () => {
     localStorage.removeItem('accountName'); 
     localStorage.removeItem('id'); 
     navigate('/login');
+  };
+
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString); // Convert string to Date
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
   };
 
   const getJobs = async() => {
@@ -53,6 +64,15 @@ const LandingPageEmployer = () => {
     getApplication();
   }, []);
 
+  const handlePostJobClick = () => {
+    setIsModalOpen(true);  // Open the modal
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);  // Close the modal
+  };
+
+
   const renderContent = () => {
     switch (activeTab) {
       case 'overview':
@@ -63,7 +83,7 @@ const LandingPageEmployer = () => {
             <p className="mt-4">Here are your latest stats:</p>
 
             {/* Chart Section */}
-            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-6 mt-6 md:grid-cols-2">
               <div className="p-4 bg-gray-100 rounded shadow">
                 <h3 className="text-lg font-medium">Job Posting Insights</h3>
                 <Bar
@@ -118,9 +138,9 @@ const LandingPageEmployer = () => {
               <p className="mt-4">Here you can view and manage all your job postings:</p>
   
               {/* Modern Job Postings Table */}
-              <div className="overflow-x-auto mt-6">
-                <table className="min-w-full bg-white shadow-md rounded-md">
-                  <thead className="bg-teal-500 text-white">
+              <div className="mt-6 overflow-x-auto">
+                <table className="min-w-full bg-white rounded-md shadow-md">
+                  <thead className="text-white bg-teal-500">
                     <tr>
                       <th className="py-3 px-6 text-left">Job Title</th>
                       <th className="py-3 px-6 text-left">Description</th>
@@ -131,7 +151,7 @@ const LandingPageEmployer = () => {
                   <tbody>
                     {jobs.map((job, index) => (
                       <tr key={job[0]} className="border-b hover:bg-teal-50">
-                        <td className="py-3 px-6 flex items-center space-x-2">
+                        <td className="flex items-center px-6 py-3 space-x-2">
                           <img 
                             src={job[4]} 
                             alt="Company Logo" 
@@ -139,9 +159,9 @@ const LandingPageEmployer = () => {
                           />
                           <span>{job[1]}</span>
                         </td>
-                        <td className="py-3 px-6">{job[2]}</td>
-                        <td className="py-3 px-6 text-teal-500">{job[3]}</td>
-                        <td className="py-3 px-6 text-center">
+                        <td className="px-6 py-3">{job[2]}</td>
+                        <td className="px-6 py-3 text-teal-500">{job[3]}</td>
+                        <td className="px-6 py-3 text-center">
                           <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
                             Edit
                           </button>
@@ -151,27 +171,21 @@ const LandingPageEmployer = () => {
                   </tbody>
                 </table>
               </div>
-  
-              {/* Add New Job Button */}
-              <div className="mt-6">
-                <button className="px-6 py-3 text-white bg-teal-500 rounded-md hover:bg-teal-600">
-                  Post a New Job
-                </button>
-              </div>
+
             </div>
           );
   
-        case 'candidates':
+        case 'applicants':
           return (
             <div className="text-base text-gray-700">
-              {/* Candidates Content */}
-              <h2 className="text-xl font-bold">Review Candidates</h2>
+              {/* applicants Content */}
+              <h2 className="text-xl font-bold">Review Applicants</h2>
               <p className="mt-4">Manage and review your job applicants:</p>
   
               {/* Modern Candidate Table */}
-              <div className="overflow-x-auto mt-6">
-                <table className="min-w-full bg-white shadow-md rounded-md">
-                  <thead className="bg-teal-500 text-white">
+              <div className="mt-6 overflow-x-auto">
+                <table className="min-w-full bg-white rounded-md shadow-md">
+                  <thead className="text-white bg-teal-500">
                     <tr>
                       <th className="py-3 px-6 text-left">Name</th>
                       <th className="py-3 px-6 text-left">Age</th>
@@ -188,10 +202,12 @@ const LandingPageEmployer = () => {
                       <tr key={app[7]} className="border-b">
                         <td className="py-3 px-6">{app[0]}</td>
                         <td className="py-3 px-6">{app[1]}</td>
-                        <td className="py-3 px-6">{app[2]}</td>
+                        <td className="py-3 px-6">{JSON.parse(app[2]).map((impairment, index) => (
+                          <li key={index}>{impairment}</li>
+                        ))}</td>
                         <td className="py-3 px-6">{app[3]}</td>
                         <td className="py-3 px-6">{app[4]}</td>
-                        <td className="py-3 px-6">{app[5]}</td>
+                        <td className="py-3 px-6">{formatDate(app[5])}</td>
                         <td className="py-3 px-6 text-teal-500">{app[6]}</td>
                         <td className="py-3 px-6 text-center">
                           <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
@@ -226,7 +242,7 @@ const LandingPageEmployer = () => {
 
         {/* Navigation Tabs */}
         <nav className="flex flex-wrap justify-center gap-4 sm:flex-nowrap sm:gap-8">
-          {['overview', 'jobs', 'candidates', 'logout'].map((tab) => (
+          {['overview', 'jobs', 'applicants', 'logout'].map((tab) => (
             <button
               key={tab}
               className={`relative py-2 px-4 text-sm font-medium text-gray-900 transition-colors ${
@@ -247,12 +263,19 @@ const LandingPageEmployer = () => {
         </nav>
       </header>
 
+ 
       {/* Main Content */}
       <main className="p-4 mt-5 bg-white rounded-md shadow md:p-6">
         {renderContent()}
       </main>
+
+      {/* PostModal component */}
+      {isModalOpen && <PostModal onClose={handleCloseModal} showModal={false} setShowModal={function (value: React.SetStateAction<boolean>): void {
+          throw new Error('Function not implemented.');
+        } } />}
     </div>
   );
 };
+
 
 export default LandingPageEmployer;

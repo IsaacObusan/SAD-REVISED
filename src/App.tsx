@@ -1,9 +1,8 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Footer from './components/Footer'; // Import the Footer component
 import AccessibilityTool from './components/AccessibilityTool'; // Import the AccessibilityToolbar component
-
-
+import PostModal from './components/PostModal'; // Import the PostModal component
 
 // Lazy-loaded components for optimization
 const MainLandingPage = React.lazy(() => import('./components/MainLandingPage'));
@@ -31,6 +30,8 @@ const LoadingSpinner = () => (
 );
 
 const App: React.FC = () => {
+  const [showModal, setShowModal] = useState(false); // State to manage the modal visibility
+
   return (
     <BrowserRouter>
       <Suspense fallback={<LoadingSpinner />}>
@@ -49,18 +50,33 @@ const App: React.FC = () => {
           <Route path="/explore" element={<Explore />} />
           <Route path="/materials" element={<Materials />} />
           <Route path="/voice-command" element={<VoiceCommand />} />
-          <Route path="/high-contrast" element={<HighContrast />} /> 
-          {/* Add route for HighContrast */}
+          <Route path="/high-contrast" element={<HighContrast />} />
           <Route path="/apply-applicant" element={<ApplicantApply />} />
           <Route path="/*" element={<ErrorPage />} />
         </Routes>
 
+        {/* PostModal Component */}
+        <PostModal
+          showModal={showModal}
+          setShowModal={setShowModal} onClose={function (): void {
+            throw new Error('Function not implemented.');
+          } }        />
+
         {/* Footer and Accessibility Toolbar */}
         <Footer />
         <AccessibilityTool />
+
+        {/* Example button to trigger the modal */}
+        <button
+          onClick={() => setShowModal(true)}
+          className="fixed bottom-4 right-4 p-4 bg-teal-500 text-white rounded-full shadow-lg"
+        >
+          Post Job
+        </button>
       </Suspense>
     </BrowserRouter>
   );
 };
+
 
 export default App;
