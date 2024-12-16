@@ -4,11 +4,13 @@ import 'chart.js/auto';
 import Footer from './Footer';
 import { useNavigate } from 'react-router-dom';
 import axios  from 'axios';
+import PostModal from './PostModal';  // Import the modal component
 
 const LandingPageEmployer = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
   const [jobs, setJobs] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
   const accountName = localStorage.getItem("accountName");
   const accountId = localStorage.getItem("id");
   const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
@@ -37,6 +39,15 @@ const LandingPageEmployer = () => {
     getJobs();
   }, []);
 
+  const handlePostJobClick = () => {
+    setIsModalOpen(true);  // Open the modal
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);  // Close the modal
+  };
+
+
   const renderContent = () => {
     switch (activeTab) {
       case 'overview':
@@ -47,7 +58,7 @@ const LandingPageEmployer = () => {
             <p className="mt-4">Here are your latest stats:</p>
 
             {/* Chart Section */}
-            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-6 mt-6 md:grid-cols-2">
               <div className="p-4 bg-gray-100 rounded shadow">
                 <h3 className="text-lg font-medium">Job Posting Insights</h3>
                 <Bar
@@ -102,20 +113,20 @@ const LandingPageEmployer = () => {
               <p className="mt-4">Here you can view and manage all your job postings:</p>
   
               {/* Modern Job Postings Table */}
-              <div className="overflow-x-auto mt-6">
-                <table className="min-w-full bg-white shadow-md rounded-md">
-                  <thead className="bg-teal-500 text-white">
+              <div className="mt-6 overflow-x-auto">
+                <table className="min-w-full bg-white rounded-md shadow-md">
+                  <thead className="text-white bg-teal-500">
                     <tr>
-                      <th className="py-3 px-6 text-left">Job Title</th>
-                      <th className="py-3 px-6 text-left">Company</th>
-                      <th className="py-3 px-6 text-left">Status</th>
-                      <th className="py-3 px-6 text-center">Action</th>
+                      <th className="px-6 py-3 text-left">Job Title</th>
+                      <th className="px-6 py-3 text-left">Company</th>
+                      <th className="px-6 py-3 text-left">Status</th>
+                      <th className="px-6 py-3 text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     {jobs.map((job, index) => (
                       <tr key={job[0]} className="border-b hover:bg-teal-50">
-                        <td className="py-3 px-6 flex items-center space-x-2">
+                        <td className="flex items-center px-6 py-3 space-x-2">
                           <img 
                             src={job[4]} 
                             alt="Company Logo" 
@@ -123,9 +134,9 @@ const LandingPageEmployer = () => {
                           />
                           <span>{job[1]}</span>
                         </td>
-                        <td className="py-3 px-6">{job[2]}</td>
-                        <td className="py-3 px-6 text-teal-500">{job[3]}</td>
-                        <td className="py-3 px-6 text-center">
+                        <td className="px-6 py-3">{job[2]}</td>
+                        <td className="px-6 py-3 text-teal-500">{job[3]}</td>
+                        <td className="px-6 py-3 text-center">
                           <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
                             Edit
                           </button>
@@ -135,13 +146,7 @@ const LandingPageEmployer = () => {
                   </tbody>
                 </table>
               </div>
-  
-              {/* Add New Job Button */}
-              <div className="mt-6">
-                <button className="px-6 py-3 text-white bg-teal-500 rounded-md hover:bg-teal-600">
-                  Post a New Job
-                </button>
-              </div>
+
             </div>
           );
   
@@ -153,42 +158,42 @@ const LandingPageEmployer = () => {
               <p className="mt-4">Manage and review your job applicants:</p>
   
               {/* Modern Candidate Table */}
-              <div className="overflow-x-auto mt-6">
-                <table className="min-w-full bg-white shadow-md rounded-md">
-                  <thead className="bg-teal-500 text-white">
+              <div className="mt-6 overflow-x-auto">
+                <table className="min-w-full bg-white rounded-md shadow-md">
+                  <thead className="text-white bg-teal-500">
                     <tr>
-                      <th className="py-3 px-6 text-left">Candidate</th>
-                      <th className="py-3 px-6 text-left">Position</th>
-                      <th className="py-3 px-6 text-left">Status</th>
-                      <th className="py-3 px-6 text-center">Action</th>
+                      <th className="px-6 py-3 text-left">Candidate</th>
+                      <th className="px-6 py-3 text-left">Position</th>
+                      <th className="px-6 py-3 text-left">Status</th>
+                      <th className="px-6 py-3 text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr className="border-b">
-                      <td className="py-3 px-6">John Doe</td>
-                      <td className="py-3 px-6">Software Engineer</td>
-                      <td className="py-3 px-6 text-teal-500">Pending</td>
-                      <td className="py-3 px-6 text-center">
+                      <td className="px-6 py-3">John Doe</td>
+                      <td className="px-6 py-3">Software Engineer</td>
+                      <td className="px-6 py-3 text-teal-500">Pending</td>
+                      <td className="px-6 py-3 text-center">
                         <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
                           View Profile
                         </button>
                       </td>
                     </tr>
                     <tr className="border-b">
-                      <td className="py-3 px-6">Jane Smith</td>
-                      <td className="py-3 px-6">Data Analyst</td>
-                      <td className="py-3 px-6 text-teal-500">Reviewed</td>
-                      <td className="py-3 px-6 text-center">
+                      <td className="px-6 py-3">Jane Smith</td>
+                      <td className="px-6 py-3">Data Analyst</td>
+                      <td className="px-6 py-3 text-teal-500">Reviewed</td>
+                      <td className="px-6 py-3 text-center">
                         <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
                           View Profile
                         </button>
                       </td>
                     </tr>
                     <tr>
-                      <td className="py-3 px-6">Michael Brown</td>
-                      <td className="py-3 px-6">UX Designer</td>
-                      <td className="py-3 px-6 text-teal-500">Interviewed</td>
-                      <td className="py-3 px-6 text-center">
+                      <td className="px-6 py-3">Michael Brown</td>
+                      <td className="px-6 py-3">UX Designer</td>
+                      <td className="px-6 py-3 text-teal-500">Interviewed</td>
+                      <td className="px-6 py-3 text-center">
                         <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
                           View Profile
                         </button>
@@ -241,12 +246,19 @@ const LandingPageEmployer = () => {
         </nav>
       </header>
 
+ 
       {/* Main Content */}
       <main className="p-4 mt-5 bg-white rounded-md shadow md:p-6">
         {renderContent()}
       </main>
+
+      {/* PostModal component */}
+      {isModalOpen && <PostModal onClose={handleCloseModal} showModal={false} setShowModal={function (value: React.SetStateAction<boolean>): void {
+          throw new Error('Function not implemented.');
+        } } />}
     </div>
   );
 };
+
 
 export default LandingPageEmployer;
