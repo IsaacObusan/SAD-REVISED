@@ -1,12 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Bar, Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
 import Footer from './Footer';
-
-
+import { useNavigate } from 'react-router-dom';
+import axios  from 'axios';
 
 const LandingPageEmployer = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
+  const [jobs, setJobs] = useState<string[]>([]);
+  const accountName = localStorage.getItem("accountName");
+  const accountId = localStorage.getItem("id");
+  const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
+
+  const handleLogout = () => {
+    localStorage.removeItem('accountName'); 
+    localStorage.removeItem('id'); 
+    navigate('/login');
+  };
+
+  const getJobs = async() => {
+    try {
+      const response = await axios.post(serverUrl + "jobs", {id: accountId});
+      const data = response.data.job_dets;  // Assuming the response is JSON
+      if (Array.isArray(data)) {
+        setJobs(data);
+      } else {
+        console.error("Expected an array, but got:", data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    getJobs();
+  }, []);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -84,62 +113,25 @@ const LandingPageEmployer = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {/* Active Job Post */}
-                    <tr className="border-b hover:bg-teal-50">
-                      <td className="py-3 px-6 flex items-center space-x-2">
-                        <img 
-                          src="https://via.placeholder.com/30" 
-                          alt="Company Logo" 
-                          className="w-8 h-8 rounded-full"
-                        />
-                        <span>Software Engineer</span>
-                      </td>
-                      <td className="py-3 px-6">Tech Corp</td>
-                      <td className="py-3 px-6 text-teal-500">Active</td>
-                      <td className="py-3 px-6 text-center">
-                        <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
-                          Manage
-                        </button>
-                      </td>
-                    </tr>
-  
-                    {/* Closed Job Post */}
-                    <tr className="border-b hover:bg-teal-50">
-                      <td className="py-3 px-6 flex items-center space-x-2">
-                        <img 
-                          src="https://via.placeholder.com/30" 
-                          alt="Company Logo" 
-                          className="w-8 h-8 rounded-full"
-                        />
-                        <span>Data Analyst</span>
-                      </td>
-                      <td className="py-3 px-6">Data Solutions</td>
-                      <td className="py-3 px-6 text-gray-500">Closed</td>
-                      <td className="py-3 px-6 text-center">
-                        <button className="px-4 py-2 text-sm text-white bg-gray-500 rounded cursor-not-allowed" disabled>
-                          Closed
-                        </button>
-                      </td>
-                    </tr>
-  
-                    {/* Draft Job Post */}
-                    <tr className="border-b hover:bg-teal-50">
-                      <td className="py-3 px-6 flex items-center space-x-2">
-                        <img 
-                          src="https://via.placeholder.com/30" 
-                          alt="Company Logo" 
-                          className="w-8 h-8 rounded-full"
-                        />
-                        <span>UX Designer</span>
-                      </td>
-                      <td className="py-3 px-6">Creative Minds</td>
-                      <td className="py-3 px-6 text-yellow-500">Draft</td>
-                      <td className="py-3 px-6 text-center">
-                        <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
-                          Edit
-                        </button>
-                      </td>
-                    </tr>
+                    {jobs.map((job, index) => (
+                      <tr key={job[0]} className="border-b hover:bg-teal-50">
+                        <td className="py-3 px-6 flex items-center space-x-2">
+                          <img 
+                            src={job[4]} 
+                            alt="Company Logo" 
+                            className="w-8 h-8 rounded-full"
+                          />
+                          <span>{job[1]}</span>
+                        </td>
+                        <td className="py-3 px-6">{job[2]}</td>
+                        <td className="py-3 px-6 text-teal-500">{job[3]}</td>
+                        <td className="py-3 px-6 text-center">
+                          <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
+                            Edit
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
@@ -207,6 +199,9 @@ const LandingPageEmployer = () => {
               </div>
             </div>
           );
+
+        case 'logout':
+          handleLogout();
         default:
           return null;
       }
@@ -225,7 +220,7 @@ const LandingPageEmployer = () => {
 
         {/* Navigation Tabs */}
         <nav className="flex flex-wrap justify-center gap-4 sm:flex-nowrap sm:gap-8">
-          {['overview', 'jobs', 'candidates'].map((tab) => (
+          {['overview', 'jobs', 'candidates', 'logout'].map((tab) => (
             <button
               key={tab}
               className={`relative py-2 px-4 text-sm font-medium text-gray-900 transition-colors ${

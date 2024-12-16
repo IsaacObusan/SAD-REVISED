@@ -64,18 +64,9 @@ const EmployeeLandingPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [companyDetails, setCompanyDetails] = useState<employerDetails[]>([]);
   const handleLogout = () => {
-    // Clear session-related data
-    localStorage.removeItem('accountName'); // Remove specific items, if needed
-    localStorage.removeItem('id'); // Remove the user ID from localStorage
-  
-    // Optional: Clear other session-related data if stored
-    // localStorage.clear(); // If you want to clear all localStorage items
-  
-    // Redirect the user to the login page
+    localStorage.removeItem('accountName');
+    localStorage.removeItem('id'); 
     navigate('/login');
-    
-    // Log out message for debugging purposes
-    console.log('Logging out...');
   };
   const [maxCount, setMaxCount] = useState(0);
   const startingPoint = 0;

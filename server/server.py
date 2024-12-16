@@ -198,17 +198,12 @@ def login():
 
         #Get employer account
         cursor1 = connection.cursor()
-        query1 = "SELECT * FROM employer_account WHERE email = %s AND password = %s"
-        cursor1.execute(query1, (email, hashed_password))
-
-        #Get employer account
-        cursor1 = connection.cursor()
-        query1 = "SELECT * FROM employer_account WHERE email = %s AND password = %s"
+        query1 = "SELECT * FROM employer_account a JOIN employer b ON a.employer_acc_id = b.employer_id WHERE email = %s AND password = %s AND status = 'Active'"
         cursor1.execute(query1, (email, hashed_password))
 
         #Get applicant account
         cursor2 = connection.cursor()
-        query2 = "SELECT * FROM applicant_account a JOIN applicant b ON a.applicant_acc_id = b.applicant_id WHERE a.email = %s AND a.password = %s"
+        query2 = "SELECT * FROM applicant_account a JOIN applicant b ON a.applicant_acc_id = b.applicant_id WHERE a.email = %s AND a.password = %s AND status = 'Active'"
         cursor2.execute(query2, (email, hashed_password))
 
         result = cursor.fetchone()
@@ -220,12 +215,34 @@ def login():
             return jsonify({"role": "admin"})
         elif result1:
             set_session(email)
-            return jsonify({"role": "employer"})
+            return jsonify({"role": "employer", "id": result1[0], "name": result1[8]})
         elif result2:
             set_session(email)
             return jsonify({"role": "applicant", "id": result2[0],"name": result2[8]})
         else:
             return jsonify({"code": 401})
+
+    except Exception as e:
+        print(str(e))
+        return jsonify({"error": str(e)}), 400
+    
+@app.route("/jobs", methods=["POST"])
+def setJobs():
+    try:
+        connection = get_db_connection()
+        data = request.get_json()
+        employer_id = data["id"]
+
+        cursor = connection.cursor()
+        query = "SELECT a.job_id, a.job_name, b.employer_company, a.job_status, b.company_image FROM job_hiring a JOIN employer b ON a.job_employer = b.employer_id WHERE b.employer_id = %s"
+        cursor.execute(query,  (employer_id,))
+
+        result = cursor.fetchall()
+
+        if len(result) > 0:
+            return jsonify({"job_dets": result})
+        else:
+            return jsonify({"code": 405})
 
     except Exception as e:
         print(str(e))

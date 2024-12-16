@@ -47,6 +47,8 @@ const Login: React.FC = () => {
         localStorage.setItem('accountName', response.data.name || '');
         navigate('/employee-landing'); // Navigate to Employee Landing page
       } else if (response.data.role === 'employer') {
+        localStorage.setItem('id', response.data.id || '');
+        localStorage.setItem('accountName', response.data.name || '');
         navigate('/employer-landing'); // Navigate to Employer Landing page
       } else {
         setError('Invalid Credentials');
