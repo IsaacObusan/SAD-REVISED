@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
 import AccessibilityTool from './AccessibilityTool';
 import axios from 'axios';
+import HighContrast from './HighContrast';
+
 
 interface jobHiring {
   jobName: string;
@@ -80,7 +82,7 @@ const MainLandingPage = () => {
   ></video>
 
   {/* Caption on the Left Side and Bigger Font */}
-  <div className="absolute top-9 right-10 text-right text-white bg-opacity-75 py-6 px-12 rounded-lg">
+  <div className="absolute px-12 py-6 text-right text-white bg-opacity-75 rounded-lg top-9 right-10">
     <p className="text-3xl font-bold">Find Inclusive Job Opportunities for PWDs</p>
   </div>
 
@@ -135,7 +137,7 @@ const MainLandingPage = () => {
         <img
           src={job.jobLogo}
           alt={`${job.jobCompany} logo`}
-          className="w-12 h-12 rounded-full mr-4"
+          className="w-12 h-12 mr-4 rounded-full"
         />
         <h3 className="text-lg font-bold text-green-700">{job.jobName}</h3>
       </div>
@@ -184,7 +186,7 @@ const MainLandingPage = () => {
     </p>
     <button
       onClick={() => setActiveTab('Career Advice')}
-      className="px-4 py-2 mt-4 text-white bg-teal-500 border-white-400 rounded-lg hover:bg-gray-300"
+      className="px-4 py-2 mt-4 text-white bg-teal-500 rounded-lg border-white-400 hover:bg-gray-300"
     >
       Get Tips
     </button>
@@ -196,8 +198,8 @@ const MainLandingPage = () => {
           return (
             <div className="flex flex-col items-center justify-center p-8 bg-gray-100">
               {/* Main Profile Frame */}
-              <div className="p-8 border-4 border-teal-500 rounded-lg bg-white">
-                <h2 className="text-2xl font-bold text-gray-800 text-center">Your Profile</h2>
+              <div className="p-8 bg-white border-4 border-teal-500 rounded-lg">
+                <h2 className="text-2xl font-bold text-center text-gray-800">Your Profile</h2>
                 <p className="mt-4 text-center text-gray-600">
                   You haven't created your profile yet. Let employers know more about you and your unique skills!
                 </p>
@@ -206,7 +208,7 @@ const MainLandingPage = () => {
                 <div className="flex justify-center mt-6">
                   <button
                     onClick={() => navigate('/sign-up')} // Navigate to SignUp.tsx
-                    className="px-6 py-2 text-teal-500 border-2 border-teal-500 bg-transparent rounded-lg hover:bg-teal-500 hover:text-white"
+                    className="px-6 py-2 text-teal-500 bg-transparent border-2 border-teal-500 rounded-lg hover:bg-teal-500 hover:text-white"
                   >
                     Create Profile
                   </button>
@@ -214,8 +216,8 @@ const MainLandingPage = () => {
               </div>
   
               {/* Additional Captions Section (Outside the Frame) */}
-              <div className="mt-10 w-full max-w-4xl">
-                <h3 className="text-center text-xl font-semibold text-gray-800 mb-6">
+              <div className="w-full max-w-4xl mt-10">
+                <h3 className="mb-6 text-xl font-semibold text-center text-gray-800">
                   Empower Your Career Journey
                 </h3>
                 <div className="grid grid-cols-2 gap-8">
@@ -224,10 +226,10 @@ const MainLandingPage = () => {
                     <img
                       src="/icon_accessibility.png" // Replace with your local icon path
                       alt="Accessible Jobs Icon"
-                      className="mx-auto mb-4 w-16 h-16"
+                      className="w-16 h-16 mx-auto mb-4"
                     />
                     <h4 className="text-lg font-bold text-gray-800">Accessible Job Opportunities</h4>
-                    <p className="text-gray-600 mt-2">
+                    <p className="mt-2 text-gray-600">
                       Find job listings designed to meet the diverse needs of the PWD community.
                     </p>
                   </div>
@@ -237,10 +239,10 @@ const MainLandingPage = () => {
                     <img
                       src="/icon_visibility.png" // Replace with your local icon path
                       alt="Visibility Icon"
-                      className="mx-auto mb-4 w-16 h-16"
+                      className="w-16 h-16 mx-auto mb-4"
                     />
                     <h4 className="text-lg font-bold text-gray-800">Showcase Your Abilities</h4>
-                    <p className="text-gray-600 mt-2">
+                    <p className="mt-2 text-gray-600">
                       Highlight your unique skills and talents to attract inclusive employers.
                     </p>
                   </div>
@@ -250,10 +252,10 @@ const MainLandingPage = () => {
                     <img
                       src="/icon_support.png" // Replace with your local icon path
                       alt="Support Icon"
-                      className="mx-auto mb-4 w-16 h-16"
+                      className="w-16 h-16 mx-auto mb-4"
                     />
                     <h4 className="text-lg font-bold text-gray-800">Community Support</h4>
-                    <p className="text-gray-600 mt-2">
+                    <p className="mt-2 text-gray-600">
                       Connect with a supportive network of organizations and fellow job seekers.
                     </p>
                   </div>
@@ -263,10 +265,10 @@ const MainLandingPage = () => {
                     <img
                       src="/icon_empower.png" // Replace with your local icon path
                       alt="Empower Icon"
-                      className="mx-auto mb-4 w-16 h-16"
+                      className="w-16 h-16 mx-auto mb-4"
                     />
                     <h4 className="text-lg font-bold text-gray-800">Empower Your Future</h4>
-                    <p className="text-gray-600 mt-2">
+                    <p className="mt-2 text-gray-600">
                       Take control of your career with tools and resources tailored for success.
                     </p>
                   </div>
@@ -278,8 +280,8 @@ const MainLandingPage = () => {
             return (
               <div className="flex flex-col items-center justify-center p-8 bg-gray-100">
                 {/* Explore Companies Frame */}
-                <div className="p-8 border-4 border-teal-500 rounded-lg bg-white w-full max-w-4xl">
-                  <h2 className="text-2xl font-bold text-gray-800 text-center">Search Companies</h2>
+                <div className="w-full max-w-4xl p-8 bg-white border-4 border-teal-500 rounded-lg">
+                  <h2 className="text-2xl font-bold text-center text-gray-800">Search Companies</h2>
                   <p className="mt-4 text-center text-gray-600">
                     Search for companies that are inclusive and offer opportunities to the PWD community.
                   </p>
@@ -291,14 +293,14 @@ const MainLandingPage = () => {
                       placeholder="Search for companies..."
                       className="w-full max-w-xs p-2 border border-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500"
                     />
-                    <button className="ml-2 p-2 bg-teal-500 rounded-full">
+                    <button className="p-2 ml-2 bg-teal-500 rounded-full">
                       <img src="/Microphone.png" alt="Mic" className="w-6 h-6" />
                     </button>
                   </div>
                 </div>
           
                 {/* Find Employer Cards Section (Outside the Frame) */}
-                <section className="px-4 mt-12 sm:px-8 w-full">
+                <section className="w-full px-4 mt-12 sm:px-8">
                   <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Explore Companies</h2>
                   <div className="flex justify-center gap-4 overflow-x-scroll">
                     {companyDetails.map((dets, index) => (
@@ -332,7 +334,7 @@ const MainLandingPage = () => {
                   {/* Pagination Section */}
                   <div className="flex items-center justify-center gap-4 mt-8">
                     {/* Previous Button */}
-                    <button className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600">
+                    <button className="px-4 py-2 text-white bg-teal-500 rounded-lg hover:bg-teal-600">
                       Previous
                     </button>
           
@@ -349,7 +351,7 @@ const MainLandingPage = () => {
                     </div>
           
                     {/* Next Button */}
-                    <button className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600">
+                    <button className="px-4 py-2 text-white bg-teal-500 rounded-lg hover:bg-teal-600">
                       Next
                     </button>
                   </div>
@@ -365,18 +367,18 @@ case 'Career Advice':
     <div className="flex flex-col items-center p-8">
       {/* Autoplay Video Slider with Caption Inside */}
       <div className="relative w-full mb-20">
-        <div className="w-full h-96 overflow-hidden"> {/* Adjusted height to h-96 */}
-          <video autoPlay loop muted className="w-full h-full object-cover">
+        <div className="w-full overflow-hidden h-96"> {/* Adjusted height to h-96 */}
+          <video autoPlay loop muted className="object-cover w-full h-full">
             <source src="/path/to/your/video.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
-        <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-30">
-          <h2 className="text-3xl text-white font-bold text-center">
+        <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-30">
+          <h2 className="text-3xl font-bold text-center text-white">
             Let Job Compass empower your career journey by guiding you .
           </h2>
         </div>
-        <button className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white bg-transparent border-2 border-white px-6 py-3 rounded-full opacity-80 hover:bg-white hover:text-black">
+        <button className="absolute px-6 py-3 text-white transform -translate-x-1/2 bg-transparent border-2 border-white rounded-full bottom-4 left-1/2 opacity-80 hover:bg-white hover:text-black">
           Watch Now
 
                     </button>
@@ -384,7 +386,7 @@ case 'Career Advice':
                   </div>
             
                   {/* Career Advice Content */}
-                  <h2 className="text-2xl font-bold text-gray-800 text-center">
+                  <h2 className="text-2xl font-bold text-center text-gray-800">
                     Career Advice for PWDs
                   </h2>
                   <p className="mt-4 text-center text-gray-600">
@@ -438,7 +440,7 @@ case 'Career Advice':
                     ))}
                   </div>
      {/* Bottom Frames with Buttons */}
-<div className="mt-12 w-full max-w-screen-md space-y-6">
+<div className="w-full max-w-screen-md mt-12 space-y-6">
   <div className="flex flex-col items-center justify-between p-6 bg-white rounded-lg shadow-lg sm:flex-row">
     <div>
       <h3 className="text-lg font-bold text-gray-800">Find Job Opportunities</h3>
@@ -446,7 +448,7 @@ case 'Career Advice':
         Browse jobs tailored for persons with disabilities and take the first step in your career.
       </p>
     </div>
-    <button className="mt-4 sm:mt-0 px-6 py-3 text-white bg-teal-500 rounded-lg hover:bg-blue-700">
+    <button className="px-6 py-3 mt-4 text-white bg-teal-500 rounded-lg sm:mt-0 hover:bg-blue-700">
       Explore Jobs
     </button>
   </div>
@@ -457,7 +459,7 @@ case 'Career Advice':
         Enroll in training courses designed to empower and enhance your skills.
       </p>
     </div>
-    <button className="mt-4 sm:mt-0 px-6 py-3 text-white bg-teal-500 rounded-lg hover:bg-green-700">
+    <button className="px-6 py-3 mt-4 text-white bg-teal-500 rounded-lg sm:mt-0 hover:bg-green-700">
       Start Learning
     </button>
   </div>
@@ -469,20 +471,20 @@ case 'Career Advice':
         Access career resources and guides designed specifically for persons with disabilities.
       </p>
     </div>
-    <button className="mt-4 sm:mt-0 px-6 py-3 text-white bg-teal-500 rounded-lg hover:bg-purple-700">
+    <button className="px-6 py-3 mt-4 text-white bg-teal-500 rounded-lg sm:mt-0 hover:bg-purple-700">
       View Materials
     </button>
         </div>
       </div>
 {/* Subscribe Frame with Icon at the Top of Caption */}
-<div className="mt-12 flex flex-col items-center justify-between p-6 bg-white rounded-lg shadow-lg sm:flex-row">
-  <div className="w-full sm:w-80 space-y-4 mt-6 sm:mt-0">
+<div className="flex flex-col items-center justify-between p-6 mt-12 bg-white rounded-lg shadow-lg sm:flex-row">
+  <div className="w-full mt-6 space-y-4 sm:w-80 sm:mt-0">
     {/* Icon Above the Caption */}
     <div className="flex justify-center mb-4">
       <img src="/path/to/your/icon.png" alt="Career Advice Icon" className="w-8 h-8" />
     </div>
-    <h3 className="text-lg font-bold text-gray-800 text-center">Subscribe to Career Advice</h3>
-    <p className="mt-2 text-sm text-gray-600 text-center">
+    <h3 className="text-lg font-bold text-center text-gray-800">Subscribe to Career Advice</h3>
+    <p className="mt-2 text-sm text-center text-gray-600">
       Get expert career advice delivered to your inbox.
     </p>
     {/* Form and Button */}
@@ -504,7 +506,7 @@ case 'Career Advice':
     <button className="w-full py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
       Subscribe
     </button>
-    <p className="mt-2 text-sm text-gray-600 text-center">
+    <p className="mt-2 text-sm text-center text-gray-600">
       You can cancel emails at any time. By clicking ‘subscribe’ you agree to JobCompass’s Privacy Statement.
     </p>
   </div>

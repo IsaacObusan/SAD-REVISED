@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 import {
@@ -11,14 +12,34 @@ import {
   FaSearchPlus,
 } from "react-icons/fa";
 
+interface AccessibilityToolProps {
+  toggleHighContrast: () => void;
+  isHighContrast: boolean;
+}
+
+const AccessibilityTool: React.FC<AccessibilityToolProps> = ({ toggleHighContrast, isHighContrast }) => {
+  return (
+    <div>
+      <button onClick={toggleHighContrast}>
+        {isHighContrast ? 'Switch to Normal Mode' : 'Switch to High Contrast Mode'}
+      </button>
+    </div>
+  );
+};
+
+
+
 const AccessibilityToolbar: React.FC = () => {
   const [textSize, setTextSize] = useState(16);
+  const navigate = useNavigate();
+
   const [lineSpacing, setLineSpacing] = useState(1.5);
   const [isHighContrast, setIsHighContrast] = useState(false);
   const [isToolbarVisible, setIsToolbarVisible] = useState(true);
   const [isMagnifierActive, setIsMagnifierActive] = useState(false);
   const [activeButton, setActiveButton] = useState<string | null>(null);
   const [magnifierPosition, setMagnifierPosition] = useState({ x: 0, y: 0 });
+  
 
   const toolbarRef = useRef<HTMLDivElement | null>(null);
   const [dragging, setDragging] = useState(false);
@@ -36,9 +57,12 @@ const AccessibilityToolbar: React.FC = () => {
     document.body.style.lineHeight = `${newSpacing}`;
   };
 
+
+
+
   const toggleContrastMode = () => {
-    setIsHighContrast(!isHighContrast);
-    document.body.classList.toggle("high-contrast", !isHighContrast);
+    // Navigate to the HighContrast component
+    navigate("/high-contrast");
   };
 
   const resetAccessibility = () => {
@@ -116,13 +140,15 @@ const AccessibilityToolbar: React.FC = () => {
 
   return (
     <div>
-      {/* Toggle Button */}
-      <button
-        onClick={toggleToolbarVisibility}
-        className="fixed z-50 p-4 text-white transition duration-300 ease-in-out transform -translate-x-1/2 border-4 border-indigo-700 rounded-full shadow-xl bottom-3 left-1/2 bg-gradient-to-r from-teal-500 to-teal-500 hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-600 hover:scale-105"
-      >
-        {isToolbarVisible ? <FaArrowDown size={20} /> : <FaArrowUp size={20} />}
-      </button>
+    {/* Toggle Button */}
+<button
+  onClick={toggleToolbarVisibility}
+  className="fixed z-50 p-4 text-white transition duration-300 ease-in-out transform -translate-x-1/2 border-4 border-indigo-700 rounded-full shadow-xl bottom-3 left-1/2 bg-gradient-to-r from-teal-500 to-teal-500 hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-600 hover:scale-105"
+  aria-label={isToolbarVisible ? "Hide Toolbar" : "Show Toolbar"}
+>
+  {isToolbarVisible ? <FaArrowDown size={20} /> : <FaArrowUp size={20} />}
+</button>
+
 
       {/* Toolbar */}
       {isToolbarVisible && (
@@ -142,23 +168,23 @@ const AccessibilityToolbar: React.FC = () => {
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
         >
-          <div className="flex flex-wrap justify-center space-x-4">
-            {/* Contrast Button */}
-            <div className="flex flex-col items-center">
-              <button
-                onClick={() => {
-                  toggleContrastMode();
-                  handleButtonClick("contrast");
-                }}
-                className={`bg-yellow-500 text-gray-900 font-semibold py-2 px-4 rounded-full transition-all duration-300 transform ${
-                  activeButton === "contrast" ? "scale-110 shadow-lg" : "hover:scale-110 hover:shadow-lg"
-                }`}
-                aria-label="Toggle Contrast"
-              >
-                <FaAdjust size={20} />
-              </button>
-              <span className="mt-1 text-xs">Contrast</span>
-            </div>
+           <div className="flex flex-wrap justify-center space-x-4">
+      {/* Contrast Button */}
+      <div className="flex flex-col items-center">
+        <button
+          onClick={() => {
+            toggleContrastMode();
+            handleButtonClick("contrast");
+          }}
+          className={`bg-yellow-500 text-gray-900 font-semibold py-2 px-4 rounded-full transition-all duration-300 transform ${
+            activeButton === "contrast" ? "scale-110 shadow-lg" : "hover:scale-110 hover:shadow-lg"
+          }`}
+          aria-label="Toggle Contrast"
+        >
+          <FaAdjust size={20} />
+        </button>
+        <span className="mt-1 text-xs">Contrast</span>
+      </div>
 
             {/* Text Size Button */}
             <div className="flex flex-col items-center">

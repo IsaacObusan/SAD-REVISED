@@ -1,31 +1,34 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-interface EmployeeSignUp{
-    fullname: string;
-    email: string;
-    age: string;
-    password: string;
-    cpassword: string;
-    file_loc: string;
-    link: string;
-    disabilities: string[];
+interface EmployeeSignUp {
+  fullname: string;
+  email: string;
+  age: string;
+  password: string;
+  cpassword: string;
+  file_loc: string;
+  link: string;
+  disabilities: string[];
 }
 
 const SignUp = () => {
   const [activeTab, setActiveTab] = useState<'employee' | 'employer'>('employee');
   const [resume, setResume] = useState<File | null>(null);
+  const [profileImage, setProfileImage] = useState<File | null>(null); // Profile image state for employee
+  const [coverPhoto, setCoverPhoto] = useState<File | null>(null); // Cover photo state for employer
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
   const [signUpData, setSignUpData] = useState<EmployeeSignUp>({
-      fullname: "",
-      email: "",
-      age: "",
-      password: "",
-      cpassword: "",
-      file_loc: "",
-      link: "",
-      disabilities: []
+    fullname: "",
+    email: "",
+    age: "",
+    password: "",
+    cpassword: "",
+    file_loc: "",
+    link: "",
+    disabilities: [],
   });
 
   const handleSignUpChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,45 +41,60 @@ const SignUp = () => {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+
+    // Logic for resume upload (original)
     if (file && (file.type === 'application/pdf' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')) {
       setResume(file);
-    } else {
+    } else if (file) {
       alert('Please upload a PDF or Word document.');
+    }
+
+    // Additional logic for profile image upload (employee)
+    if (file && (file.type.startsWith('image/'))) {
+      setProfileImage(file);
+    } else if (file && file.type.startsWith('image/') === false) {
+      alert('Please upload a valid image file (JPEG, PNG, etc.) for your profile image.');
+    }
+
+    // Additional logic for cover photo upload (employer)
+    if (file && (file.type.startsWith('image/'))) {
+      setCoverPhoto(file);
+    } else if (file && file.type.startsWith('image/') === false) {
+      alert('Please upload a valid image file (JPEG, PNG, etc.) for your cover photo.');
     }
   };
 
-  const handleEmployeeSubmit = async() => {
+  const handleEmployeeSubmit = async () => {
     try {
       const response = await axios.post(serverUrl + "signup", signUpData);
-      if(response.data.status){
+      if (response.data.status) {
         setIsModalOpen(true);
-      }else{
+      } else {
         console.log("Unable to sign up. Please try again.");
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
   const handleDisabilityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
-  
+
     setSignUpData((prevSignUpData) => {
       let updatedDisabilities = [...prevSignUpData.disabilities];
-  
+
       if (checked) {
         updatedDisabilities.push(name);
       } else {
         updatedDisabilities = updatedDisabilities.filter((disability) => disability !== name);
       }
-  
+
       return {
         ...prevSignUpData,
         disabilities: updatedDisabilities, // Update disabilities in the state
       };
     });
   };
-  
 
   const handleNext = () => {
     setIsModalOpen(false);
@@ -158,15 +176,26 @@ const SignUp = () => {
                 className="w-full p-2 border border-gray-300 rounded"
                 required
               />
-            
+              {/* Profile Photo Upload */}
+              <div>
+                <label>Profile Photo Upload:</label>
+                <input
+                  type="file"
+                  name="profileImage"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+                {profileImage && <p>Selected: {profileImage.name}</p>}
+              </div>
+
+              {/* Resume Upload */}
               <div className="flex flex-col items-center space-y-2">
-                {/* File Input Trigger */}
                 <label
                   htmlFor="resume-upload"
                   className="w-full py-2 text-center text-white transition duration-300 bg-gray-500 rounded cursor-pointer hover:bg-gray-600"
                   onClick={triggerFileInput} // Trigger file input on button click
                 >
-                  Upload
+                  Upload Resume
                 </label>
                 <input
                   id="resume-upload"
@@ -227,6 +256,31 @@ const SignUp = () => {
                 placeholder="Company Name"
                 className="w-full p-2 border border-gray-300 rounded"
               />
+
+
+               {/* Profile Photo Upload */}
+               <div>
+                <label>Profile Photo Upload:</label>
+                <input
+                  type="file"
+                  name="profileImage"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+                {profileImage && <p>Selected: {profileImage.name}</p>}
+              </div>
+              
+              {/* Cover Photo Upload */}
+              <div>
+                <label>Cover Photo Upload:</label>
+                <input
+                  type="file"
+                  name="coverPhoto"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                />
+                {coverPhoto && <p>Selected: {coverPhoto.name}</p>}
+              </div>
               <button className="w-full py-2 text-white bg-teal-500 rounded hover:bg-green-600">Sign Up</button>
             </form>
           </div>

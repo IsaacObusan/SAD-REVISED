@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, ReactNode } from 'react';
 import axios from 'axios';
 import Footer from './Footer';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +6,11 @@ import ExplorePage from './Explore';
 import AccessibilityTool from './AccessibilityTool';
 
 interface jobHiring {
+  jobLogo: string | undefined;
+  jobMuni: ReactNode;
+  jobProvince: ReactNode;
+  jobCompany: ReactNode;
+  jobRate: ReactNode;
   jobName: string;
   jobDesc: string;
 }

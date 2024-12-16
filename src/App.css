@@ -24,6 +24,18 @@ body.high-contrast {
   color: #fff; /* White text */
 }
 
+.high-contrast-mode {
+  background-color: black;
+  color: white;
+}
+
+
+.high-contrast-overlay {
+  filter: invert(100%) contrast(200%);
+  background-color: black !important;
+  color: white !important;
+}
+
 body.high-contrast a {
   color: #0ff; /* Cyan links for high contrast */
   text-decoration: underline; /* Underline links for visibility */
