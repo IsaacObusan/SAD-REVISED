@@ -9,6 +9,7 @@ const LandingPageEmployer = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
   const [jobs, setJobs] = useState<string[]>([]);
+  const [application, setApplication] = useState<string[]>([]);
   const accountName = localStorage.getItem("accountName");
   const accountId = localStorage.getItem("id");
   const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
@@ -33,8 +34,23 @@ const LandingPageEmployer = () => {
     }
   }
 
+  const getApplication = async() => {
+    try {
+      const response = await axios.post(serverUrl + "applications", {id: accountId});
+      const data = response.data.application_dets;  // Assuming the response is JSON
+      if (Array.isArray(data)) {
+        setApplication(data);
+      } else {
+        console.error("Expected an array, but got:", data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   useEffect(() => {
     getJobs();
+    getApplication();
   }, []);
 
   const renderContent = () => {
@@ -107,7 +123,7 @@ const LandingPageEmployer = () => {
                   <thead className="bg-teal-500 text-white">
                     <tr>
                       <th className="py-3 px-6 text-left">Job Title</th>
-                      <th className="py-3 px-6 text-left">Company</th>
+                      <th className="py-3 px-6 text-left">Description</th>
                       <th className="py-3 px-6 text-left">Status</th>
                       <th className="py-3 px-6 text-center">Action</th>
                     </tr>
@@ -157,43 +173,33 @@ const LandingPageEmployer = () => {
                 <table className="min-w-full bg-white shadow-md rounded-md">
                   <thead className="bg-teal-500 text-white">
                     <tr>
-                      <th className="py-3 px-6 text-left">Candidate</th>
-                      <th className="py-3 px-6 text-left">Position</th>
+                      <th className="py-3 px-6 text-left">Name</th>
+                      <th className="py-3 px-6 text-left">Age</th>
+                      <th className="py-3 px-6 text-left">Disability</th>
+                      <th className="py-3 px-6 text-left">Title</th>
+                      <th className="py-3 px-6 text-left">Content</th>
+                      <th className="py-3 px-6 text-left">Date</th>
                       <th className="py-3 px-6 text-left">Status</th>
                       <th className="py-3 px-6 text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="border-b">
-                      <td className="py-3 px-6">John Doe</td>
-                      <td className="py-3 px-6">Software Engineer</td>
-                      <td className="py-3 px-6 text-teal-500">Pending</td>
-                      <td className="py-3 px-6 text-center">
-                        <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
-                          View Profile
-                        </button>
-                      </td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="py-3 px-6">Jane Smith</td>
-                      <td className="py-3 px-6">Data Analyst</td>
-                      <td className="py-3 px-6 text-teal-500">Reviewed</td>
-                      <td className="py-3 px-6 text-center">
-                        <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
-                          View Profile
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="py-3 px-6">Michael Brown</td>
-                      <td className="py-3 px-6">UX Designer</td>
-                      <td className="py-3 px-6 text-teal-500">Interviewed</td>
-                      <td className="py-3 px-6 text-center">
-                        <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
-                          View Profile
-                        </button>
-                      </td>
-                    </tr>
+                    {application.map((app, index) => (
+                      <tr key={app[7]} className="border-b">
+                        <td className="py-3 px-6">{app[0]}</td>
+                        <td className="py-3 px-6">{app[1]}</td>
+                        <td className="py-3 px-6">{app[2]}</td>
+                        <td className="py-3 px-6">{app[3]}</td>
+                        <td className="py-3 px-6">{app[4]}</td>
+                        <td className="py-3 px-6">{app[5]}</td>
+                        <td className="py-3 px-6 text-teal-500">{app[6]}</td>
+                        <td className="py-3 px-6 text-center">
+                          <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
+                            View Profile
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

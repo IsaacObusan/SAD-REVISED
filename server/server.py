@@ -234,13 +234,35 @@ def setJobs():
         employer_id = data["id"]
 
         cursor = connection.cursor()
-        query = "SELECT a.job_id, a.job_name, b.employer_company, a.job_status, b.company_image FROM job_hiring a JOIN employer b ON a.job_employer = b.employer_id WHERE b.employer_id = %s"
+        query = "SELECT a.job_id, a.job_name, a.job_desc, a.job_status, b.company_image FROM job_hiring a JOIN employer b ON a.job_employer = b.employer_id WHERE b.employer_id = %s"
         cursor.execute(query,  (employer_id,))
 
         result = cursor.fetchall()
 
         if len(result) > 0:
             return jsonify({"job_dets": result})
+        else:
+            return jsonify({"code": 405})
+
+    except Exception as e:
+        print(str(e))
+        return jsonify({"error": str(e)}), 400
+    
+@app.route("/applications", methods=["POST"])
+def getApplication():
+    try:
+        connection = get_db_connection()
+        data = request.get_json()
+        application_id = data["id"]
+
+        cursor = connection.cursor()
+        query = "SELECT c.applicant_name, c.applicant_age, c.applicant_disability, a.application_title, a.application_content, a.application_date, a.application_status, a.application_num FROM application a JOIN job_hiring b ON a.applicant_target = b.job_id JOIN applicant c ON a.applicant = c.applicant_id WHERE b.job_employer = %s"
+        cursor.execute(query,  (application_id,))
+
+        result = cursor.fetchall()
+
+        if len(result) > 0:
+            return jsonify({"application_dets": result})
         else:
             return jsonify({"code": 405})
 
