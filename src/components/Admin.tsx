@@ -12,7 +12,11 @@ const Admin: React.FC = () => {
   const [portfolio, setPortfolio] = useState<string[]>([]);
   const [user, setUser] = useState<string[]>([]);
   const [type, setType] = useState('applicant');
-
+  const handleLogout = () => {
+    localStorage.removeItem('accountName'); // Remove specific items, if needed
+    localStorage.removeItem('id'); // Remove the user ID from localStorage
+    navigate('/login');
+  };
   const navigate = useNavigate();
   const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
 
@@ -344,7 +348,7 @@ const Admin: React.FC = () => {
                 {tab.replace('-', ' ').toUpperCase()}
               </div>
             ))}
-            <div className="px-4 py-2 text-sm font-medium text-gray-700 cursor-pointer">Logout</div>
+            <div onClick={()=>handleLogout()} className="px-4 py-2 text-sm font-medium text-gray-700 cursor-pointer">Logout</div>
           </nav>
         </div>
       </header>
