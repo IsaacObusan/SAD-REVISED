@@ -6,11 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import axios  from 'axios';
 import PostModal from './PostModal';  // Import the modal component
 
+
 const LandingPageEmployer = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
   const [jobs, setJobs] = useState<string[]>([]);
-  const [application, setApplication] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
   const accountName = localStorage.getItem("accountName");
   const accountId = localStorage.getItem("id");
@@ -20,15 +20,6 @@ const LandingPageEmployer = () => {
     localStorage.removeItem('accountName'); 
     localStorage.removeItem('id'); 
     navigate('/login');
-  };
-
-  const formatDate = (dateString: string): string => {
-    const date = new Date(dateString); // Convert string to Date
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    });
   };
 
   const getJobs = async() => {
@@ -45,23 +36,8 @@ const LandingPageEmployer = () => {
     }
   }
 
-  const getApplication = async() => {
-    try {
-      const response = await axios.post(serverUrl + "applications", {id: accountId});
-      const data = response.data.application_dets;  // Assuming the response is JSON
-      if (Array.isArray(data)) {
-        setApplication(data);
-      } else {
-        console.error("Expected an array, but got:", data);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
   useEffect(() => {
     getJobs();
-    getApplication();
   }, []);
 
   const handlePostJobClick = () => {
@@ -142,10 +118,10 @@ const LandingPageEmployer = () => {
                 <table className="min-w-full bg-white rounded-md shadow-md">
                   <thead className="text-white bg-teal-500">
                     <tr>
-                      <th className="py-3 px-6 text-left">Job Title</th>
-                      <th className="py-3 px-6 text-left">Description</th>
-                      <th className="py-3 px-6 text-left">Status</th>
-                      <th className="py-3 px-6 text-center">Action</th>
+                      <th className="px-6 py-3 text-left">Job Title</th>
+                      <th className="px-6 py-3 text-left">Company</th>
+                      <th className="px-6 py-3 text-left">Status</th>
+                      <th className="px-6 py-3 text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -171,15 +147,21 @@ const LandingPageEmployer = () => {
                   </tbody>
                 </table>
               </div>
-
+  
+              {/* Add New Job Button */}
+              <div className="mt-6">
+                <button className="px-6 py-3 text-white bg-teal-500 rounded-md hover:bg-teal-600">
+                  Post a New Job
+                </button>
+              </div>
             </div>
           );
   
-        case 'applicants':
+        case 'candidates':
           return (
             <div className="text-base text-gray-700">
-              {/* applicants Content */}
-              <h2 className="text-xl font-bold">Review Applicants</h2>
+              {/* Candidates Content */}
+              <h2 className="text-xl font-bold">Review Candidates</h2>
               <p className="mt-4">Manage and review your job applicants:</p>
   
               {/* Modern Candidate Table */}
@@ -187,35 +169,43 @@ const LandingPageEmployer = () => {
                 <table className="min-w-full bg-white rounded-md shadow-md">
                   <thead className="text-white bg-teal-500">
                     <tr>
-                      <th className="py-3 px-6 text-left">Name</th>
-                      <th className="py-3 px-6 text-left">Age</th>
-                      <th className="py-3 px-6 text-left">Disability</th>
-                      <th className="py-3 px-6 text-left">Title</th>
-                      <th className="py-3 px-6 text-left">Content</th>
-                      <th className="py-3 px-6 text-left">Date</th>
-                      <th className="py-3 px-6 text-left">Status</th>
-                      <th className="py-3 px-6 text-center">Action</th>
+                      <th className="px-6 py-3 text-left">Candidate</th>
+                      <th className="px-6 py-3 text-left">Position</th>
+                      <th className="px-6 py-3 text-left">Status</th>
+                      <th className="px-6 py-3 text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {application.map((app, index) => (
-                      <tr key={app[7]} className="border-b">
-                        <td className="py-3 px-6">{app[0]}</td>
-                        <td className="py-3 px-6">{app[1]}</td>
-                        <td className="py-3 px-6">{JSON.parse(app[2]).map((impairment, index) => (
-                          <li key={index}>{impairment}</li>
-                        ))}</td>
-                        <td className="py-3 px-6">{app[3]}</td>
-                        <td className="py-3 px-6">{app[4]}</td>
-                        <td className="py-3 px-6">{formatDate(app[5])}</td>
-                        <td className="py-3 px-6 text-teal-500">{app[6]}</td>
-                        <td className="py-3 px-6 text-center">
-                          <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
-                            View Profile
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                    <tr className="border-b">
+                      <td className="px-6 py-3">John Doe</td>
+                      <td className="px-6 py-3">Software Engineer</td>
+                      <td className="px-6 py-3 text-teal-500">Pending</td>
+                      <td className="px-6 py-3 text-center">
+                        <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
+                          View Profile
+                        </button>
+                      </td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="px-6 py-3">Jane Smith</td>
+                      <td className="px-6 py-3">Data Analyst</td>
+                      <td className="px-6 py-3 text-teal-500">Reviewed</td>
+                      <td className="px-6 py-3 text-center">
+                        <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
+                          View Profile
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-6 py-3">Michael Brown</td>
+                      <td className="px-6 py-3">UX Designer</td>
+                      <td className="px-6 py-3 text-teal-500">Interviewed</td>
+                      <td className="px-6 py-3 text-center">
+                        <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
+                          View Profile
+                        </button>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -242,7 +232,7 @@ const LandingPageEmployer = () => {
 
         {/* Navigation Tabs */}
         <nav className="flex flex-wrap justify-center gap-4 sm:flex-nowrap sm:gap-8">
-          {['overview', 'jobs', 'applicants', 'logout'].map((tab) => (
+          {['overview', 'jobs', 'candidates', 'logout'].map((tab) => (
             <button
               key={tab}
               className={`relative py-2 px-4 text-sm font-medium text-gray-900 transition-colors ${
