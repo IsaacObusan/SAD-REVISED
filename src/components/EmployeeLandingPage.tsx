@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, ReactNode } from 'react';
-import axios from 'axios';
+import axios, { post } from 'axios';
 import Footer from './Footer';
 import { useNavigate } from 'react-router-dom';
 import ExplorePage from './Explore';
@@ -54,7 +54,7 @@ const EmployeeLandingPage = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("Home");
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
-  const [selectedJob, setSelectedJob] = useState<string>(null);
+  const [selectedJob, setSelectedJob] = useState('');
   const [currentSlide, setCurrentSlide] = useState(0); // State for slideshow
   const accountName = localStorage.getItem("accountName");
   const accountId = localStorage.getItem("id");
@@ -112,7 +112,6 @@ const toggleDropdown = () => {
     try {
       const response = await fetch(serverUrl + "retrieve_job");
       const data = await response.json();  // Assuming the response is JSON
-      console.log("Data from fetch:", data);
       if (Array.isArray(data)) {
         setJobDetails(data);
       } else {
@@ -135,6 +134,7 @@ const toggleDropdown = () => {
   const [selectedJobTitle, setSelectedJobTitle] = useState<string>(''); // Track the selected job title
 
   const apply = async () => {
+    console.log(accountId, selectedJobTitle, letter, selectedJob);
     try {
       const response = await axios.post(serverUrl + "apply", {
         id: accountId,
@@ -142,6 +142,7 @@ const toggleDropdown = () => {
         content: letter,
         job_id: selectedJob
       });
+      
       if (response.data.remarks === "success") {
         alert("Application has been submitted");
       } else {
@@ -153,14 +154,9 @@ const toggleDropdown = () => {
       console.log(error);
     }
   };
-
   
-
-  
-  
-  const toggleModal = (jobTitle?: string, jobId?: string) => {
+  const toggleModal = (jobTitle?: string) => {
     setSelectedJobTitle(jobTitle || ''); // Set the job title when the modal is opened
-    setSelectedJob(jobId || '');
     setIsModalVisible(!isModalVisible);
   };
 
@@ -207,7 +203,10 @@ const handleMicClick = () => {
   }
 };
 
-  
+  const handleToggling = (jobId, jobName) =>{
+    setSelectedJob(jobId);
+    toggleModal(jobName);
+  }
 
   // Function to render the content based on the active tab
   const renderContent = () => {
@@ -277,7 +276,7 @@ const handleMicClick = () => {
                   <p className="mt-2 text-sm text-gray-600">
                     {job.jobDesc}
                   </p>
-                  <button onClick={() => toggleModal(job.jobName, job.jobId)} className="px-4 py-2 mt-4 text-white bg-teal-500 rounded-lg hover:bg-teal-600">
+                  <button onClick={() => handleToggling(job.jobId, job.jobName)} className="px-4 py-2 mt-4 text-white bg-teal-500 rounded-lg hover:bg-teal-600">
                     Apply
                   </button>
                 </div>

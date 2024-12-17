@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from './Logoo.png'; // Update path as needed
 import Footer from './Footer';
+import axios from 'axios';
 
 const Admin: React.FC = () => {
   const [activeTab, setActiveTab] = useState('job-offerings');
+  const [jobOfferings, setJobOfferings] = useState<string[]>([]);
+  const [application, setApplication] = useState<string[]>([]);
+  const [hiring, setHiring] = useState<string[]>([]);
+  const [portfolio, setPortfolio] = useState<string[]>([]);
+
   const navigate = useNavigate();
+  const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
@@ -13,12 +20,189 @@ const Admin: React.FC = () => {
     // navigate(`/admin/${tab}`);
   };
 
+  const fetchDetails = async() =>{
+    try {
+      const response = await axios.get(serverUrl + "jobs");
+      setJobOfferings(response.data.job_details);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const fetchApplications = async() =>{
+    try {
+      const response = await axios.get(serverUrl + "applications");
+      setApplication(response.data.application_details);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const fetchNotice = async() =>{
+    try {
+      const response = await axios.get(serverUrl + "get_notice");
+      setHiring(response.data.notice_details);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString); // Convert string to Date
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+  };
+
+  useEffect(() => {
+    fetchDetails();
+    fetchApplications();
+    fetchNotice();
+  }, []);
+
   const renderTabContent = () => {
     switch (activeTab) {
       case 'job-offerings':
         return (
           <div>
             <table className="min-w-full overflow-hidden bg-white rounded-lg shadow-md">
+              <thead>
+                <tr className="text-left bg-gray-200">
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Job Title</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Description</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Location</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Rate</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Status</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Posted Date</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {jobOfferings.map((jobs, index) => (
+                  <tr key={index} className="border-b">
+                    <td className="px-6 py-4 text-sm text-gray-800">{jobs[1]}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">{jobs[2]}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">{jobs[3]}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">{jobs[4]}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">{jobs[5]}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">{formatDate(jobs[6])}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">
+                      <button className="px-4 py-2 text-white bg-teal-500 rounded-md">Edit</button>
+                      <button className="px-4 py-2 text-white bg-red-500 rounded-md">Delete</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      case 'application':
+        return (
+          <div>
+            <table className="min-w-full overflow-hidden bg-white rounded-lg shadow-md">
+              <thead>
+                <tr className="text-left bg-gray-200">
+                <th className="px-6 py-3 text-sm font-semibold text-gray-700">Title</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Description</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Applicant</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Status</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Job</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Posted Date</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {application.map((app, index) => (
+                  <tr key={index} className="border-b">
+                    <td className="px-6 py-4 text-sm text-gray-800">{app[1]}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">{app[2]}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">{app[5]}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">{app[4]}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">{app[6]}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">{formatDate(app[3])}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">
+                      <button className="px-4 py-2 text-white bg-blue-500 rounded-md">View</button>
+                      <button className="px-4 py-2 text-white bg-red-500 rounded-md">Delete</button>
+                    </td>
+                  </tr>
+                ))}
+                {/* Add more rows dynamically */}
+              </tbody>
+            </table>
+          </div>
+        );
+      case 'hiring notice':
+        return (
+          <div>
+            <table className="min-w-full overflow-hidden bg-white rounded-lg shadow-md">
+              <thead>
+                <tr className="text-left bg-gray-200">
+                <th className="px-6 py-3 text-sm font-semibold text-gray-700">Title</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Description</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Applicant</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Date</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Employer</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {hiring.map((hire, index) => (
+                  <tr key={index} className="border-b">
+                    <td className="px-6 py-4 text-sm text-gray-800">{hire[1]}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">{hire[2]}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">{hire[3]}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">{formatDate(hire[4])}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">{hire[5]}</td>
+                    <td className="px-6 py-4 text-sm text-gray-800">
+                      <button className="px-4 py-2 text-white bg-teal-500 rounded-md">Edit</button>
+                      <button className="px-4 py-2 text-white bg-red-500 rounded-md">Delete</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      case 'portfolio':
+        return (
+          <div>
+            <table className="min-w-full overflow-hidden bg-white rounded-lg shadow-md">
+              <thead>
+                <tr className="text-left bg-gray-200">
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Job Title</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Description</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Applicant</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Status</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Job</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Posted Date</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b">
+                  <td className="px-6 py-4 text-sm text-gray-800">Software Engineer</td>
+                  <td className="px-6 py-4 text-sm text-gray-800">Develop and maintain software applications.</td>
+                  <td className="px-6 py-4 text-sm text-gray-800">Remote</td>
+                  <td className="px-6 py-4 text-sm text-gray-800">Full-time</td>
+                  <td className="px-6 py-4 text-sm text-gray-800">01 Dec 2024</td>
+                  <td className="px-6 py-4 text-sm text-gray-800">01 Dec 2024</td>
+                  <td className="px-6 py-4 text-sm text-gray-800">
+                    <button className="px-4 py-2 text-white bg-teal-500 rounded-md">Edit</button>
+                    <button className="px-4 py-2 ml-2 text-white bg-red-500 rounded-md">Delete</button>
+                  </td>
+                </tr>
+                {/* Add more rows dynamically */}
+              </tbody>
+            </table>
+          </div>
+        );
+
+        case 'user management':
+          return (
+            <div>
+              <table className="min-w-full overflow-hidden bg-white rounded-lg shadow-md">
               <thead>
                 <tr className="text-left bg-gray-200">
                   <th className="px-6 py-3 text-sm font-semibold text-gray-700">Job Title</th>
@@ -44,65 +228,37 @@ const Admin: React.FC = () => {
                 {/* Add more rows dynamically */}
               </tbody>
             </table>
-          </div>
-        );
-      case 'application':
-        return (
-          <div>
-            <table className="min-w-full overflow-hidden bg-white rounded-lg shadow-md">
+            </div>
+          );
+      default:
+          return (
+            <div>
+              <table className="min-w-full overflow-hidden bg-white rounded-lg shadow-md">
               <thead>
                 <tr className="text-left bg-gray-200">
-                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Applicant Name</th>
-                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Email</th>
                   <th className="px-6 py-3 text-sm font-semibold text-gray-700">Job Title</th>
-                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Status</th>
-                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Applied Date</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Description</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Location</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Job Type</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Posted Date</th>
                   <th className="px-6 py-3 text-sm font-semibold text-gray-700">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="border-b">
-                  <td className="px-6 py-4 text-sm text-gray-800">John Doe</td>
-                  <td className="px-6 py-4 text-sm text-gray-800">john.doe@email.com</td>
                   <td className="px-6 py-4 text-sm text-gray-800">Software Engineer</td>
-                  <td className="px-6 py-4 text-sm text-gray-800">Pending</td>
-                  <td className="px-6 py-4 text-sm text-gray-800">02 Dec 2024</td>
+                  <td className="px-6 py-4 text-sm text-gray-800">Develop and maintain software applications.</td>
+                  <td className="px-6 py-4 text-sm text-gray-800">Remote</td>
+                  <td className="px-6 py-4 text-sm text-gray-800">Full-time</td>
+                  <td className="px-6 py-4 text-sm text-gray-800">01 Dec 2024</td>
                   <td className="px-6 py-4 text-sm text-gray-800">
-                    <button className="px-4 py-2 text-white bg-blue-500 rounded-md">View</button>
-                    <button className="px-4 py-2 ml-2 text-white bg-green-500 rounded-md">Mark as Hired</button>
+                    <button className="px-4 py-2 text-white bg-teal-500 rounded-md">Edit</button>
                     <button className="px-4 py-2 ml-2 text-white bg-red-500 rounded-md">Delete</button>
                   </td>
                 </tr>
                 {/* Add more rows dynamically */}
               </tbody>
             </table>
-          </div>
-        );
-      case 'hiring-notice':
-        return (
-          <div>
-            <p>Hiring Notice content goes here.</p>
-          </div>
-        );
-      case 'portfolio':
-        return (
-          <div>
-            <p>Portfolio content goes here.</p>
-          </div>
-        );
-
-        case 'user management':
-          return (
-            <div>
-              <p>section.</p>
-            </div>
-          );
-      default:
-        return <p>Select a tab to view its content.</p>;
-        case 'hiring-notice':
-          return (
-            <div>
-              <p>Hiring Notice content goes here.</p>
             </div>
           );
     }
@@ -117,7 +273,7 @@ const Admin: React.FC = () => {
             <span className="text-xl font-semibold">Admin Dashboard</span>
           </div>
           <nav className="flex space-x-8">
-            {['job-offerings', 'application', 'hiring-notice', 'portfolio' , 'user management'].map((tab) => (
+            {['job-offerings', 'application', 'hiring notice', 'portfolio' , 'user management'].map((tab) => (
               <div
                 key={tab}
                 onClick={() => handleTabClick(tab)}
