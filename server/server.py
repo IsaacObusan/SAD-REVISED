@@ -60,14 +60,15 @@ def insertData():
         _id = data['id']
         title = data['title']
         content = data['content']
+        job_id = data["job_id"]
 
         # Create a connection to the database
         connection = get_db_connection()
         cursor = connection.cursor()
 
         # Insert the data into MySQL
-        query = "INSERT INTO application (application_title, application_content, application_date, applicant) VALUES (%s, %s,%s,%s)"
-        cursor.execute(query, (title, content, get_current_date(), _id))
+        query = "INSERT INTO application (application_title, application_content, application_date, applicant,applicant_target) VALUES (%s, %s,%s,%s, %s)"
+        cursor.execute(query, (title, content, get_current_date(), _id, job_id))
         connection.commit()
 
         # Close the connection
@@ -296,6 +297,28 @@ def postJob():
 
         return jsonify({"remarks": "success"}), 200
     except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route("/get_pie", methods=["POST"])
+def getPie():
+    try:
+        connection = get_db_connection()
+        data = request.get_json()
+        application_id = data["id"]
+
+        cursor = connection.cursor()
+        query = "SELECT c.applicant_name, c.applicant_age, c.applicant_disability, a.application_title, a.application_content, a.application_date, a.application_status, a.application_num FROM application a JOIN job_hiring b ON a.applicant_target = b.job_id JOIN applicant c ON a.applicant = c.applicant_id WHERE b.job_employer = %s"
+        cursor.execute(query,  (application_id,))
+
+        result = cursor.fetchall()
+
+        if len(result) > 0:
+            return jsonify({"application_dets": result})
+        else:
+            return jsonify({"code": 405})
+
+    except Exception as e:
+        print(str(e))
         return jsonify({"error": str(e)}), 400
 
 @app.route('/logout')

@@ -14,6 +14,8 @@ const LandingPageEmployer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
   const [barData, setBarData] = useState<string[]>([]);
   const [barLabel, setBarLabel] = useState<string[]>([]);
+  const [pieData, setPieData] = useState<string[]>([]);
+  const [pieLabel, setPieLabel] = useState<string[]>([]);
   const accountName = localStorage.getItem("accountName");
   const accountId = localStorage.getItem("id");
   const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
@@ -50,6 +52,20 @@ const LandingPageEmployer = () => {
   const getApplication = async() => {
     try {
       const response = await axios.post(serverUrl + "applications", {id: accountId});
+      const data = response.data.application_dets;  // Assuming the response is JSON
+      if (Array.isArray(data)) {
+        setApplication(data);
+      } else {
+        console.error("Expected an array, but got:", data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const getPieData = async() =>{
+    try {
+      const response = await axios.post(serverUrl + "get_pie", {id: accountId});
       const data = response.data.application_dets;  // Assuming the response is JSON
       if (Array.isArray(data)) {
         setApplication(data);
