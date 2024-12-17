@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Footer from './components/Footer'; // Import the Footer component
 import AccessibilityTool from './components/AccessibilityTool'; // Import the AccessibilityToolbar component
 import PostModal from './components/PostModal'; // Import the PostModal component
@@ -31,52 +31,60 @@ const LoadingSpinner = () => (
 
 const App: React.FC = () => {
   const [showModal, setShowModal] = useState(false); // State to manage the modal visibility
+  const location = useLocation(); // Get the current route
+
+  // Only show the PostModal on /employer-landing route
+  const shouldShowModal = location.pathname === "/employer-landing";
+
+  // Only show the Post Job button on /employer-landing route
+  const shouldShowButton = location.pathname === "/employer-landing";
 
   return (
-    <BrowserRouter>
-      <Suspense fallback={<LoadingSpinner />}>
-        {/* Application Routes */}
-        <Routes>
-          <Route path="/" element={<MainLandingPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/employee-landing" element={<EmployeeLandingPage />} />
-          <Route path="/employer-landing" element={<EmployerLandingPage />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/profile" element={<YourProfile />} />
-          <Route path="/stats" element={<MyStats />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/forgot" element={<Forgot />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/materials" element={<Materials />} />
-          <Route path="/voice-command" element={<VoiceCommand />} />
-          <Route path="/high-contrast" element={<HighContrast />} />
-          <Route path="/apply-applicant" element={<ApplicantApply />} />
-          <Route path="/*" element={<ErrorPage />} />
-        </Routes>
+    <Suspense fallback={<LoadingSpinner />}>
+      {/* Application Routes */}
+      <Routes>
+        <Route path="/" element={<MainLandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/employee-landing" element={<EmployeeLandingPage />} />
+        <Route path="/employer-landing" element={<EmployerLandingPage />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/profile" element={<YourProfile />} />
+        <Route path="/stats" element={<MyStats />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/forgot" element={<Forgot />} />
+        <Route path="/explore" element={<Explore />} />
+        <Route path="/materials" element={<Materials />} />
+        <Route path="/voice-command" element={<VoiceCommand />} />
+        <Route path="/high-contrast" element={<HighContrast />} />
+        <Route path="/apply-applicant" element={<ApplicantApply />} />
+        <Route path="/*" element={<ErrorPage />} />
+      </Routes>
 
-        {/* PostModal Component */}
+      {/* Conditionally render PostModal based on the current route */}
+      {shouldShowModal && (
         <PostModal
           showModal={showModal}
-          setShowModal={setShowModal} onClose={function (): void {
-            throw new Error('Function not implemented.');
-          } }        />
+          setShowModal={setShowModal}
+          onClose={() => setShowModal(false)} // Define the close behavior
+        />
+      )}
 
-        {/* Footer and Accessibility Toolbar */}
-        <Footer />
-        <AccessibilityTool />
+      {/* Footer and Accessibility Toolbar */}
+      <Footer />
+      <AccessibilityTool />
 
-        {/* Example button to trigger the modal */}
+      {/* Conditionally render the Post Job button on the /employer-landing route */}
+      {shouldShowButton && (
         <button
           onClick={() => setShowModal(true)}
-          className="fixed bottom-4 right-4 p-4 bg-teal-500 text-white rounded-full shadow-lg"
+          className="fixed p-4 text-white bg-teal-500 rounded-full shadow-lg bottom-4 right-4"
         >
           Post Job
         </button>
-      </Suspense>
-    </BrowserRouter>
+      )}
+    </Suspense>
   );
 };
-
 
 export default App;
