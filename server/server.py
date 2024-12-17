@@ -137,7 +137,7 @@ def retrieveData():
         cursor = connection.cursor()
 
         # Retrieve data from MySQL
-        query = "SELECT job_name, job_desc, job_rate, b.employer_company, b.company_image, c.* FROM job_hiring a JOIN employer b ON a.job_employer = b.employer_id JOIN address c ON b.employer_address_id = c.address_id;"
+        query = "SELECT job_name, job_desc, job_rate, b.employer_company, b.company_image, c.*, job_id FROM job_hiring a JOIN employer b ON a.job_employer = b.employer_id JOIN address c ON b.employer_address_id = c.address_id;"
         cursor.execute(query)
         result = cursor.fetchall()
 
@@ -146,7 +146,7 @@ def retrieveData():
         connection.close()
 
         # Return the retrieved data as a JSON response
-        data = [{"jobName": row[0], "jobDesc": row[1], "jobRate": row[2],"jobCompany": row[3], "jobLogo": row[4],"jobMuni": row[9], "jobProvince": row[10]} for row in result]
+        data = [{"jobId": row[-1], "jobName": row[0], "jobDesc": row[1], "jobRate": row[2],"jobCompany": row[3], "jobLogo": row[4],"jobMuni": row[9], "jobProvince": row[10]} for row in result]
         return jsonify(data), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400
@@ -227,46 +227,85 @@ def login():
         print(str(e))
         return jsonify({"error": str(e)}), 400
     
-@app.route("/jobs", methods=["POST"])
+@app.route("/jobs", methods=["GET", "POST"])
 def setJobs():
-    try:
-        connection = get_db_connection()
-        data = request.get_json()
-        employer_id = data["id"]
-
-        cursor = connection.cursor()
-        query = "SELECT a.job_id, a.job_name, a.job_desc, a.job_status, b.company_image, a.job_rate FROM job_hiring a JOIN employer b ON a.job_employer = b.employer_id WHERE b.employer_id = %s"
-        cursor.execute(query,  (employer_id,))
-
-        result = cursor.fetchall()
-
-        if len(result) > 0:
-            return jsonify({"job_dets": result})
-        else:
-            return jsonify({"code": 405})
-
-    except Exception as e:
-        print(str(e))
-        return jsonify({"error": str(e)}), 400
+    if request.method == "POST":
+        try:
+            connection = get_db_connection()
+            data = request.get_json()
+            employer_id = data["id"]
+            cursor = connection.cursor()
+            query = "SELECT a.job_id, a.job_name, a.job_desc, a.job_status, b.company_image, a.job_rate FROM job_hiring a JOIN employer b ON a.job_employer = b.employer_id WHERE b.employer_id = %s"
+            cursor.execute(query,  (employer_id,))
+            result = cursor.fetchall()
+            if len(result) > 0:
+                return jsonify({"job_dets": result})
+            else:
+                return jsonify({"code": 405})
+        except Exception as e:
+            print(str(e))
+            return jsonify({"error": str(e)}), 400
+    else:
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor()
+            query = "SELECT a.job_id, a.job_name, a.job_desc, CONCAT_WS(' ', house_num, street, baranggay, municipality, province, zip_code) AS concatenated_values ,a.job_rate, a.job_status, a.job_postDate FROM job_hiring a JOIN employer b ON a.job_employer = b.employer_id JOIN address c ON b.employer_address_id = c.address_id"
+            cursor.execute(query)
+            result = cursor.fetchall()
+            if len(result) > 0:
+                return jsonify({"job_details": result})
+            else:
+                return jsonify({"code": 405})
+        except Exception as e:
+            print(str(e))
+            return jsonify({"error": str(e)}), 400
     
-@app.route("/applications", methods=["POST"])
+    
+@app.route("/applications", methods=["GET", "POST"])
 def getApplication():
+    if request.method == "POST":
+        try:
+            connection = get_db_connection()
+            data = request.get_json()
+            application_id = data["id"]
+            cursor = connection.cursor()
+            query = "SELECT c.applicant_name, c.applicant_age, c.applicant_disability, a.application_title, a.application_content, a.application_date, a.application_status, a.application_num FROM application a JOIN job_hiring b ON a.applicant_target = b.job_id JOIN applicant c ON a.applicant = c.applicant_id WHERE b.job_employer = %s"
+            cursor.execute(query,  (application_id,))
+            result = cursor.fetchall()
+            if len(result) > 0:
+                return jsonify({"application_dets": result})
+            else:
+                return jsonify({"code": 405})
+        except Exception as e:
+            print(str(e))
+            return jsonify({"error": str(e)}), 400
+    else:
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor()
+            query = "SELECT a.application_num, a.application_title, a.application_content, a.application_date, a.application_status, b.applicant_name, c.job_name FROM application a JOIN applicant b ON a.applicant = b.applicant_id JOIN job_hiring c ON c.job_id = a.applicant_target"
+            cursor.execute(query)
+            result = cursor.fetchall()
+            if len(result) > 0:
+                return jsonify({"application_details": result})
+            else:
+                return jsonify({"code": 405})
+        except Exception as e:
+            print(str(e))
+            return jsonify({"error": str(e)}), 400
+
+@app.route("/get_notice", methods=["GET"])
+def fetchNotice():
     try:
         connection = get_db_connection()
-        data = request.get_json()
-        application_id = data["id"]
-
         cursor = connection.cursor()
-        query = "SELECT c.applicant_name, c.applicant_age, c.applicant_disability, a.application_title, a.application_content, a.application_date, a.application_status, a.application_num FROM application a JOIN job_hiring b ON a.applicant_target = b.job_id JOIN applicant c ON a.applicant = c.applicant_id WHERE b.job_employer = %s"
-        cursor.execute(query,  (application_id,))
-
+        query = "SELECT a.notice_num, a.notice_title, a.notice_content, b.applicant_name ,a.notice_date, c.employer_name FROM hiring_notice a JOIN applicant b ON a.notice_applicant = b.applicant_id JOIN employer c ON a.notice_employer = c.employer_id "
+        cursor.execute(query)
         result = cursor.fetchall()
-
         if len(result) > 0:
-            return jsonify({"application_dets": result})
+            return jsonify({"notice_details": result})
         else:
             return jsonify({"code": 405})
-
     except Exception as e:
         print(str(e))
         return jsonify({"error": str(e)}), 400
