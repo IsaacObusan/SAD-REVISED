@@ -7,6 +7,7 @@ import AccessibilityTool from './AccessibilityTool';
 import { FaBell } from 'react-icons/fa'; // Import Font Awesome Bell icon
 
 interface jobHiring {
+  jobId: string;
   jobLogo: string | undefined;
   jobMuni: ReactNode;
   jobProvince: ReactNode;
@@ -54,6 +55,7 @@ const EmployeeLandingPage = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("Home");
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+  const [selectedJob, setSelectedJob] = useState<string>(null);
   const [currentSlide, setCurrentSlide] = useState(0); // State for slideshow
   const accountName = localStorage.getItem("accountName");
   const accountId = localStorage.getItem("id");
@@ -139,10 +141,11 @@ const toggleDropdown = () => {
 
   const apply = async () => {
     try {
-      const response = await axios.post<{ remarks: string }>(serverUrl + "apply", {
+      const response = await axios.post(serverUrl + "apply", {
         id: accountId,
         title: "Job Application for " + selectedJobTitle,
         content: letter,
+        job_id: selectedJob
       });
       if (response.data.remarks === "success") {
         alert("Application has been submitted");
@@ -160,8 +163,9 @@ const toggleDropdown = () => {
 
   
   
-  const toggleModal = (jobTitle?: string) => {
+  const toggleModal = (jobTitle?: string, jobId?: string) => {
     setSelectedJobTitle(jobTitle || ''); // Set the job title when the modal is opened
+    setSelectedJob(jobId || '');
     setIsModalVisible(!isModalVisible);
   };
 
@@ -278,7 +282,7 @@ const handleMicClick = () => {
                   <p className="mt-2 text-sm text-gray-600">
                     {job.jobDesc}
                   </p>
-                  <button onClick={() => toggleModal(job.jobName)} className="px-4 py-2 mt-4 text-white bg-teal-500 rounded-lg hover:bg-teal-600">
+                  <button onClick={() => toggleModal(job.jobName, job.jobId)} className="px-4 py-2 mt-4 text-white bg-teal-500 rounded-lg hover:bg-teal-600">
                     Apply
                   </button>
                 </div>
@@ -794,7 +798,7 @@ const handleMicClick = () => {
         jobTitle={selectedJobTitle}
         letter={letter}  // Pass down the state as a prop
         onChange={handleChange}  // Handle text change
-        onApply={apply}  // Handle apply button click
+        onApply={() => apply()}  // Handle apply button click
       />
     </div>
   );

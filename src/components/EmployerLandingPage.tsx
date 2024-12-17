@@ -5,15 +5,14 @@ import Footer from './Footer';
 import { useNavigate } from 'react-router-dom';
 import axios  from 'axios';
 import PostModal from './PostModal';  // Import the modal component
-import { FaBell } from 'react-icons/fa'; // Import Font Awesome Bell icon
 
 
 const LandingPageEmployer = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
   const [jobs, setJobs] = useState<string[]>([]);
+  const [application, setApplication] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
-  const [showNotifications, setShowNotifications] = useState(false); // Notification dropdown state
   const accountName = localStorage.getItem("accountName");
   const accountId = localStorage.getItem("id");
   const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
@@ -31,6 +30,15 @@ const LandingPageEmployer = () => {
     navigate('/login');
   };
 
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString); // Convert string to Date
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+  };
+
   const getJobs = async() => {
     try {
       const response = await axios.post(serverUrl + "jobs", {id: accountId});
@@ -45,8 +53,37 @@ const LandingPageEmployer = () => {
     }
   }
 
+  const getApplication = async() => {
+    try {
+      const response = await axios.post(serverUrl + "applications", {id: accountId});
+      const data = response.data.application_dets;  // Assuming the response is JSON
+      if (Array.isArray(data)) {
+        setApplication(data);
+      } else {
+        console.error("Expected an array, but got:", data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const getPieData = async() =>{
+    try {
+      const response = await axios.post(serverUrl + "get_pie", {id: accountId});
+      const data = response.data.application_dets;  // Assuming the response is JSON
+      if (Array.isArray(data)) {
+        setApplication(data);
+      } else {
+        console.error("Expected an array, but got:", data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   useEffect(() => {
     getJobs();
+    getApplication();
   }, []);
 
   const handlePostJobClick = () => {
@@ -128,7 +165,8 @@ const LandingPageEmployer = () => {
                   <thead className="text-white bg-teal-500">
                     <tr>
                       <th className="px-6 py-3 text-left">Job Title</th>
-                      <th className="px-6 py-3 text-left">Company</th>
+                      <th className="px-6 py-3 text-left">Description</th>
+                      <th className="px-6 py-3 text-left">Rate</th>
                       <th className="px-6 py-3 text-left">Status</th>
                       <th className="px-6 py-3 text-center">Action</th>
                     </tr>
@@ -145,6 +183,7 @@ const LandingPageEmployer = () => {
                           <span>{job[1]}</span>
                         </td>
                         <td className="px-6 py-3">{job[2]}</td>
+                        <td className="px-6 py-3">{job[5]}</td>
                         <td className="px-6 py-3 text-teal-500">{job[3]}</td>
                         <td className="px-6 py-3 text-center">
                           <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
@@ -157,15 +196,20 @@ const LandingPageEmployer = () => {
                 </table>
               </div>
   
-           
+              {/* Add New Job Button */}
+              <div className="mt-6">
+                <button className="px-6 py-3 text-white bg-teal-500 rounded-md hover:bg-teal-600">
+                  Post a New Job
+                </button>
+              </div>
             </div>
           );
   
         case 'applicants':
           return (
             <div className="text-base text-gray-700">
-              {/* Candidates Content */}
-              <h2 className="text-xl font-bold">Review Candidates</h2>
+              {/* applicants Content */}
+              <h2 className="text-xl font-bold">Review Applicants</h2>
               <p className="mt-4">Manage and review your job applicants:</p>
   
               {/* Modern Candidate Table */}
@@ -173,43 +217,35 @@ const LandingPageEmployer = () => {
                 <table className="min-w-full bg-white rounded-md shadow-md">
                   <thead className="text-white bg-teal-500">
                     <tr>
-                      <th className="px-6 py-3 text-left">Candidate</th>
-                      <th className="px-6 py-3 text-left">Position</th>
+                      <th className="px-6 py-3 text-left">Name</th>
+                      <th className="px-6 py-3 text-left">Age</th>
+                      <th className="px-6 py-3 text-left">Disability</th>
+                      <th className="px-6 py-3 text-left">Title</th>
+                      <th className="px-6 py-3 text-left">Content</th>
+                      <th className="px-6 py-3 text-left">Date</th>
                       <th className="px-6 py-3 text-left">Status</th>
                       <th className="px-6 py-3 text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="border-b">
-                      <td className="px-6 py-3">John Doe</td>
-                      <td className="px-6 py-3">Software Engineer</td>
-                      <td className="px-6 py-3 text-teal-500">Pending</td>
-                      <td className="px-6 py-3 text-center">
-                        <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
-                          View Profile
-                        </button>
-                      </td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="px-6 py-3">Jane Smith</td>
-                      <td className="px-6 py-3">Data Analyst</td>
-                      <td className="px-6 py-3 text-teal-500">Reviewed</td>
-                      <td className="px-6 py-3 text-center">
-                        <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
-                          View Profile
-                        </button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="px-6 py-3">Michael Brown</td>
-                      <td className="px-6 py-3">UX Designer</td>
-                      <td className="px-6 py-3 text-teal-500">Interviewed</td>
-                      <td className="px-6 py-3 text-center">
-                        <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
-                          View Profile
-                        </button>
-                      </td>
-                    </tr>
+                    {application.map((app, index) => (
+                      <tr key={app[7]} className="border-b">
+                        <td className="px-6 py-3">{app[0]}</td>
+                        <td className="px-6 py-3">{app[1]}</td>
+                        <td className="px-6 py-3">{JSON.parse(app[2]).map((impairment, index) => (
+                          <li key={index}>{impairment}</li>
+                        ))}</td>
+                        <td className="px-6 py-3">{app[3]}</td>
+                        <td className="px-6 py-3">{app[4]}</td>
+                        <td className="px-6 py-3">{formatDate(app[5])}</td>
+                        <td className="px-6 py-3 text-teal-500">{app[6]}</td>
+                        <td className="px-6 py-3 text-center">
+                          <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
+                            View Profile
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
@@ -234,45 +270,28 @@ const LandingPageEmployer = () => {
       className="w-auto h-20 sm:h-24" 
     />
 
-    {/* Navigation Tabs */}
-    <nav className="flex flex-wrap justify-center gap-4 sm:flex-nowrap sm:gap-8">
-      {['overview', 'jobs', 'applicants', 'logout'].map((tab) => (
-        <button
-          key={tab}
-          className={`relative py-2 px-4 text-sm font-medium text-gray-900 transition-colors ${
-            activeTab === tab 
-              ? 'border-b-2 border-teal-500 text-teal-500' 
-              : 'hover:text-teal-500 group'
-          }`}
-          onClick={() => setActiveTab(tab)}
-        >
-          {tab.charAt(0).toUpperCase() + tab.slice(1)} {/* Capitalizes tab names */}
-          <span
-            className={`absolute left-0 bottom-0 w-full h-[2px] bg-teal-500 transition-transform duration-300 ${
-              activeTab === tab ? 'scale-100' : 'scale-0 group-hover:scale-100'
-            }`}
-          ></span>
-        </button>
-      ))}
-    </nav>
-
-    {/* Notification Icon */}
-    <div className="relative">
-      <button
-        onClick={toggleNotifications}
-        className="p-2 text-gray-600 bg-gray-100 rounded-full hover:bg-gray-200"
-      >
-        <FaBell size={20} />
-      </button>
-      {showNotifications && (
-        <div className="absolute right-0 z-10 mt-2 bg-white border rounded shadow">
-          <ul className="p-4 space-y-2">
-            <li>No new notifications</li>
-          </ul>
-        </div>
-      )}
-    </div>
-  </header>
+        {/* Navigation Tabs */}
+        <nav className="flex flex-wrap justify-center gap-4 sm:flex-nowrap sm:gap-8">
+          {['overview', 'jobs', 'candidates', 'logout'].map((tab) => (
+            <button
+              key={tab}
+              className={`relative py-2 px-4 text-sm font-medium text-gray-900 transition-colors ${
+                activeTab === tab 
+                  ? 'border-b-2 border-teal-500'
+                  : 'hover:text-teal-500 group'
+              }`}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)} {/* Capitalizes tab names */}
+              <span
+                className={`absolute left-0 bottom-0 w-full h-[2px] bg-teal-500 transition-transform duration-300 ${
+                  activeTab === tab ? 'scale-100' : 'scale-0 group-hover:scale-100'
+                }`}
+              ></span>
+            </button>
+          ))}
+        </nav>
+      </header>
 
 
 
