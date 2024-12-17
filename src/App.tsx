@@ -22,6 +22,8 @@ const VoiceCommand = React.lazy(() => import('./components/VoiceCommand'));
 const HighContrast = React.lazy(() => import('./components/HighContrast')); // Lazy load HighContrast component
 const ApplicantApply = React.lazy(() => import('./components/ApplicantApply'));
 
+// Importing the SpeechOverlay component
+import SpeechOverlay from './components/SpeechOverlay'; // Add the SpeechOverlay import
 
 // Loading spinner for fallback
 const LoadingSpinner = () => (
@@ -85,6 +87,9 @@ const App: React.FC = () => {
           Post Job
         </button>
       )}
+
+      {/* SpeechOverlay Button and Functionality */}
+      <SpeechOverlay /> {/* Add SpeechOverlay component here */}
     </Suspense>
   );
 };

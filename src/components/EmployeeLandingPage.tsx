@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import ExplorePage from './Explore';
 import AccessibilityTool from './AccessibilityTool';
 import { FaBell } from 'react-icons/fa'; // Import Font Awesome Bell icon
+import SpeechOverlay from "./SpeechOverlay";
 
 interface jobHiring {
   jobId: string;
@@ -106,7 +107,15 @@ const toggleDropdown = () => {
   setIsOpen((prev) => !prev);
 };
 
-  
+const SomePage: React.FC = () => {
+  return (
+    <div>
+      <SpeechOverlay />
+      <input type="text" placeholder="Type here" className="p-2 border" />
+      <textarea placeholder="Type here" className="p-2 border" />
+    </div>
+  );
+};
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setLetter(event.target.value);  // Update parent state with the letter content
   };
@@ -134,6 +143,10 @@ const toggleDropdown = () => {
     navigate('/materials');
   };
   
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedJobTitle, setSelectedJobTitle] = useState<string>(''); // Track the selected job title
@@ -180,6 +193,10 @@ const toggleDropdown = () => {
   }, [slides.length]);
 
 
+
+
+
+
   // Speech-to-text search bar functionality
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -212,6 +229,9 @@ const handleMicClick = () => {
     setSelectedJob(jobId);
     toggleModal(jobName);
   }
+
+
+  
 
   // Function to render the content based on the active tab
   const renderContent = () => {
@@ -259,9 +279,12 @@ const handleMicClick = () => {
             <div className="flex flex-col items-center justify-center p-4 mt-8 text-center bg-gray-100 md:p-8">
               <h2 className="text-lg font-bold text-gray-600 md:text-2xl">Find Your Dream Job</h2>
               <div className="flex items-center gap-2 mt-4">
-                <input
-                  type="text"
-                  placeholder="Search jobs..."
+              <input
+          type="text"
+          value={searchQuery}
+          onChange={handleSearchChange} // Update searchQuery state as user types
+          placeholder="Search for companies..."
+
                   className="w-full max-w-xs p-2 border border-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
                 <button className="p-2 bg-teal-500 rounded-full">
@@ -269,7 +292,7 @@ const handleMicClick = () => {
                 </button>
               </div>
             </div>
-
+\
 {/* Job Cards Section */}
 <div className="flex flex-wrap justify-center gap-4 mt-8">
               {jobDetails.map((job, index) => (
@@ -507,14 +530,16 @@ const handleMicClick = () => {
         
                     {/* Search Box with Microphone Button on the Right */}
                     <div className="flex items-center justify-center mt-8">
-                      <input
-                        type="text"
-                        placeholder="Search for companies..."
-                        className="w-full max-w-xs p-2 border border-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500"
-                      />
-                      <button className="p-2 ml-2 bg-teal-500 rounded-full">
-                        <img src="/Microphone.png" alt="Mic" className="w-6 h-6" />
-                      </button>
+                    <input
+          type="text"
+          value={searchQuery}
+          onChange={handleSearchChange} // Update searchQuery state as user types
+          placeholder="Search for companies..."
+          className="w-full max-w-xs p-2 border border-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500"
+        />
+        <button className="p-2 ml-2 bg-teal-500 rounded-full">
+          <img src="/Microphone.png" alt="Mic" className="w-6 h-6" />
+        </button>
                     </div>
                   </div>
 

@@ -169,22 +169,7 @@ const AccessibilityToolbar: React.FC = () => {
           onMouseLeave={handleMouseUp}
         >
            <div className="flex flex-wrap justify-center space-x-4">
-      {/* Contrast Button */}
-      <div className="flex flex-col items-center">
-        <button
-          onClick={() => {
-            toggleContrastMode();
-            handleButtonClick("contrast");
-          }}
-          className={`bg-yellow-500 text-gray-900 font-semibold py-2 px-4 rounded-full transition-all duration-300 transform ${
-            activeButton === "contrast" ? "scale-110 shadow-lg" : "hover:scale-110 hover:shadow-lg"
-          }`}
-          aria-label="Toggle Contrast"
-        >
-          <FaAdjust size={20} />
-        </button>
-        <span className="mt-1 text-xs">Contrast</span>
-      </div>
+    
 
             {/* Text Size Button */}
             <div className="flex flex-col items-center">

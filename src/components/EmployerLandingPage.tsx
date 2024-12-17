@@ -196,12 +196,8 @@ const LandingPageEmployer = () => {
                 </table>
               </div>
   
-              {/* Add New Job Button */}
-              <div className="mt-6">
-                <button className="px-6 py-3 text-white bg-teal-500 rounded-md hover:bg-teal-600">
-                  Post a New Job
-                </button>
-              </div>
+         
+      
             </div>
           );
   
