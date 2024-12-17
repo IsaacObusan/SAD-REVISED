@@ -3,7 +3,7 @@ import { MdOutlineRecordVoiceOver } from "react-icons/md"; // Icon resembling op
 
 const SpeechOverlay: React.FC = () => {
   const [isListening, setIsListening] = useState(false);
-  const [transcript, setTranscript] = useState<string>("");
+  const [transcript, setTranscript] = useState<string>(""); // Holds the transcript text
   const [activeElement, setActiveElement] = useState<HTMLElement | null>(null);
 
   const SpeechRecognition =
@@ -21,22 +21,27 @@ const SpeechOverlay: React.FC = () => {
       };
 
       recognition.onresult = (event: any) => {
+        let finalTranscript = "";
         let interimTranscript = "";
+
         for (let i = event.resultIndex; i < event.results.length; i++) {
           const speechResult = event.results[i][0].transcript;
           if (event.results[i].isFinal) {
-            setTranscript((prev) => prev + " " + speechResult.trim());
+            finalTranscript += speechResult + " ";
           } else {
             interimTranscript += speechResult;
           }
         }
+
+        // Append the final transcript to the state (not clearing previously inputted text)
+        setTranscript((prevTranscript) => prevTranscript + finalTranscript.trim());
 
         // Automatically input into the active input or textarea element
         if (
           activeElement instanceof HTMLInputElement ||
           activeElement instanceof HTMLTextAreaElement
         ) {
-          activeElement.value = interimTranscript;
+          activeElement.value = transcript + finalTranscript.trim(); // Append to the existing value
         }
       };
 
@@ -53,17 +58,17 @@ const SpeechOverlay: React.FC = () => {
       setActiveElement(event.target as HTMLElement);
     };
 
-    const inputs = document.querySelectorAll("input, textarea");
+    const inputs = document.querySelectorAll("textarea, input");
     inputs.forEach((input) => {
-      input.addEventListener("focus", handleFocus);
+      input.addEventListener("focus", handleFocus as EventListener); // Explicitly cast to EventListener
     });
 
     return () => {
       inputs.forEach((input) => {
-        input.removeEventListener("focus", handleFocus);
+        input.removeEventListener("focus", handleFocus as EventListener);
       });
     };
-  }, [recognition]);
+  }, [recognition, transcript]);
 
   const toggleSpeechRecognition = () => {
     if (recognition) {
@@ -83,7 +88,7 @@ const SpeechOverlay: React.FC = () => {
         className="fixed p-4 text-white transition duration-200 ease-in-out bg-teal-500 rounded-full shadow-lg bottom-10 right-10 focus:outline-none hover:bg-teal-600 active:bg-teal-700"
         onClick={toggleSpeechRecognition}
       >
-        <MdOutlineRecordVoiceOver className="text-2xl" /> {/* Open mouth icon */}
+        <MdOutlineRecordVoiceOver className="text-2xl" />
       </button>
 
       {isListening && (
@@ -91,6 +96,14 @@ const SpeechOverlay: React.FC = () => {
           <p>Speak now...</p>
         </div>
       )}
+      
+      {/* Displaying the transcribed text */}
+      <textarea
+        value={transcript}
+        onChange={(e) => setTranscript(e.target.value)}
+        rows={4}
+        className="w-full p-2 mt-4 border border-gray-300 rounded-md"
+      />
     </div>
   );
 };
