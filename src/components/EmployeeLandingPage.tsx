@@ -4,6 +4,7 @@ import Footer from './Footer';
 import { useNavigate } from 'react-router-dom';
 import ExplorePage from './Explore';
 import AccessibilityTool from './AccessibilityTool';
+import { FaBell } from 'react-icons/fa'; // Import Font Awesome Bell icon
 
 interface jobHiring {
   jobLogo: string | undefined;
@@ -58,10 +59,12 @@ const EmployeeLandingPage = () => {
   const accountId = localStorage.getItem("id");
   const slides = ["/slide1.png", "/slide2.png"];
   const slideInterval = 5000; // 5 seconds per slide
+  
   const [jobDetails, setJobDetails] = useState<jobHiring[]>([]);
   const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
   const [letter, setLetter] = useState<string>('');
   const [isOpen, setIsOpen] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
   const [companyDetails, setCompanyDetails] = useState<employerDetails[]>([]);
   const handleLogout = () => {
     // Clear session-related data
@@ -122,7 +125,9 @@ const toggleDropdown = () => {
   };
   
   
-  
+  const toggleNotifications = () => {
+    setShowNotifications((prev) => !prev);
+  };
   
   const handleClick = () => {
     navigate('/materials');
@@ -601,44 +606,7 @@ const handleMicClick = () => {
     </button>
   ))}
 
-  {/* Dropdowns aligned closer to the tabs */}
-  <div className="flex items-center gap-2 ml-4">
-    {/* First Dropdown */}
-    <div className="relative">
-      <select
-        className="p-2 bg-white "
-        defaultValue=""
-      >
-        <option value="" disabled>
-          Find Work
-        </option>
-        <option value="Option1">Work</option>
-        <option value="Option2">Saved Jobs</option>
-        <option value="Option3">Proposals</option>
-      </select>
-    </div>
-
-    {/* Second Dropdown */}
-    <div className="relative">
-      <select
-        className="p-2 bg-white "
-        defaultValue=""
-      >
-        <option value="" disabled>
-          Deliver Work
-        </option>
-        <option value="Option1">Active</option>
-        <option value="Option2">History</option>
-        <option value="Option3">Hourly</option>
-      </select>
-    </div>
-  </div>
 </div>
-
-       
-
-    
-
 
         {/* Greeting, Search Bar, and Profile Image */}
         <div className="flex items-center gap-4 mt-4 sm:flex-row sm:mt-0">
@@ -646,6 +614,7 @@ const handleMicClick = () => {
           <span className="text-sm font-medium text-gray-700 sm:text-lg">
             Welcome, {accountName}
           </span>
+          </div>
 
       {/* Search Bar */}
 <div className="flex items-center gap-2">
@@ -665,61 +634,95 @@ const handleMicClick = () => {
 
 
 {/* Profile Button */}
-<div className="relative">
-        <button
-          className="w-10 h-10 focus:outline-none"
-          onClick={toggleDropdown}
-        >
-          <img
-            src="/profile.png"
-            alt="Profile"
-            className="object-cover w-full h-full border-2 border-teal-500 rounded-full"
-          />
-        </button>
-
-        {/* Dropdown Menu */}
-        {isOpen && (
-          <div className="absolute right-0 z-10 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg w-44">
-            <ul className="text-gray-700">
-              <li>
-                <a
-                  href="/profile"
-                  className="block px-4 py-2 hover:bg-gray-100"
-                >
-                  Your Profile
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/stats"
-                  className="block px-4 py-2 hover:bg-gray-100"
-                >
-                  My Stats
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/settings"
-                  className="block px-4 py-2 hover:bg-gray-100"
-                >
-                  Settings
-                </a>
-              </li>
-              <li>
-              <button
-      className="block w-full px-4 py-2 text-left hover:bg-gray-100"
-      onClick={handleLogout}
+<div className="flex items-center gap-4">
+  {/* Profile Button */}
+  <div className="relative">
+    <button
+      className="w-10 h-10 focus:outline-none"
+      onClick={toggleDropdown}
     >
-      Logout
+      <img
+        src="/profile.png"
+        alt="Profile"
+        className="object-cover w-full h-full border-2 border-teal-500 rounded-full"
+      />
     </button>
-              </li>
-            </ul>
+
+    </div>
+
+    {/* Dropdown Menu */}
+    {isOpen && (
+      <div className="absolute z-10 mt-40 bg-white border border-gray-200 rounded-lg shadow-lg right-38 w-44">
+        <ul className="text-gray-700">
+          <li>
+            <a
+              href="/profile"
+              className="block px-4 py-2 hover:bg-gray-100"
+            >
+              Your Profile
+            </a>
+          </li>
+          <li>
+            <a
+              href="/status"
+              className="block px-4 py-2 hover:bg-gray-100"
+            >
+              Employment Status
+            </a>
+          </li>
+          <li>
+            <button
+              className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+              onClick={handleLogout}
+            >
+              Logout
+        </button>
+      </li>
+    </ul>
+  </div>
+)}
+
+{/* Notification Icon */}
+<div className="relative px-4 py-2">
+  <button
+    onClick={toggleNotifications}
+    className="flex items-center text-gray-600 hover:text-teal-500"
+  >
+    <FaBell className="text-2xl" />
+    <span className="ml-2">Notifications</span>
+    <span className="absolute inline-block w-3 h-3 bg-red-500 rounded-full top-1 right-1"></span>
+  </button>
+
+  {/* Notification Dropdown */}
+  {showNotifications && (
+    <div className="absolute right-0 z-10 w-64 mt-2 bg-white rounded-md shadow-lg">
+      <ul className="p-4 space-y-2">
+        <li className="text-sm text-gray-700">
+          <span className="block font-semibold">New Application</span>
+          <span>John Doe applied for Software Engineer</span>
+        </li>
+        <li className="text-sm text-gray-700">
+          <span className="block font-semibold">Interview Scheduled</span>
+          <span>Interview for Data Analyst on Dec 20</span>
+        </li>
+        <li className="text-sm text-gray-700">
+          <span className="block font-semibold">Job Posted</span>
+          <span>Your job 'UI Designer' is live</span>
+        </li>
+      </ul>
+      <button
+        className="w-full px-4 py-2 text-sm font-medium text-center text-white bg-teal-500 rounded-b-md hover:bg-teal-600"
+        onClick={toggleNotifications}
+      >
+        Close
+      </button>
+      
+            
           </div>
         )}
       </div>
     </div>
   </header>
-
 
        
 

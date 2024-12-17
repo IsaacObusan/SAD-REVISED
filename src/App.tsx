@@ -22,6 +22,7 @@ const VoiceCommand = React.lazy(() => import('./components/VoiceCommand'));
 const HighContrast = React.lazy(() => import('./components/HighContrast')); // Lazy load HighContrast component
 const ApplicantApply = React.lazy(() => import('./components/ApplicantApply'));
 
+
 // Loading spinner for fallback
 const LoadingSpinner = () => (
   <div className="flex items-center justify-center h-screen">
@@ -58,6 +59,7 @@ const App: React.FC = () => {
         <Route path="/voice-command" element={<VoiceCommand />} />
         <Route path="/high-contrast" element={<HighContrast />} />
         <Route path="/apply-applicant" element={<ApplicantApply />} />
+        
         <Route path="/*" element={<ErrorPage />} />
       </Routes>
 

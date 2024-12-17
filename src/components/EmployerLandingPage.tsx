@@ -5,6 +5,7 @@ import Footer from './Footer';
 import { useNavigate } from 'react-router-dom';
 import axios  from 'axios';
 import PostModal from './PostModal';  // Import the modal component
+import { FaBell } from 'react-icons/fa'; // Import Font Awesome Bell icon
 
 
 const LandingPageEmployer = () => {
@@ -12,10 +13,18 @@ const LandingPageEmployer = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [jobs, setJobs] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
+  const [showNotifications, setShowNotifications] = useState(false); // Notification dropdown state
   const accountName = localStorage.getItem("accountName");
   const accountId = localStorage.getItem("id");
   const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
 
+
+  const toggleNotifications = () => {
+    setShowNotifications((prev) => !prev);
+  };
+
+  
+  
   const handleLogout = () => {
     localStorage.removeItem('accountName'); 
     localStorage.removeItem('id'); 
@@ -148,16 +157,11 @@ const LandingPageEmployer = () => {
                 </table>
               </div>
   
-              {/* Add New Job Button */}
-              <div className="mt-6">
-                <button className="px-6 py-3 text-white bg-teal-500 rounded-md hover:bg-teal-600">
-                  Post a New Job
-                </button>
-              </div>
+           
             </div>
           );
   
-        case 'candidates':
+        case 'applicants':
           return (
             <div className="text-base text-gray-700">
               {/* Candidates Content */}
@@ -220,38 +224,57 @@ const LandingPageEmployer = () => {
     };
   
     return (
-      <div className="min-h-screen bg-gray-100">
-        {/* Header */}
-        <header className="flex flex-col items-center justify-between gap-4 p-4 bg-white rounded-md shadow sm:flex-row">
-          {/* Logo */}
-          <img 
-            src="/Logoo.png" 
-            alt="Logo" 
-            className="w-auto h-20 sm:h-24" 
-          />
+    <div className="min-h-screen bg-gray-100">
+  {/* Header */}
+  <header className="flex flex-col items-center justify-between gap-4 p-4 bg-white rounded-md shadow sm:flex-row">
+    {/* Logo */}
+    <img 
+      src="/Logoo.png" 
+      alt="Logo" 
+      className="w-auto h-20 sm:h-24" 
+    />
 
-        {/* Navigation Tabs */}
-        <nav className="flex flex-wrap justify-center gap-4 sm:flex-nowrap sm:gap-8">
-          {['overview', 'jobs', 'candidates', 'logout'].map((tab) => (
-            <button
-              key={tab}
-              className={`relative py-2 px-4 text-sm font-medium text-gray-900 transition-colors ${
-                activeTab === tab 
-                  ? 'border-b-2 border-teal-500'
-                  : 'hover:text-teal-500 group'
-              }`}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)} {/* Capitalizes tab names */}
-              <span
-                className={`absolute left-0 bottom-0 w-full h-[2px] bg-teal-500 transition-transform duration-300 ${
-                  activeTab === tab ? 'scale-100' : 'scale-0 group-hover:scale-100'
-                }`}
-              ></span>
-            </button>
-          ))}
-        </nav>
-      </header>
+    {/* Navigation Tabs */}
+    <nav className="flex flex-wrap justify-center gap-4 sm:flex-nowrap sm:gap-8">
+      {['overview', 'jobs', 'applicants', 'logout'].map((tab) => (
+        <button
+          key={tab}
+          className={`relative py-2 px-4 text-sm font-medium text-gray-900 transition-colors ${
+            activeTab === tab 
+              ? 'border-b-2 border-teal-500 text-teal-500' 
+              : 'hover:text-teal-500 group'
+          }`}
+          onClick={() => setActiveTab(tab)}
+        >
+          {tab.charAt(0).toUpperCase() + tab.slice(1)} {/* Capitalizes tab names */}
+          <span
+            className={`absolute left-0 bottom-0 w-full h-[2px] bg-teal-500 transition-transform duration-300 ${
+              activeTab === tab ? 'scale-100' : 'scale-0 group-hover:scale-100'
+            }`}
+          ></span>
+        </button>
+      ))}
+    </nav>
+
+    {/* Notification Icon */}
+    <div className="relative">
+      <button
+        onClick={toggleNotifications}
+        className="p-2 text-gray-600 bg-gray-100 rounded-full hover:bg-gray-200"
+      >
+        <FaBell size={20} />
+      </button>
+      {showNotifications && (
+        <div className="absolute right-0 z-10 mt-2 bg-white border rounded shadow">
+          <ul className="p-4 space-y-2">
+            <li>No new notifications</li>
+          </ul>
+        </div>
+      )}
+    </div>
+  </header>
+
+
 
  
       {/* Main Content */}
