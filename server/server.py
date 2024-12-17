@@ -360,6 +360,31 @@ def getPie():
         print(str(e))
         return jsonify({"error": str(e)}), 400
 
+@app.route("/get_user", methods=["POST"])
+def getUser():
+    try:
+        connection = get_db_connection()
+        data = request.get_json()
+        type = data["type"]
+
+        cursor = connection.cursor()
+        if(type == "applicant"):
+            query = "SELECT a.account_id, b.applicant_name, b.applicant_age, CONCAT_WS(' ', house_num, street, baranggay, municipality, province, zip_code) AS concatenated_values, b.applicant_disability, a.date_created, a.status, a.email, a.image FROM applicant_account a JOIN applicant b ON a.applicant_acc_id = b.applicant_id JOIN address c ON c.address_id = b.applicant_address_id"
+        else:
+            query = "SELECT a.account_id, b.employer_name, b.employer_age, CONCAT_WS(' ', house_num, street, baranggay, municipality, province, zip_code) AS concatenated_values, a.date_created, a.status, a.email, a.image FROM employer_account a JOIN employer b ON a.employer_acc_id = b.employer_id JOIN address c ON c.address_id = b.employer_address_id"
+        cursor.execute(query)
+
+        result = cursor.fetchall()
+
+        if len(result) > 0:
+            return jsonify({"users": result})
+        else:
+            return jsonify({"code": 405})
+
+    except Exception as e:
+        print(str(e))
+        return jsonify({"error": str(e)}), 400
+
 @app.route('/logout')
 def logout():
     session.pop('email', None)
