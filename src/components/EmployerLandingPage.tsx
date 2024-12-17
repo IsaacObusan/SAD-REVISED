@@ -272,7 +272,7 @@ const LandingPageEmployer = () => {
 
         {/* Navigation Tabs */}
         <nav className="flex flex-wrap justify-center gap-4 sm:flex-nowrap sm:gap-8">
-          {['overview', 'jobs', 'candidates', 'logout'].map((tab) => (
+          {['overview', 'jobs', 'applicants', 'logout'].map((tab) => (
             <button
               key={tab}
               className={`relative py-2 px-4 text-sm font-medium text-gray-900 transition-colors ${

@@ -10,6 +10,8 @@ const Admin: React.FC = () => {
   const [application, setApplication] = useState<string[]>([]);
   const [hiring, setHiring] = useState<string[]>([]);
   const [portfolio, setPortfolio] = useState<string[]>([]);
+  const [user, setUser] = useState<string[]>([]);
+  const [type, setType] = useState('applicant');
 
   const navigate = useNavigate();
   const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
@@ -56,10 +58,21 @@ const Admin: React.FC = () => {
     });
   };
 
+  const onSelect = async(data:string) =>{
+    try {
+      const response = await axios.post(serverUrl + "get_user", {type: data})
+      setType(data);
+      setUser(response.data.users);
+    } catch (error) {
+      console.error()
+    }
+  }
+
   useEffect(() => {
     fetchDetails();
     fetchApplications();
     fetchNotice();
+    onSelect(type);
   }, []);
 
   const renderTabContent = () => {
@@ -202,32 +215,79 @@ const Admin: React.FC = () => {
         case 'user management':
           return (
             <div>
-              <table className="min-w-full overflow-hidden bg-white rounded-lg shadow-md">
-              <thead>
-                <tr className="text-left bg-gray-200">
-                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Job Title</th>
-                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Description</th>
-                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Location</th>
-                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Job Type</th>
-                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Posted Date</th>
-                  <th className="px-6 py-3 text-sm font-semibold text-gray-700">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b">
-                  <td className="px-6 py-4 text-sm text-gray-800">Software Engineer</td>
-                  <td className="px-6 py-4 text-sm text-gray-800">Develop and maintain software applications.</td>
-                  <td className="px-6 py-4 text-sm text-gray-800">Remote</td>
-                  <td className="px-6 py-4 text-sm text-gray-800">Full-time</td>
-                  <td className="px-6 py-4 text-sm text-gray-800">01 Dec 2024</td>
-                  <td className="px-6 py-4 text-sm text-gray-800">
-                    <button className="px-4 py-2 text-white bg-teal-500 rounded-md">Edit</button>
-                    <button className="px-4 py-2 ml-2 text-white bg-red-500 rounded-md">Delete</button>
-                  </td>
-                </tr>
-                {/* Add more rows dynamically */}
-              </tbody>
-            </table>
+              <select 
+                className='px-4 py-1 rounded-md'
+                onChange={(e) => onSelect(e.target.value)}
+              >
+                <option value="applicant">Applicant</option>
+                <option value="employer">Employer</option>
+              </select>
+              {type === "applicant" ? (
+                <table className="min-w-full overflow-hidden bg-white rounded-lg shadow-md">
+                  <thead>
+                    <tr className="text-left bg-gray-200">
+                      <th className="px-6 py-3 text-sm font-semibold text-gray-700">Name</th>
+                      <th className="px-6 py-3 text-sm font-semibold text-gray-700">Age</th>
+                      <th className="px-6 py-3 text-sm font-semibold text-gray-700">Address</th>
+                      <th className="px-6 py-3 text-sm font-semibold text-gray-700">Disability</th>
+                      <th className="px-6 py-3 text-sm font-semibold text-gray-700">Date Created</th>
+                      <th className="px-6 py-3 text-sm font-semibold text-gray-700">Status</th>
+                      <th className="px-6 py-3 text-sm font-semibold text-gray-700">Email</th>
+                      <th className="px-6 py-3 text-sm font-semibold text-gray-700">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {user.map((user, index) => (
+                      <tr key={index} className="border-b">
+                        <td className="px-6 py-4 text-sm text-gray-800">{user[1]}</td>
+                        <td className="px-6 py-4 text-sm text-gray-800">{user[2]}</td>
+                        <td className="px-6 py-4 text-sm text-gray-800">{user[3]}</td>
+                        <td className="px-6 py-4 text-sm text-gray-800">{JSON.parse(user[4]).map((impairment, index) =>(
+                           <li key={index}>{impairment}</li>
+                        ))}</td>
+                        <td className="px-6 py-4 text-sm text-gray-800">{formatDate(user[5])}</td>
+                        <td className="px-6 py-4 text-sm text-gray-800">{user[6]}</td>
+                        <td className="px-6 py-4 text-sm text-gray-800">{user[7]}</td>
+                        <td className="px-6 py-4 text-sm text-gray-800">
+                          <button className="px-4 py-2 text-white bg-teal-500 rounded-md">Edit</button>
+                          <button className="px-4 py-2 text-white bg-red-500 rounded-md">Delete</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <table className="min-w-full overflow-hidden bg-white rounded-lg shadow-md">
+                  <thead>
+                    <tr className="text-left bg-gray-200">
+                      <th className="px-6 py-3 text-sm font-semibold text-gray-700">Name</th>
+                      <th className="px-6 py-3 text-sm font-semibold text-gray-700">Age</th>
+                      <th className="px-6 py-3 text-sm font-semibold text-gray-700">Address</th>
+                      <th className="px-6 py-3 text-sm font-semibold text-gray-700">Date Created</th>
+                      <th className="px-6 py-3 text-sm font-semibold text-gray-700">Status</th>
+                      <th className="px-6 py-3 text-sm font-semibold text-gray-700">Email</th>
+                      <th className="px-6 py-3 text-sm font-semibold text-gray-700">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {user.map((user, index) => (
+                      <tr key={index} className="border-b">
+                        <td className="px-6 py-4 text-sm text-gray-800">{user[1]}</td>
+                        <td className="px-6 py-4 text-sm text-gray-800">{user[2]}</td>
+                        <td className="px-6 py-4 text-sm text-gray-800">{user[3]}</td>
+                        <td className="px-6 py-4 text-sm text-gray-800">{formatDate(user[4])}</td>
+                        <td className="px-6 py-4 text-sm text-gray-800">{user[5]}</td>
+                        <td className="px-6 py-4 text-sm text-gray-800">{user[6]}</td>
+                        <td className="px-6 py-4 text-sm text-gray-800">
+                          <button className="px-4 py-2 text-white bg-teal-500 rounded-md">Edit</button>
+                          <button className="px-4 py-2 text-white bg-red-500 rounded-md">Delete</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+
             </div>
           );
       default:
