@@ -234,7 +234,7 @@ def setJobs():
         employer_id = data["id"]
 
         cursor = connection.cursor()
-        query = "SELECT a.job_id, a.job_name, a.job_desc, a.job_status, b.company_image FROM job_hiring a JOIN employer b ON a.job_employer = b.employer_id WHERE b.employer_id = %s"
+        query = "SELECT a.job_id, a.job_name, a.job_desc, a.job_status, b.company_image, a.job_rate FROM job_hiring a JOIN employer b ON a.job_employer = b.employer_id WHERE b.employer_id = %s"
         cursor.execute(query,  (employer_id,))
 
         result = cursor.fetchall()
@@ -268,6 +268,34 @@ def getApplication():
 
     except Exception as e:
         print(str(e))
+        return jsonify({"error": str(e)}), 400
+
+@app.route('/post_job', methods=["POST"])
+def postJob():
+    try:
+        data = request.get_json()
+        _id = data['id']
+        title = data['title']
+        desc = data['desc']
+        salary = data['job']
+        formatted_salary = f"₱{salary}"
+
+        # Create a connection to the database
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        # Insert the data into MySQL
+        query = "INSERT INTO job_hiring (`job_name`,`job_desc`,`job_postDate`,`job_employer`,`job_rate`) VALUES (%s,%s,%s,%s,%s)"
+        cursor.execute(query, (title, desc, get_current_date(), _id, formatted_salary))
+        connection.commit()
+        
+
+        # Close the connection
+        cursor.close()
+        connection.close()
+
+        return jsonify({"remarks": "success"}), 200
+    except Exception as e:
         return jsonify({"error": str(e)}), 400
 
 @app.route('/logout')

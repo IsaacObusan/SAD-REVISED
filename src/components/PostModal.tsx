@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 interface PostJobModalProps {
   showModal: boolean;
@@ -10,9 +11,25 @@ const PostJobModal: React.FC<PostJobModalProps> = ({ showModal, setShowModal, on
   const [jobTitle, setJobTitle] = useState('');
   const [description, setDescription] = useState('');
   const [jobSalary, setJobSalary] = useState('');
-  
+  const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
+  const accountId = localStorage.getItem("id");
+  const [rateUnit, setRateUnit] = useState('');
+
+  const handleJobPosting = async () => {
+    try {
+      const formattedSalary = jobSalary + rateUnit;
+      const response = await axios.post(serverUrl + "post_job", {id: accountId, title: jobTitle, desc: description, job: formattedSalary});
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handlePostJob = () => {
+    setJobTitle("");
+    setJobSalary("");
+    setDescription("");
+    handleJobPosting();
     setShowModal(false); // Close modal after submission
     onClose(); // Trigger the onClose callback
   };
@@ -57,13 +74,25 @@ const PostJobModal: React.FC<PostJobModalProps> = ({ showModal, setShowModal, on
             <label className="block mb-1 text-sm font-medium text-gray-600">
               Job Salary
             </label>
-            <input
-              type="number"
-              className="w-full px-3 py-2 border rounded-md focus:outline-teal-500"
-              placeholder="Enter job salary"
-              value={jobSalary}
-              onChange={(e) => setJobSalary(e.target.value)}
-            />
+            <div className='flex'>
+              <input
+                type="number"
+                className="w-full px-3 py-2 border rounded-md focus:outline-teal-500"
+                placeholder="Enter job salary"
+                value={jobSalary}
+                onChange={(e) => setJobSalary(e.target.value)}
+              />
+              <select 
+                className='w-full px-3 py-2 border rounded-md focus:outline-teal-500'
+                value={rateUnit}
+                onChange={(e) => setRateUnit(e.target.value)}
+              >
+                <option value="/hour">Hourly</option>
+                <option value="/day">Daily</option>
+                <option value="/week">Weekly</option>
+                <option value="/month">Monthly</option>
+              </select>
+            </div>
           </div>
         </div>
 

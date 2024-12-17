@@ -12,6 +12,8 @@ const LandingPageEmployer = () => {
   const [jobs, setJobs] = useState<string[]>([]);
   const [application, setApplication] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
+  const [barData, setBarData] = useState<string[]>([]);
+  const [barLabel, setBarLabel] = useState<string[]>([]);
   const accountName = localStorage.getItem("accountName");
   const accountId = localStorage.getItem("id");
   const serverUrl = import.meta.env.VITE_APP_SERVERHOST;
@@ -144,6 +146,7 @@ const LandingPageEmployer = () => {
                     <tr>
                       <th className="py-3 px-6 text-left">Job Title</th>
                       <th className="py-3 px-6 text-left">Description</th>
+                      <th className="py-3 px-6 text-left">Rate</th>
                       <th className="py-3 px-6 text-left">Status</th>
                       <th className="py-3 px-6 text-center">Action</th>
                     </tr>
@@ -160,6 +163,7 @@ const LandingPageEmployer = () => {
                           <span>{job[1]}</span>
                         </td>
                         <td className="px-6 py-3">{job[2]}</td>
+                        <td className="px-6 py-3">{job[5]}</td>
                         <td className="px-6 py-3 text-teal-500">{job[3]}</td>
                         <td className="px-6 py-3 text-center">
                           <button className="px-4 py-2 text-sm text-white bg-teal-500 rounded hover:bg-teal-600">
