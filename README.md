@@ -88,7 +88,11 @@ Fill job details, Submit
 
 View/edit/deactivate as needed
 
-Review applicants & manage interview statu
+Review applicants & manage interview status
+
+
+
+Additional Information:
 
 
 # React + TypeScript + Vite
