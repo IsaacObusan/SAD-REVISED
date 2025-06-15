@@ -1,9 +1,8 @@
 
 🧭 JobCompass: Employment Opportunity 
 Navigator for PWDs of Camarines Norte  
-![jobcompass-manual (1)](https://github.com/user-attachments/assets/4d851169-419a-4b4d-a218-4491e22a5212)
 
-
+![470055840_1693901331154505_2936764786385761488_n](https://github.com/user-attachments/assets/3935f2e9-b5f5-4d74-b3a1-3a847b045676)
 
 
 
