@@ -1,237 +1,94 @@
 
-🧭 JobCompass: Employment Opportunity 
-Navigator for PWDs of Camarines Norte  
+🧭 JobCompass: Employment Opportunity Navigator for PWDs
+JobCompass is a digital platform that connects Persons with Disabilities (PWDs) in Camarines Norte to inclusive employment opportunities.
 
-![470055840_1693901331154505_2936764786385761488_n](https://github.com/user-attachments/assets/3935f2e9-b5f5-4d74-b3a1-3a847b045676)
+![470055840_1693901331154505_2936764786385761488_n](https://github.com/user-attachments/assets/e113f4eb-fd8b-4267-b951-2164369700dd)
 
+🔑 Features
+👤 For PWD Job Seekers
+🔍 Search & filter jobs
 
+🏢 Explore hiring companies
 
-JobCompass is a dedicated digital platform designed to empower Persons with Disabilities (PWDs) in Camarines Norte by connecting them with relevant employment opportunities. It aims to bridge the gap between PWDs and potential employers, fostering a more inclusive job market.
+📄 Apply with resume & cover letter
 
-Table of Contents
-System Introduction
+🧾 Track application status
 
-Key Features
+📚 Access career tips & tutorials
 
-For PWD Job Seekers
+👤 Manage personal profile
 
-For Employers
+🏢 For Employers
+📊 View dashboard analytics
 
-For Administrators
+📌 Post, edit, activate/deactivate jobs
 
-Accessibility Toolbar
+👁️‍🗨️ Review & filter applicants
 
-System Requirements
+🗓 Schedule interviews
 
-Getting Started
+⚙️ For Admins
+🛠 Manage users & job posts
 
-Sign Up (Employee)
+📑 Track all applications
 
-Login
+📈 Generate reports
 
-Exploring Career Options (Applicant)
+⚙️ Configure system settings
 
-Applying for Jobs (Applicant)
+♿ Accessibility Toolbar
+🔠 Text size & spacing adjustment
 
-Managing Applications (Applicant)
+🔍 Magnifier
 
-Posting a New Job (Employer)
+🎙 Speech-to-text input
 
-Managing Job Postings (Employer)
+🔄 Reset to default
 
-Reviewing Applicants (Employer)
+🖥️ System Requirements
+Devices:
 
-FAQ
+Desktop: Windows 10+, macOS 10.15+, Linux (4GB RAM, 50GB Storage)
 
-Contact Support
+Mobile: iOS/Android, 7"+ screen
 
-System Introduction
-JobCompass provides a dedicated space for PWDs to showcase their skills and abilities, access a diverse range of job opportunities, and increase their chances of employment. It offers distinct interfaces for applicants, employers, and administrators to ensure a tailored and efficient experience for all users.
+Browser: Chrome, Firefox, Edge, Safari
+Internet: 5 Mbps+ recommended
 
-Key Features
-For PWD Job Seekers
-Browse Featured Jobs: Explore suggested job postings on the dashboard.
+🚀 Getting Started
+👥 Sign Up (Employee)
+Visit the JobCompass site
 
-Search for Jobs: Use a powerful search bar with filters (keywords, location, job type) to find matching opportunities.
+Click Sign Up → Employee
 
-Explore Companies: Learn more about companies actively hiring PWDs.
+Fill in info and upload resume
 
-Apply for Jobs: Easily submit applications, including resumes and cover letters.
+Create account
 
-Manage Applications: Track the status of submitted applications (e.g., shortlisted for an interview).
+🔐 Login
+Go to the Login page
 
-Career Resources: Access tutorials and career advice on job searching, resume writing, and interview preparation.
+Enter email & password
 
-Personal Profile Management: Create and manage a job seeker profile to highlight skills and qualifications.
+Click Login
 
-For Employers
-Employer Dashboard: A centralized platform to manage recruitment needs.
+Forgot password? Use the recovery link
 
-Job Posting Insights: View analytics on active jobs, applications received, and positions filled.
+💼 Explore & Apply (Applicant)
+Use search & filters to find jobs
 
-Application Distribution: See a pie chart showing the distribution of applications across job postings.
+Click Apply and follow the prompts
 
-Manage Job Postings: View, edit, post, deactivate, and reactivate job listings.
+Track progress in My Applications
 
-Review Applicants: Filter and review applications for job postings, with options to mark as pending, shortlist, or reject.
+📢 Post & Manage Jobs (Employer)
+Login → Dashboard → Post Job
 
-Schedule Interviews: Plan and manage interviews directly through the platform.
+Fill job details, Submit
 
-For Administrators
-Admin Dashboard: A central hub for platform management.
+View/edit/deactivate as needed
 
-User Account Management: Oversee and update user accounts.
-
-Job Posting Management: Manage all job postings on the platform.
-
-Application Tracking: Monitor and review all applications.
-
-Analytics Generation: Generate reports and insights on platform activity.
-
-System Settings Configuration: Adjust and maintain overall system settings.
-
-Accessibility Toolbar
-The JobCompass platform features an Accessibility Toolbar to customize the viewing experience for users. Located typically at the bottom of the screen, it includes:
-
-Text Size Slider: Adjusts the size of text, videos, and icons.
-
-Spacing Adjustment: Modifies spacing between elements for better readability.
-
-Magnifier: Enlarges portions of the screen.
-
-Speech-to-Text: Converts spoken words into text, useful for searching and filling forms.
-
-Reset Button: Restores all accessibility settings to default.
-
-System Requirements
-To ensure optimal performance, your system should meet the following minimum requirements:
-
-A. Device
-
-Computer or Laptop:
-
-Operating System: Windows 10 or later, macOS 10.15 Catalina or later, or a compatible Linux distribution.
-
-Processor: A modern processor with sufficient processing power.
-
-Memory (RAM): At least 4GB of RAM.
-
-Storage: At least 50GB of free storage space.
-
-Display: A screen with a minimum resolution of 1024x768 pixels.
-
-Accessibility Features: Ensure your device has built-in accessibility features (screen readers, magnifiers, keyboard navigation).
-
-Tablet or Smartphone:
-
-Operating System: A device with a recent operating system (iOS or Android).
-
-Screen Size: At least 7 inches for optimal viewing.
-
-Accessibility Features: Ensure your device has built-in accessibility features (voice control, screen readers, magnifiers).
-
-B. Internet Connection
-
-A stable internet connection with a minimum speed of 5 Mbps is recommended for optimal performance.
-
-C. Web Browser
-
-Google Chrome
-
-Mozilla Firefox
-
-Microsoft Edge
-
-Safari
-
-Getting Started
-Sign Up (Employee)
-Open your web browser and navigate to the JobCompass website.
-
-Click on the Sign Up button.
-
-Select Employee from the options provided.
-
-Fill in the required information: Full Name, Email address, Age, and create a secure Password (re-enter for confirmation).
-
-Upload your Resume or CV by clicking Choose File.
-
-Optionally, provide a link to your online portfolio.
-
-Click on the Upload Resume button to submit your information and create your account.
-
-Login
-Open your web browser and navigate to the JobCompass website (you should be automatically directed to the login page).
-
-Enter your registered email address and password in the provided fields.
-
-Click the Login button to access your JobCompass account.
-
-If you have forgotten your password, click on the Forgot Password? link and follow the instructions.
-
-If you don't have an account, click on the Don't have an account? Sign Up link.
-
-Exploring Career Options (Applicant)
-Browse Featured Jobs: Explore the featured job suggestions displayed on your dashboard.
-
-Search for Jobs: Use the search bar to find jobs matching your skills and interests (filter by keywords, location, job type).
-
-Explore Companies: Learn more about companies hiring PWDs.
-
-Applying for Jobs (Applicant)
-Click on the Apply button for any job that interests you.
-
-Follow the instructions to submit your application, including uploading your resume and cover letter.
-
-Managing Applications (Applicant)
-Track the status of your applications in the My Applications section of your dashboard.
-
-View the status of each application and see if you have been shortlisted for an interview.
-
-Posting a New Job (Employer)
-Log in to your JobCompass account as an employer.
-
-Navigate to the Jobs tab on the dashboard.
-
-Click on the Post Job button at the bottom of the page.
-
-Follow the on-screen instructions to fill in the job details (title, description, requirements, salary).
-
-Click Submit to post the job.
-
-Managing Job Postings (Employer)
-Viewing: The Jobs page displays a list of all your active and past job postings with details like job title, description, rate, status, and an Edit button.
-
-Editing: Click Edit next to the job posting you want to modify, make changes, and click Save.
-
-Deactivating/Reactivating: Click Edit and then select Deactivate or Reactivate as needed.
-
-Reviewing Applicants (Employer)
-Click on the Applicants tab to view a list of applicants.
-
-Each applicant's profile will display their name, age, disability, applied job title, application content, date, status, and an action button.
-
-Click on the View Profile button for a detailed view (skills, experience, contact).
-
-Decide on the next step:
-
-Pending: If you need more time to review.
-
-Shortlist: If you're interested and want to schedule an interview.
-
-Reject: If the applicant is not suitable.
-
-FAQ
-Is JobCompass free to use?
-Yes, JobCompass is free for both job seekers and employers.
-
-How secure is my information on JobCompass?
-JobCompass takes data security very seriously and implements robust security measures to protect your personal information.
-
-What kind of jobs are available on JobCompass?
-JobCompass offers a wide range of jobs, including full-time, part-time, and freelance positions.
-
-
+Review applicants & manage interview statu
 
 
 # React + TypeScript + Vite
