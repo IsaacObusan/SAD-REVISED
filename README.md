@@ -1,6 +1,10 @@
 
-🧭 JobCompass: Employment Opportunity [Uploading jobcompass-manual - Bi-Fold Brochure (Landscape) 11 in x 8.5 in.html…]()
-Navigator for PWDs of Camarines Norte  ![download](https://github.com/user-attachments/assets/6922433c-ece5-451a-b9f6-05fbdbcd747e)
+🧭 JobCompass: Employment Opportunity 
+Navigator for PWDs of Camarines Norte  
+
+
+![Uploading jobcompass-manual (1).png…]()
+
 
 JobCompass is a dedicated digital platform designed to empower Persons with Disabilities (PWDs) in Camarines Norte by connecting them with relevant employment opportunities. It aims to bridge the gap between PWDs and potential employers, fostering a more inclusive job market.
 
